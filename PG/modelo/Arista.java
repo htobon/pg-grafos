@@ -37,4 +37,12 @@ public class Arista {
 		return atributos;
 	}
 	
+	public void agregarAtributo(String nombreAtributo, Object valor) {
+		atributos.put(nombreAtributo, valor);
+	}
+
+	public void setAtributos(HashMap<String, Object> atributos) {
+		this.atributos = atributos;
+		
+	}
 }

@@ -1,14 +1,8 @@
 package vista;
 
-import bd.ServicioBD;
-
-import com.cloudgarden.layout.AnchorConstraint;
-import com.cloudgarden.layout.AnchorLayout;
-import com.mysql.jdbc.Connection;
-
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,14 +10,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
-
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.SwingUtilities;
+
+import com.cloudgarden.layout.AnchorConstraint;
+import com.cloudgarden.layout.AnchorLayout;
+
+import ctrl.Ctrl;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -58,7 +53,6 @@ public class Principal extends javax.swing.JFrame {
 	private JMenuItem abrirMenu;
 	private JMenu jMenu1;
 	private JMenuBar menuPrincipal;
-	private Connection conexionMySQL;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -75,7 +69,6 @@ public class Principal extends javax.swing.JFrame {
 
 	public Principal() {
 		super();
-		conexionMySQL = null;
 		initGUI();
 	}
 
@@ -130,8 +123,9 @@ public class Principal extends javax.swing.JFrame {
 			}
 			{
 				panelPrincipal = new JPanel();
+				AnchorLayout panelPrincipalLayout = new AnchorLayout();
 				getContentPane().add(panelPrincipal);
-				panelPrincipal.setLayout(null);
+				panelPrincipal.setLayout(panelPrincipalLayout);
 				
 				//Trabajar con esa resolucion: 1024 x 728
 				panelPrincipal
@@ -139,26 +133,29 @@ public class Principal extends javax.swing.JFrame {
 				panelPrincipal.setBounds(0, 0, 864, 346);
 				{
 					panelVisualizacion = new JPanel();
-					panelPrincipal.add(panelVisualizacion);
+					AnchorLayout panelVisualizacionLayout = new AnchorLayout();
+					panelVisualizacion.setLayout(panelVisualizacionLayout);
+					panelPrincipal.add(panelVisualizacion, new AnchorConstraint(50, 985, 888, 315, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
 					panelVisualizacion.setBackground(new java.awt.Color(128,
 							128, 255));
 					panelVisualizacion.setBorder(BorderFactory
 							.createEtchedBorder(BevelBorder.LOWERED));
-					panelVisualizacion.setPreferredSize(new java.awt.Dimension(580, 290));
-					panelVisualizacion.setBounds(272, 17, 579, 290);
+					panelVisualizacion.setPreferredSize(new java.awt.Dimension(579, 290));
 				}
 				{
 					scrollPanelIzquierdo = new JScrollPane();
-					panelPrincipal.add(scrollPanelIzquierdo);
-					scrollPanelIzquierdo.setBounds(12, 17, 248, 290);
-					scrollPanelIzquierdo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-					scrollPanelIzquierdo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+					panelPrincipal.add(scrollPanelIzquierdo, new AnchorConstraint(50, 301, 888, 14, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
+					scrollPanelIzquierdo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					scrollPanelIzquierdo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+					scrollPanelIzquierdo.setPreferredSize(new java.awt.Dimension(248, 290));
 					{
 						panelIzquierdo = new JPanel();
+						AnchorLayout panelIzquierdoLayout = new AnchorLayout();
 						scrollPanelIzquierdo.setViewportView(panelIzquierdo);
 						panelIzquierdo.setBounds(31, 237, 62, 70);
 						panelIzquierdo.setBackground(new java.awt.Color(255,255,255));
 						panelIzquierdo.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+						panelIzquierdo.setLayout(panelIzquierdoLayout);
 					}
 				}
 			}
@@ -175,13 +172,9 @@ public class Principal extends javax.swing.JFrame {
 		ventanaAbrir.setVisible(true);
 	}
 
-	public void manejarConexion() {
-		conexionMySQL = ServicioBD.conexion;
-		cargarGrafo();
-	}
-
-	private void cargarGrafo() {
-		
+	public void cargarGrafo() {
+		System.out.println("Cargando grafo!");		
+		boolean fueCreado = Ctrl.crearGrafo();
 		
 	}
 
