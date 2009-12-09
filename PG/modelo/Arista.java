@@ -1,0 +1,40 @@
+package modelo;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Arista {
+	private int codigo;
+	private String tipo;
+	private Nodo origen, destino;
+	private Map<String, Object> atributos;
+	
+	public Arista(int codigo, String tipo, Nodo origen, Nodo destino) {
+		this.codigo = codigo;
+		this.tipo = tipo;
+		this.origen = origen;
+		this.destino = destino;
+		atributos = new HashMap<String, Object>();
+	}
+	
+	public String getTipo() {
+		return tipo;
+	}
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	
+	public Nodo getOrigen() {
+		return origen;
+	}
+	
+	public Nodo getDestino() {
+		return destino;
+	}
+	
+	public Map<String, Object> getAtributos() {
+		return atributos;
+	}
+	
+}
