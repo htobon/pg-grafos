@@ -41,7 +41,6 @@ public class Principal extends javax.swing.JFrame {
 		// Set Look & Feel
 		try {
 			UIManager.setLookAndFeel(new MetalLookAndFeel());
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -177,7 +176,13 @@ public class Principal extends javax.swing.JFrame {
 	}
 
 	public void manejarConexion() {
-		conexionMySQL = ServicioBD.conexion;		
+		conexionMySQL = ServicioBD.conexion;
+		cargarGrafo();
+	}
+
+	private void cargarGrafo() {
+		
+		
 	}
 
 }
