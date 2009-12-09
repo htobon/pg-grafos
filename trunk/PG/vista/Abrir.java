@@ -1,27 +1,19 @@
 package vista;
-import bd.ServicioBD;
-
-import com.cloudgarden.layout.AnchorConstraint;
-import com.cloudgarden.layout.AnchorLayout;
-
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
-import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
+
+import ctrl.Ctrl;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -37,7 +29,6 @@ public class Abrir extends javax.swing.JFrame {
 	private JTextField servidor;
 	private JButton probar;
 	private JLabel pincorrecto;
-	private JLabel pcorrecto;
 	private JLabel lcontraseña;
 	private JLabel lpuerto;
 	private JLabel lbd;
@@ -50,6 +41,7 @@ public class Abrir extends javax.swing.JFrame {
 	private JTextField usuario;
 	private JPanel PanelAbrir;
 	private Principal ventanaPrincipal;
+	private ImageIcon iconoOk, iconoBad;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -95,6 +87,7 @@ public class Abrir extends javax.swing.JFrame {
 				// PanelAbrir.setFocusable(false);
 				{
 					servidor = new JTextField();
+					servidor.setText("localhost");
 					PanelAbrir.add(servidor, "servidor");
 					servidor.setBounds(124, 12, 191, 23);
 				}
@@ -102,6 +95,7 @@ public class Abrir extends javax.swing.JFrame {
 					usuario = new JTextField();
 					PanelAbrir.add(usuario, "usuario");
 					usuario.setBounds(124, 54, 191, 23);
+					usuario.setText("root");
 				}
 				{
 					contraseña = new JPasswordField();
@@ -141,6 +135,7 @@ public class Abrir extends javax.swing.JFrame {
 							aceptarActionPerformed(evt);
 						}
 					});
+					aceptar.setEnabled(false);
 				}
 				{
 					lservidor = new JLabel();
@@ -173,18 +168,12 @@ public class Abrir extends javax.swing.JFrame {
 					lpuerto.setBounds(379, 15, 42, 16);
 				}
 				{
-					pcorrecto = new JLabel();
-					PanelAbrir.add(pcorrecto);
-					pcorrecto.setIcon(new ImageIcon(getClass().getClassLoader().getResource("imagenes/chulo.jpg")));
-					pcorrecto.setBounds(125, 177, 37, 37);
-					pcorrecto.setVisible(false);
-					
-				}
-				{
 					pincorrecto = new JLabel();
 					PanelAbrir.add(pincorrecto);
-					pincorrecto.setIcon(new ImageIcon(getClass().getClassLoader().getResource("imagenes/exis.jpg")));
-					pincorrecto.setBounds(173, 177, 37, 37);
+					iconoOk = new ImageIcon(getClass().getClassLoader().getResource("imagenes/accepted_48.png"));
+					iconoBad = new ImageIcon(getClass().getClassLoader().getResource("imagenes/cancel_48.png"));
+					pincorrecto.setIcon(iconoOk);
+					pincorrecto.setBounds(450, 119, 51, 47);
 					pincorrecto.setVisible(false);
 					
 				}
@@ -196,26 +185,38 @@ public class Abrir extends javax.swing.JFrame {
 		}
 	}
 	
+	public void cambiarIcono(boolean isOk) {
+		if(isOk) {
+			pincorrecto.setIcon(iconoOk);
+		} else {
+			pincorrecto.setIcon(iconoBad);
+		}
+		pincorrecto.repaint();
+		pincorrecto.updateUI();
+	}
+	
 	private void probarActionPerformed(ActionEvent evt) {
-		boolean creaConexion=ServicioBD.crearConexion(servidor.getText(), puerto.getText(), usuario.getText(), contraseña.getPassword(), nombreBD.getText());
+		boolean creaConexion=Ctrl.probarConexion(servidor.getText(), puerto.getText(), usuario.getText(), contraseña.getPassword(), nombreBD.getText());
+		pincorrecto.setVisible(true);
 		if(creaConexion){
-			pincorrecto.setVisible(false);
-			pcorrecto.setVisible(true);
+			aceptar.setEnabled(true);
+			this.cambiarIcono(true);
 		}else{
-			pcorrecto.setVisible(false);
-			pincorrecto.setVisible(true);
+			aceptar.setEnabled(false);
+			this.cambiarIcono(false);
 		}
 	}
 	
 	private void aceptarActionPerformed(ActionEvent evt) {
-		boolean creaConexion=ServicioBD.crearConexion(servidor.getText(), puerto.getText(), usuario.getText(), contraseña.getPassword(), nombreBD.getText());
+		boolean creaConexion=Ctrl.probarConexion(servidor.getText(), puerto.getText(), usuario.getText(), contraseña.getPassword(), nombreBD.getText());
 		if(creaConexion){
-			ventanaPrincipal.manejarConexion();
 			ventanaPrincipal.setEnabled(true);
 			this.dispose();
+			ventanaPrincipal.cargarGrafo();
 		}else{
-			pcorrecto.setVisible(false);
+			this.cambiarIcono(false);
 			pincorrecto.setVisible(true);
+			aceptar.setEnabled(false);
 		}
 	}
 	
