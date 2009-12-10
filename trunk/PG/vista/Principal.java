@@ -1,19 +1,28 @@
 package vista;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
+
+import org.eclipse.swt.internal.theme.Theme;
+
+import net.sourceforge.napkinlaf.NapkinLookAndFeel;
+import net.sourceforge.napkinlaf.NapkinTheme;
 
 import com.cloudgarden.layout.AnchorConstraint;
 import com.cloudgarden.layout.AnchorLayout;
@@ -59,16 +68,59 @@ public class Principal extends javax.swing.JFrame {
 	 */
 	public static void main(String[] args) {
 
-		setDefaultLookAndFeelDecorated(true);
+		//establecerLookAndFeel();
 		Principal inst = new Principal();
 		inst.setLocationRelativeTo(null);
 		inst.setVisible(true);
-		inst.getJMenuBar().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		inst.getJMenuBar().setBorder(
+				BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
+	}
+
+	private void establecerLookAndFeel() {
+		
+		Toolkit.getDefaultToolkit().setDynamicLayout(true);
+		//System.setProperty("sun.awt.noerasebackground", "true");
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		JDialog.setDefaultLookAndFeelDecorated(true);
+		try {
+			NapkinLookAndFeel laf = new NapkinLookAndFeel();
+			
+			NapkinTheme tema = NapkinTheme.Manager.getTheme("blueprint");
+			
+			for(String t : NapkinTheme.Manager.themeNames()){
+				System.out.println(t);
+			}
+			//NapkinTheme.Manager.setCurrentTheme(tema);
+			NapkinTheme.Manager.setCurrentTheme(tema);
+			UIManager
+					.setLookAndFeel(laf);
+			
+			SwingUtilities.updateComponentTreeUI(this);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+//		Toolkit.getDefaultToolkit().setDynamicLayout(true);
+//		System.setProperty("sun.awt.noerasebackground", "true");
+//		JFrame.setDefaultLookAndFeelDecorated(true);
+//		JDialog.setDefaultLookAndFeelDecorated(true);
+//		try {
+//			TinyLookAndFeel laf = new TinyLookAndFeel();			
+//			ThemeDescription[] temas = Theme.getAvailableThemes();
+//			Theme.loadTheme(temas[3]);			
+//			System.out.println(temas[3]);
+//			UIManager
+//					.setLookAndFeel(laf);
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		}
 
 	}
 
 	public Principal() {
 		super();
+		establecerLookAndFeel();
 		initGUI();
 	}
 
@@ -126,35 +178,51 @@ public class Principal extends javax.swing.JFrame {
 				AnchorLayout panelPrincipalLayout = new AnchorLayout();
 				getContentPane().add(panelPrincipal);
 				panelPrincipal.setLayout(panelPrincipalLayout);
-				
-				//Trabajar con esa resolucion: 1024 x 728
-				panelPrincipal
-						.setPreferredSize(new java.awt.Dimension(1024, 728));
+
+				// Trabajar con esa resolucion: 1024 x 728
+				panelPrincipal.setPreferredSize(new java.awt.Dimension(1024,
+						728));
 				panelPrincipal.setBounds(0, 0, 864, 346);
 				{
 					panelVisualizacion = new JPanel();
 					AnchorLayout panelVisualizacionLayout = new AnchorLayout();
 					panelVisualizacion.setLayout(panelVisualizacionLayout);
-					panelPrincipal.add(panelVisualizacion, new AnchorConstraint(50, 985, 888, 315, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
+					panelPrincipal.add(panelVisualizacion,
+							new AnchorConstraint(50, 985, 888, 315,
+									AnchorConstraint.ANCHOR_REL,
+									AnchorConstraint.ANCHOR_REL,
+									AnchorConstraint.ANCHOR_REL,
+									AnchorConstraint.ANCHOR_REL));
 					panelVisualizacion.setBackground(new java.awt.Color(128,
 							128, 255));
 					panelVisualizacion.setBorder(BorderFactory
 							.createEtchedBorder(BevelBorder.LOWERED));
-					panelVisualizacion.setPreferredSize(new java.awt.Dimension(579, 290));
+					panelVisualizacion.setPreferredSize(new java.awt.Dimension(
+							579, 290));
 				}
 				{
 					scrollPanelIzquierdo = new JScrollPane();
-					panelPrincipal.add(scrollPanelIzquierdo, new AnchorConstraint(50, 301, 888, 14, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-					scrollPanelIzquierdo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-					scrollPanelIzquierdo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-					scrollPanelIzquierdo.setPreferredSize(new java.awt.Dimension(248, 290));
+					panelPrincipal.add(scrollPanelIzquierdo,
+							new AnchorConstraint(50, 301, 888, 14,
+									AnchorConstraint.ANCHOR_REL,
+									AnchorConstraint.ANCHOR_REL,
+									AnchorConstraint.ANCHOR_REL,
+									AnchorConstraint.ANCHOR_REL));
+					scrollPanelIzquierdo
+							.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					scrollPanelIzquierdo
+							.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+					scrollPanelIzquierdo
+							.setPreferredSize(new java.awt.Dimension(248, 290));
 					{
 						panelIzquierdo = new JPanel();
 						AnchorLayout panelIzquierdoLayout = new AnchorLayout();
 						scrollPanelIzquierdo.setViewportView(panelIzquierdo);
 						panelIzquierdo.setBounds(31, 237, 62, 70);
-						panelIzquierdo.setBackground(new java.awt.Color(255,255,255));
-						panelIzquierdo.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+						panelIzquierdo.setBackground(new java.awt.Color(255,
+								255, 255));
+						panelIzquierdo.setBorder(BorderFactory
+								.createEtchedBorder(BevelBorder.LOWERED));
 						panelIzquierdo.setLayout(panelIzquierdoLayout);
 					}
 				}
@@ -165,7 +233,7 @@ public class Principal extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void abrirMenuActionPerformed(ActionEvent evt) {
 		Abrir ventanaAbrir = new Abrir(this);
 		this.setEnabled(false);
@@ -173,9 +241,9 @@ public class Principal extends javax.swing.JFrame {
 	}
 
 	public void cargarGrafo() {
-		System.out.println("Cargando grafo!");		
+		System.out.println("Cargando grafo!");
 		boolean fueCreado = Ctrl.crearGrafo();
-		
+
 	}
 
 }
