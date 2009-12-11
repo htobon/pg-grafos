@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
 
 import bd.ServiciosBD;
 
@@ -141,5 +140,25 @@ public class Ctrl {
 		for (Arista arista : aristas) {
 			arista.setColor(coloresAristas.get(arista.getTipo()));
 		}
+	}
+	
+	public Color getColorNodo(int codNodo){
+		HashSet<Nodo> nodos= grafo.getNodos();
+		for (Nodo nodo : nodos) {
+			if(nodo.getCodigo()== codNodo){
+				return nodo.getColor();
+			}
+		}
+		return null;
+	}
+	
+	public Color getColorArista(int codArista){
+		HashSet<Arista> aristas= grafo.getAristas();
+		for (Arista arista : aristas) {
+			if(arista.getCodigo()== codArista){
+				return arista.getColor();
+			}
+		}
+		return null;
 	}
 }
