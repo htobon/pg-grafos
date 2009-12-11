@@ -74,6 +74,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 			Line arista = new Line("Arista "+codigoArista, vertices , null, null, null);
 			arista.setLineWidth(3f);
 			
+			arista.setSolidColor(Ctrl.getColorArista(codigoArista));
+			
 			arista.setModelBound(new BoundingBox());
 			
 			arista.setRenderQueueMode(Renderer.QUEUE_SKIP);
@@ -111,7 +113,9 @@ public class Espacio3D extends SimpleCanvasImpl {
 		
 		float location_x = -mitadPerimetroX + (anchoNodo / 2); 
 		
-		float location_y = mitadPerimetroX + (anchoNodo / 2);
+		
+		//float location_y = mitadPerimetroX + (anchoNodo / 2);
+		float location_y = mitadPerimetroX;
 		
 		
 		for (int codigoNodo : codigosNodos) {
@@ -127,7 +131,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 //			nodo.setSolidColor(Ctrl.getColorNodo(codigoNodo));
 			
 			/////ASIGNAR COLOR//////
-			nodo.setDefaultColor(Ctrl.getColorNodo(codigoNodo));
+			
+			//nodo.setDefaultColor(Ctrl.getColorNodo(codigoNodo));
 			nodo.setSolidColor(Ctrl.getColorNodo(codigoNodo));
 //			MaterialState material = DisplaySystem.getDisplaySystem().getRenderer().createMaterialState(); 
 //			material.setEnabled(true);
