@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -32,14 +33,17 @@ public class Creditos extends javax.swing.JFrame{
 	private JPanel  creditos;
 	private JLabel imagen;
 	private ImageIcon icono;
+	private JFrame principal;
 	
-	public Creditos(){
+	public Creditos(JFrame principal){
 		super();
+		this.principal = principal;
 		inicializar();
 		pack();
 	}
 	
 	private void thisWindowClosing(WindowEvent evt) {
+		principal.setEnabled(true);
 		this.dispose();
 	}
 	
@@ -105,11 +109,6 @@ public class Creditos extends javax.swing.JFrame{
 
 	}
 	
-	public static void main(String[] arg){
-		Creditos ventana=new Creditos();
-		ventana.setSize(400, 240);
-		ventana.setResizable(false);
-		ventana.setVisible(true);	
-	}
+	
 
 }

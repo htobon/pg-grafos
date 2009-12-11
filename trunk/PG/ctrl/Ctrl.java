@@ -1,15 +1,12 @@
 package ctrl;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
-
-import bd.ServiciosBD;
 
 import modelo.Arista;
 import modelo.Grafo;
 import modelo.Nodo;
+import bd.ServiciosBD;
 
 public class Ctrl {
 
