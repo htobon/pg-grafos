@@ -22,6 +22,14 @@ public class Ctrl {
 		return ServiciosBD.crearConexion(servidor, puerto, usuario, clave,
 				nombreBD);
 	}
+	
+	public static boolean hayConexion() {
+		if(ServiciosBD.conexion != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public static int[] getCodigosNodos() {
 		int[] codigos = new int[grafo.getNodos().size()];
