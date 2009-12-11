@@ -2,6 +2,7 @@ package ctrl;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import bd.ServiciosBD;
@@ -18,6 +19,15 @@ public class Ctrl {
 			String usuario, char[] clave, String nombreBD) {
 		return ServiciosBD.crearConexion(servidor, puerto, usuario, clave,
 				nombreBD);
+	}
+	
+	public static int[] getCodigosNodos() {
+		int[] codigos = new int[grafo.getNodos().size()];
+		int cont=0;
+		for(Iterator<Nodo> i = grafo.getNodos().iterator(); i.hasNext(); cont++) {
+			codigos[cont] = i.next().getCodigo();
+		}
+		return codigos;
 	}
 
 	public static Grafo getGrafo() {

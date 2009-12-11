@@ -1,10 +1,14 @@
 package vista;
 
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -13,21 +17,39 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
-import org.eclipse.swt.internal.theme.Theme;
+import vista3d.Espacio3D;
 
 import net.sourceforge.napkinlaf.NapkinLookAndFeel;
 import net.sourceforge.napkinlaf.NapkinTheme;
 
 import com.cloudgarden.layout.AnchorConstraint;
 import com.cloudgarden.layout.AnchorLayout;
+import com.jme.input.KeyInput;
+import com.jme.renderer.ColorRGBA;
+import com.jme.system.DisplaySystem;
+import com.jme.system.canvas.JMECanvas;
+import com.jme.system.canvas.JMECanvasImplementor;
+import com.jme.system.lwjgl.LWJGLSystemProvider;
+import com.jme.util.GameTaskQueueManager;
+import com.jmex.awt.input.AWTMouseInput;
+import com.jmex.awt.lwjgl.LWJGLAWTCanvasConstructor;
+import com.jmex.awt.lwjgl.LWJGLCanvas;
 
 import ctrl.Ctrl;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.concurrent.Callable;
+
+import jmetest.util.JMESwingTest;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -41,98 +63,121 @@ import ctrl.Ctrl;
  */
 public class Principal extends javax.swing.JFrame {
 
-	{
-		// Set Look & Feel
-		try {
-			UIManager.setLookAndFeel(new MetalLookAndFeel());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	private JPanel panelPrincipal;
 	private JPanel panelVisualizacion;
 	private JScrollPane scrollPanelIzquierdo;
+	private JSplitPane divisor;
+	private JPanel panelNorteIconos;
+	private JPanel panelSurContenido;
 	private JMenu acercaDeMenu;
 	private JPanel panelIzquierdo;
 	private JMenuItem salirMenu;
 	private JSeparator separadorMenu;
 	private JMenuItem cerrarMenu;
-	private JMenuItem guardarMenu;
 	private JMenuItem abrirMenu;
 	private JMenu jMenu1;
 	private JMenuBar menuPrincipal;
+
+	// JMONKEY
+	private LWJGLCanvas canvas = null;
+	private Espacio3D impl;
 
 	/**
 	 * Auto-generated main method to display this JFrame
 	 */
 	public static void main(String[] args) {
-
-		//establecerLookAndFeel();
 		Principal inst = new Principal();
 		inst.setLocationRelativeTo(null);
 		inst.setVisible(true);
-		inst.getJMenuBar().setBorder(
-				BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
 	}
 
 	private void establecerLookAndFeel() {
-		
-		Toolkit.getDefaultToolkit().setDynamicLayout(true);
-		//System.setProperty("sun.awt.noerasebackground", "true");
+
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JDialog.setDefaultLookAndFeelDecorated(true);
 		try {
 			NapkinLookAndFeel laf = new NapkinLookAndFeel();
-			
 			NapkinTheme tema = NapkinTheme.Manager.getTheme("blueprint");
-			
-			for(String t : NapkinTheme.Manager.themeNames()){
+			// NapkinTheme tema = NapkinTheme.Manager.getTheme("napkin");
+			for (String t : NapkinTheme.Manager.themeNames()) {
 				System.out.println(t);
 			}
-			//NapkinTheme.Manager.setCurrentTheme(tema);
 			NapkinTheme.Manager.setCurrentTheme(tema);
-			UIManager
-					.setLookAndFeel(laf);
-			
 			SwingUtilities.updateComponentTreeUI(this);
+			UIManager.setLookAndFeel(laf);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
-//		Toolkit.getDefaultToolkit().setDynamicLayout(true);
-//		System.setProperty("sun.awt.noerasebackground", "true");
-//		JFrame.setDefaultLookAndFeelDecorated(true);
-//		JDialog.setDefaultLookAndFeelDecorated(true);
-//		try {
-//			TinyLookAndFeel laf = new TinyLookAndFeel();			
-//			ThemeDescription[] temas = Theme.getAvailableThemes();
-//			Theme.loadTheme(temas[3]);			
-//			System.out.println(temas[3]);
-//			UIManager
-//					.setLookAndFeel(laf);
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-
 	}
 
 	public Principal() {
-		super();
+		// super();
 		establecerLookAndFeel();
 		initGUI();
+		initScene();
+	}
+
+	private void initScene() {
+		// make the canvas:
+		DisplaySystem display = DisplaySystem
+				.getDisplaySystem(LWJGLSystemProvider.LWJGL_SYSTEM_IDENTIFIER);
+		display.registerCanvasConstructor("AWT",
+				LWJGLAWTCanvasConstructor.class);
+		canvas = (LWJGLCanvas) display.createCanvas(panelVisualizacion
+				.getWidth(), panelVisualizacion.getHeight());
+		canvas.setUpdateInput(true);
+		canvas.setTargetRate(60);
+
+		// add a listener... if window is resized, we can do something about
+		// it.
+		canvas.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent ce) {
+				doResize();
+			}
+		});
+		
+		// Setup key and mouse input
+        KeyInput.setProvider(KeyInput.INPUT_AWT);
+        KeyListener kl = (KeyListener) KeyInput.get();
+        canvas.addKeyListener(kl);
+        AWTMouseInput.setup(canvas, false);
+        
+        // Important! Here is where we add the guts to the panel:
+        impl = new Espacio3D(panelVisualizacion.getWidth(), panelVisualizacion.getHeight());
+        canvas.setImplementor(impl);
+
+        Callable<?> call = new Callable<Object>() {
+            public Object call() throws Exception {
+                canvas.setBackground(new Color(0,0,72));
+                return null;
+            }
+        };
+        GameTaskQueueManager.getManager().render(call);
+        
+        
+        
+        canvas.setBounds(0, 0, panelVisualizacion.getWidth(), panelVisualizacion.getHeight());
+        panelVisualizacion.add(canvas, BorderLayout.CENTER);
+	}
+
+	protected void doResize() {
+		impl.resizeCanvas(canvas.getWidth(), canvas.getHeight());
+		((JMECanvas) canvas).makeDirty();
 	}
 
 	private void initGUI() {
+
 		try {
-			getContentPane().setLayout(null);
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this
 					.setTitle("Modelado, Visualización e Interacción de Grafos en 3D ");
 			{
 				menuPrincipal = new JMenuBar();
-				setJMenuBar(menuPrincipal);
+				menuPrincipal.setBorder(BorderFactory
+						.createBevelBorder(BevelBorder.RAISED));
+				this.setJMenuBar(menuPrincipal);
 				{
 					jMenu1 = new JMenu();
 					menuPrincipal.add(jMenu1);
@@ -146,11 +191,6 @@ public class Principal extends javax.swing.JFrame {
 								abrirMenuActionPerformed(evt);
 							}
 						});
-					}
-					{
-						guardarMenu = new JMenuItem();
-						jMenu1.add(guardarMenu);
-						guardarMenu.setText("Guardar Cambios");
 					}
 					{
 						cerrarMenu = new JMenuItem();
@@ -174,61 +214,81 @@ public class Principal extends javax.swing.JFrame {
 				}
 			}
 			{
+				// Panel Principal
 				panelPrincipal = new JPanel();
-				AnchorLayout panelPrincipalLayout = new AnchorLayout();
-				getContentPane().add(panelPrincipal);
-				panelPrincipal.setLayout(panelPrincipalLayout);
-
-				// Trabajar con esa resolucion: 1024 x 728
-				panelPrincipal.setPreferredSize(new java.awt.Dimension(1024,
-						728));
-				panelPrincipal.setBounds(0, 0, 864, 346);
+				panelPrincipal.setLayout(new BorderLayout());
 				{
-					panelVisualizacion = new JPanel();
-					AnchorLayout panelVisualizacionLayout = new AnchorLayout();
-					panelVisualizacion.setLayout(panelVisualizacionLayout);
-					panelPrincipal.add(panelVisualizacion,
-							new AnchorConstraint(50, 985, 888, 315,
-									AnchorConstraint.ANCHOR_REL,
-									AnchorConstraint.ANCHOR_REL,
-									AnchorConstraint.ANCHOR_REL,
-									AnchorConstraint.ANCHOR_REL));
-					panelVisualizacion.setBackground(new java.awt.Color(128,
-							128, 255));
-					panelVisualizacion.setBorder(BorderFactory
-							.createEtchedBorder(BevelBorder.LOWERED));
-					panelVisualizacion.setPreferredSize(new java.awt.Dimension(
-							579, 290));
+					// Panel Norte de iconos de opciones y demas.
+					panelNorteIconos = new JPanel();
+					FlowLayout panelNorteIconosLayout = new FlowLayout();
+					panelNorteIconosLayout.setAlignment(FlowLayout.LEFT);
+					panelNorteIconos.setLayout(panelNorteIconosLayout);
+					panelNorteIconos.setBackground(Color.black);
+					panelPrincipal.add(panelNorteIconos, BorderLayout.NORTH);
+					panelNorteIconos.add(new JButton("1"));
+					panelNorteIconos.add(new JButton("2"));
+					panelNorteIconos.add(new JButton("3"));
+					panelNorteIconos.add(new JButton("4"));
+					panelNorteIconos.add(new JButton("5"));
 				}
+
 				{
-					scrollPanelIzquierdo = new JScrollPane();
-					panelPrincipal.add(scrollPanelIzquierdo,
-							new AnchorConstraint(50, 301, 888, 14,
-									AnchorConstraint.ANCHOR_REL,
-									AnchorConstraint.ANCHOR_REL,
-									AnchorConstraint.ANCHOR_REL,
-									AnchorConstraint.ANCHOR_REL));
-					scrollPanelIzquierdo
-							.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-					scrollPanelIzquierdo
-							.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-					scrollPanelIzquierdo
-							.setPreferredSize(new java.awt.Dimension(248, 290));
+					// Panel sur de manejo de contenido de informacion.
+					panelSurContenido = new JPanel();
+					panelSurContenido.setLayout(new BorderLayout());
+					panelPrincipal.add(panelSurContenido, BorderLayout.CENTER);
 					{
-						panelIzquierdo = new JPanel();
-						AnchorLayout panelIzquierdoLayout = new AnchorLayout();
-						scrollPanelIzquierdo.setViewportView(panelIzquierdo);
-						panelIzquierdo.setBounds(31, 237, 62, 70);
-						panelIzquierdo.setBackground(new java.awt.Color(255,
-								255, 255));
-						panelIzquierdo.setBorder(BorderFactory
-								.createEtchedBorder(BevelBorder.LOWERED));
-						panelIzquierdo.setLayout(panelIzquierdoLayout);
+						// Divisor
+						divisor = new JSplitPane();
+						panelSurContenido.add(divisor, BorderLayout.CENTER);
+						{
+							// Panel Izquierdo (Informacion del Grafo)
+							scrollPanelIzquierdo = new JScrollPane();
+							scrollPanelIzquierdo
+									.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+							scrollPanelIzquierdo
+									.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+							scrollPanelIzquierdo
+									.setPreferredSize(new java.awt.Dimension(
+											248, 290));
+
+							panelIzquierdo = new JPanel();
+							scrollPanelIzquierdo
+									.setViewportView(panelIzquierdo);
+							// panelIzquierdo.setBounds(31, 237, 62, 70);
+							panelIzquierdo.setBackground(new java.awt.Color(
+									255, 255, 255));
+							panelIzquierdo.setBorder(BorderFactory
+									.createEtchedBorder(BevelBorder.LOWERED));
+
+						}
+						{
+							// Panel Derecho (Panel de visualizacion en 3D)
+							panelVisualizacion = new JPanel();
+							panelVisualizacion.setLayout(new BorderLayout());
+							panelVisualizacion
+									.setBackground(new java.awt.Color(128, 128,
+											255));
+							panelVisualizacion.setBorder(BorderFactory
+									.createEtchedBorder(BevelBorder.LOWERED));
+							
+							panelVisualizacion.setPreferredSize(new java.awt.Dimension(580, 290));
+
+						}
+
+						divisor.setLeftComponent(scrollPanelIzquierdo);
+						divisor.setRightComponent(panelVisualizacion);
+
 					}
 				}
+				getContentPane().setLayout(new BorderLayout());
+				this.setIconImage(new ImageIcon(getClass().getClassLoader()
+						.getResource("imagenes/logo2.png")).getImage());
+				getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 			}
 			pack();
-			this.setSize(872, 430);
+			// Trabajar con esa resolucion: 1024 x 728
+			this.setSize(1024, 648);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -243,6 +303,7 @@ public class Principal extends javax.swing.JFrame {
 	public void cargarGrafo() {
 		System.out.println("Cargando grafo!");
 		boolean fueCreado = Ctrl.crearGrafo();
+		impl.dibujarGrafo();
 
 	}
 

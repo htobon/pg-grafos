@@ -1,5 +1,7 @@
 package vista;
+
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -12,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import ctrl.Ctrl;
 
@@ -69,7 +72,7 @@ public class Abrir extends javax.swing.JFrame {
 
 	private void initGUI() {
 		try {
-			//setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Abrir Base de Datos");
 			BorderLayout thisLayout = new BorderLayout();
 			getContentPane().setLayout(thisLayout);
@@ -101,11 +104,13 @@ public class Abrir extends javax.swing.JFrame {
 					contraseña = new JPasswordField();
 					PanelAbrir.add(contraseña, "contraseña");
 					contraseña.setBounds(438, 54, 142, 23);
+					contraseña.setText("123456");
 				}
 				{
 					nombreBD = new JTextField();
 					PanelAbrir.add(nombreBD, "nombreBD");
 					nombreBD.setBounds(124, 97, 191, 23);
+					nombreBD.setText("grafos_relaciones");
 				}
 				{
 					puerto = new JTextField();
@@ -170,23 +175,35 @@ public class Abrir extends javax.swing.JFrame {
 				{
 					pincorrecto = new JLabel();
 					PanelAbrir.add(pincorrecto);
-					iconoOk = new ImageIcon(getClass().getClassLoader().getResource("imagenes/accepted_48.png"));
-					iconoBad = new ImageIcon(getClass().getClassLoader().getResource("imagenes/cancel_48.png"));
+					// iconoOk = new
+					// ImageIcon(getClass().getClassLoader().getResource("imagenes/accepted_48.png"));
+					// iconoBad = new
+					// ImageIcon(getClass().getClassLoader().getResource("imagenes/cancel_48.png"));
+					iconoOk = new ImageIcon(getClass().getClassLoader()
+							.getResource("imagenes/Select.png"));
+					iconoOk = new ImageIcon(iconoOk.getImage()
+							.getScaledInstance(48, 48,
+									Image.SCALE_AREA_AVERAGING));
+
+					iconoBad = new ImageIcon(getClass().getClassLoader()
+							.getResource("imagenes/Error.png"));
+					iconoBad = new ImageIcon(iconoBad.getImage()
+							.getScaledInstance(48, 48,
+									Image.SCALE_AREA_AVERAGING));
 					pincorrecto.setIcon(iconoOk);
 					pincorrecto.setBounds(450, 119, 51, 47);
 					pincorrecto.setVisible(false);
-					
 				}
 			}
 			pack();
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void cambiarIcono(boolean isOk) {
-		if(isOk) {
+		if (isOk) {
 			pincorrecto.setIcon(iconoOk);
 		} else {
 			pincorrecto.setIcon(iconoBad);
@@ -194,32 +211,44 @@ public class Abrir extends javax.swing.JFrame {
 		pincorrecto.repaint();
 		pincorrecto.updateUI();
 	}
-	
+
 	private void probarActionPerformed(ActionEvent evt) {
-		boolean creaConexion=Ctrl.probarConexion(servidor.getText(), puerto.getText(), usuario.getText(), contraseña.getPassword(), nombreBD.getText());
+		boolean creaConexion;
+		if (puerto.getText().equals("") || usuario.getText().equals("")
+				|| nombreBD.getText().equals("")) {
+			creaConexion = false;
+		} else {
+			creaConexion = Ctrl.probarConexion(servidor.getText(), puerto
+					.getText(), usuario.getText(), contraseña.getPassword(),
+					nombreBD.getText());
+		}
+
 		pincorrecto.setVisible(true);
-		if(creaConexion){
+		if (creaConexion) {
 			aceptar.setEnabled(true);
 			this.cambiarIcono(true);
-		}else{
+		} else {
 			aceptar.setEnabled(false);
 			this.cambiarIcono(false);
 		}
+
 	}
-	
+
 	private void aceptarActionPerformed(ActionEvent evt) {
-		boolean creaConexion=Ctrl.probarConexion(servidor.getText(), puerto.getText(), usuario.getText(), contraseña.getPassword(), nombreBD.getText());
-		if(creaConexion){
+		boolean creaConexion = Ctrl.probarConexion(servidor.getText(), puerto
+				.getText(), usuario.getText(), contraseña.getPassword(),
+				nombreBD.getText());
+		if (creaConexion) {
 			ventanaPrincipal.setEnabled(true);
 			this.dispose();
 			ventanaPrincipal.cargarGrafo();
-		}else{
+		} else {
 			this.cambiarIcono(false);
 			pincorrecto.setVisible(true);
 			aceptar.setEnabled(false);
 		}
 	}
-	
+
 	private void thisWindowClosing(WindowEvent evt) {
 		ventanaPrincipal.setEnabled(true);
 	}
