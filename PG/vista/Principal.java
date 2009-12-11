@@ -66,10 +66,11 @@ public class Principal extends javax.swing.JFrame {
 	private JPanel panelPrincipal;
 	private JPanel panelVisualizacion;
 	private JScrollPane scrollPanelIzquierdo;
+	private JMenuItem acercaDeMenu;
 	private JSplitPane divisor;
 	private JPanel panelNorteIconos;
 	private JPanel panelSurContenido;
-	private JMenu acercaDeMenu;
+	private JMenu informacinoMenu;
 	private JPanel panelIzquierdo;
 	private JMenuItem salirMenu;
 	private JSeparator separadorMenu;
@@ -208,9 +209,19 @@ public class Principal extends javax.swing.JFrame {
 					}
 				}
 				{
-					acercaDeMenu = new JMenu();
-					menuPrincipal.add(acercaDeMenu);
-					acercaDeMenu.setText("Acerca de...");
+					informacinoMenu = new JMenu();
+					menuPrincipal.add(informacinoMenu);
+					informacinoMenu.setText("Información");					
+					{
+						acercaDeMenu = new JMenuItem();
+						informacinoMenu.add(acercaDeMenu);
+						acercaDeMenu.setText("Acerca De");
+						acercaDeMenu.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								acercaDeMenuActionPerformed(evt);
+							}
+						});
+					}
 				}
 			}
 			{
@@ -305,6 +316,12 @@ public class Principal extends javax.swing.JFrame {
 		boolean fueCreado = Ctrl.crearGrafo();
 		impl.dibujarGrafo();
 
+	}
+	
+	private void acercaDeMenuActionPerformed(ActionEvent evt) {
+		Creditos creditos = new Creditos(this);
+		this.setEnabled(false);
+		creditos.setVisible(true);
 	}
 
 }

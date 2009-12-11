@@ -48,6 +48,13 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 		int[] codigosNodos = Ctrl.getCodigosNodos();
 
+		dibujarNodos(codigosNodos);
+	}
+
+	/**
+	 * @param codigosNodos
+	 */
+	private void dibujarNodos(int[] codigosNodos) {
 		// Dimensiones Caja
 		Vector3f max = new Vector3f(1, 1, 1);
 		Vector3f min = new Vector3f(-1, -1, -1);
@@ -66,29 +73,33 @@ public class Espacio3D extends SimpleCanvasImpl {
 				+ (distanciaNodos * (cantidadX - 1));
 		float mitadPerimetroX = perimetroX / 2;
 
-		float location_x = -mitadPerimetroX + (anchoNodo / 2); // Debido a que
+		//float location_x = -mitadPerimetroX + (anchoNodo / 2); // Debido a que
 																// es un Box por
 																// eso se hace
 																// la suma.
-		float location_y = mitadPerimetroX + (anchoNodo / 2);
+		float location_x = -mitadPerimetroX;
+		
+		//float location_y = mitadPerimetroX + (anchoNodo / 2);
+		float location_y = mitadPerimetroX;
 		
 		for (int codigoNodo : codigosNodos) {
-			Box caja = new Box("" + codigoNodo, min, max);
-			caja.setModelBound(new BoundingBox());
-			caja.updateModelBound();
+			Sphere nodo = new Sphere("" + codigoNodo, 10, 10, 1f);
+			nodo.setModelBound(new BoundingBox());
+			nodo.updateModelBound();
 
-			caja.setLocalTranslation(new Vector3f(location_x, location_y, 0));
-			caja.setRenderQueueMode(Renderer.QUEUE_SKIP);
-			rootNode.attachChild(caja);
-			caja.setRandomColors();
+			nodo.setLocalTranslation(new Vector3f(location_x, location_y, 0));
+			nodo.setRenderQueueMode(Renderer.QUEUE_SKIP);
+			rootNode.attachChild(nodo);
+			nodo.setRandomColors();
 			location_x += (anchoNodo + distanciaNodos);
 			if (location_x >= mitadPerimetroX + (anchoNodo / 2)) {
 				location_y -= (anchoNodo + distanciaNodos);
 				
-				location_x = -mitadPerimetroX + (anchoNodo / 2);
+				//location_x = -mitadPerimetroX + (anchoNodo / 2);
+				location_x = -mitadPerimetroX;
 			}
-			caja.updateGeometricState(0, true);
-			caja.updateRenderState();
+			nodo.updateGeometricState(0, true);
+			nodo.updateRenderState();
 		}
 	}
 
