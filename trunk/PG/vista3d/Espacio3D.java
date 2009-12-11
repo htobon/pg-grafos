@@ -8,12 +8,15 @@ import com.jme.input.action.InputActionEvent;
 import com.jme.math.FastMath;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
+import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
 import com.jme.scene.Line;
 import com.jme.scene.Spatial.NormalsMode;
 import com.jme.scene.shape.Box;
 import com.jme.scene.shape.Sphere;
+import com.jme.scene.state.MaterialState;
 import com.jme.scene.state.TextureState;
+import com.jme.system.DisplaySystem;
 import com.jme.system.canvas.SimpleCanvasImpl;
 import com.jme.util.TextureManager;
 
@@ -69,6 +72,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 			vertices[1] = ((Sphere)rootNode.getChild("Nodo "+verticesNodos[1])).getLocalTranslation();
 			
 			Line arista = new Line("Arista "+codigoArista, vertices , null, null, null);
+			arista.setLineWidth(3f);
 			
 			arista.setModelBound(new BoundingBox());
 			
@@ -104,10 +108,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 				+ (distanciaNodos * (cantidadX - 1));
 		float mitadPerimetroX = perimetroX / 2;
 
-		float location_x = -mitadPerimetroX + (anchoNodo / 2); // Debido a que
-																// es un Box por
-																// eso se hace
-																// la suma.
+		
+		float location_x = -mitadPerimetroX + (anchoNodo / 2); 
 		
 		float location_y = mitadPerimetroX + (anchoNodo / 2);
 		
@@ -121,8 +123,17 @@ public class Espacio3D extends SimpleCanvasImpl {
 			nodo.setRenderQueueMode(Renderer.QUEUE_SKIP);
 			rootNode.attachChild(nodo);
 			
-			System.out.println(Ctrl.getColorNodo(codigoNodo));
-			nodo.setSolidColor(Ctrl.getColorNodo(codigoNodo));
+//			System.out.println(Ctrl.getColorNodo(codigoNodo));
+//			nodo.setSolidColor(Ctrl.getColorNodo(codigoNodo));
+			
+			/////ASIGNAR COLOR//////
+			nodo.setDefaultColor(Ctrl.getColorNodo(codigoNodo));
+			nodo.setSolidColor(ColorRGBA.blue);
+//			MaterialState material = DisplaySystem.getDisplaySystem().getRenderer().createMaterialState(); 
+//			material.setEnabled(true);
+//	        material.setDiffuse(Ctrl.getColorNodo(codigoNodo));
+//	        nodo.setRenderState(material);
+			////////////////////////
 			
 			
 			location_x += (anchoNodo + distanciaNodos);
