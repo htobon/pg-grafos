@@ -1,11 +1,13 @@
 package modelo;
 
+import java.awt.Color;
 import java.util.*;
 
 public class Nodo {
 	private Map<String, Object> atributos;
 	private String tipo;
 	private int codigo;
+	private Color color;
 	
 	public Nodo(int codigo, String tipo) {
 		this.codigo = codigo;
@@ -38,6 +40,13 @@ public class Nodo {
 		
 	}
 	
+	public void setColor(Color color){
+		this.color=color;
+	}
+	
+	public Color getColor(){
+		return color;
+	}
 	
 	
 }
