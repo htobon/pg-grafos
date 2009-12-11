@@ -38,7 +38,9 @@ public class Ctrl {
 	public static boolean crearGrafo() {
 		grafo = new Grafo();
 		extraerNodos();
+		asignarColoresNodos();
 		extraerAristas();
+		asignarColoresAristas();
 		return true;
 	}
 
