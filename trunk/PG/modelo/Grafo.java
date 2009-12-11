@@ -1,29 +1,31 @@
 package modelo;
 
-import java.awt.Color;
+
 import java.util.HashMap;
 import java.util.HashSet;
+
+import com.jme.renderer.ColorRGBA;
 
 public class Grafo {
 
 	private HashSet<Nodo> nodos;
 	private HashSet<Arista> aristas;
-	private HashMap<String,Color> coloresNodos;
-	private HashMap<String,Color> coloresAristas;
+	private HashMap<String,ColorRGBA> coloresNodos;
+	private HashMap<String,ColorRGBA> coloresAristas;
 	
-	public HashMap<String, Color> getColoresNodos() {
+	public HashMap<String, ColorRGBA> getColoresNodos() {
 		return coloresNodos;
 	}
 
-	public void setColoresNodos(HashMap<String, Color> coloresNodos) {
+	public void setColoresNodos(HashMap<String, ColorRGBA> coloresNodos) {
 		this.coloresNodos = coloresNodos;
 	}
 
-	public HashMap<String, Color> getColoresAristas() {
+	public HashMap<String, ColorRGBA> getColoresAristas() {
 		return coloresAristas;
 	}
 
-	public void setColoresAristas(HashMap<String, Color> coloresAristas) {
+	public void setColoresAristas(HashMap<String, ColorRGBA> coloresAristas) {
 		this.coloresAristas = coloresAristas;
 	}
 
