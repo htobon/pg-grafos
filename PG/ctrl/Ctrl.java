@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 
+import com.jme.renderer.ColorRGBA;
+
 import bd.ServiciosBD;
 
 import modelo.Arista;
@@ -109,24 +111,24 @@ public class Ctrl {
 	}
 
 	public static void llenarMapaColores() {
-		HashMap<String, Color> coloresNodos = new HashMap<String, Color>();
-		HashMap<String, Color> coloresAristas = new HashMap<String, Color>();
+		HashMap<String, ColorRGBA> coloresNodos = new HashMap<String, ColorRGBA>();
+		HashMap<String, ColorRGBA> coloresAristas = new HashMap<String, ColorRGBA>();
 		HashSet<Nodo> nodos = grafo.getNodos();
 		HashSet<Arista> aristas = grafo.getAristas();
 		Random r = new Random();
 
 		for (Nodo nodo : nodos) {
 			if (!(coloresNodos.containsKey(nodo.getTipo()))) {
-				coloresNodos.put(nodo.getTipo(), new Color(r.nextInt(256), r
-						.nextInt(256), r.nextInt(256)));
+				coloresNodos.put(nodo.getTipo(), new ColorRGBA(r.nextInt(256), r
+						.nextInt(256), r.nextInt(256),100));
 			}
 		}
 		grafo.setColoresNodos(coloresNodos);
 
 		for (Arista arista : aristas) {
 			if (!(coloresAristas.containsKey(arista.getTipo()))) {
-				coloresAristas.put(arista.getTipo(), new Color(r.nextInt(256),
-						r.nextInt(256), r.nextInt(256)));
+				coloresAristas.put(arista.getTipo(), new ColorRGBA(r.nextInt(256),
+						r.nextInt(256), r.nextInt(256),100));
 			}
 		}
 		grafo.setColoresAristas(coloresAristas);
@@ -134,7 +136,7 @@ public class Ctrl {
 
 	public static void asignarColoresNodos() {
 		HashSet<Nodo> nodos = grafo.getNodos();
-		HashMap<String, Color> coloresNodos = new HashMap<String, Color>();
+		HashMap<String, ColorRGBA> coloresNodos = new HashMap<String, ColorRGBA>();
 		for (Nodo nodo : nodos) {
 			nodo.setColor(coloresNodos.get(nodo.getTipo()));
 		}
@@ -142,13 +144,13 @@ public class Ctrl {
 
 	public static void asignarColoresAristas() {
 		HashSet<Arista> aristas = grafo.getAristas();
-		HashMap<String, Color> coloresAristas = new HashMap<String, Color>();
+		HashMap<String, ColorRGBA> coloresAristas = new HashMap<String, ColorRGBA>();
 		for (Arista arista : aristas) {
 			arista.setColor(coloresAristas.get(arista.getTipo()));
 		}
 	}
 
-	public static Color getColorNodo(int codNodo) {
+	public static ColorRGBA getColorNodo(int codNodo) {
 		HashSet<Nodo> nodos = grafo.getNodos();
 		for (Nodo nodo : nodos) {
 			if (nodo.getCodigo() == codNodo) {
@@ -158,7 +160,7 @@ public class Ctrl {
 		return null;
 	}
 
-	public static Color getColorArista(int codArista) {
+	public static ColorRGBA getColorArista(int codArista) {
 		HashSet<Arista> aristas = grafo.getAristas();
 		for (Arista arista : aristas) {
 			if (arista.getCodigo() == codArista) {
