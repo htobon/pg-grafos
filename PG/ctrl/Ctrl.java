@@ -1,12 +1,17 @@
 package ctrl;
 
+import java.awt.Color;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
+
+import bd.ServiciosBD;
 
 import modelo.Arista;
 import modelo.Grafo;
 import modelo.Nodo;
-import bd.ServiciosBD;
 
 public class Ctrl {
 
@@ -99,5 +104,42 @@ public class Ctrl {
 	public static HashSet<Arista> getAristas() {
 		return grafo.getAristas();
 	}
-
+	
+	public static void llenarMapaColores(){
+		HashMap<String,Color> coloresNodos= new HashMap<String, Color>();	
+		HashMap<String,Color> coloresAristas= new HashMap<String, Color>();
+		HashSet<Nodo> nodos= grafo.getNodos();
+		HashSet<Arista> aristas= grafo.getAristas();
+		Random r =  new Random();
+		
+		for (Nodo nodo : nodos) {
+			if(!(coloresNodos.containsKey(nodo.getTipo()))){
+				coloresNodos.put(nodo.getTipo(), new Color(r.nextInt(256),r.nextInt(256),r.nextInt(256)));
+			}
+		}
+		grafo.setColoresNodos(coloresNodos);
+		
+		for (Arista arista : aristas) {
+			if(!(coloresAristas.containsKey(arista.getTipo()))){
+				coloresAristas.put(arista.getTipo(), new Color(r.nextInt(256),r.nextInt(256),r.nextInt(256)));
+			}
+		}
+		grafo.setColoresAristas(coloresAristas);
+	}
+	
+	public void asignarColoresNodos(){
+		HashSet<Nodo> nodos= grafo.getNodos();
+		HashMap<String,Color> coloresNodos= new HashMap<String, Color>();	
+		for (Nodo nodo : nodos) {
+			nodo.setColor(coloresNodos.get(nodo.getTipo()));
+		}
+	}
+	
+	public void asignarColoresAristas(){
+		HashSet<Arista> aristas= grafo.getAristas();
+		HashMap<String,Color> coloresAristas= new HashMap<String, Color>();	
+		for (Arista arista : aristas) {
+			arista.setColor(coloresAristas.get(arista.getTipo()));
+		}
+	}
 }
