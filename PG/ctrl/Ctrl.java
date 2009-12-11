@@ -31,7 +31,7 @@ public class Ctrl {
 		}
 		return codigos;
 	}
-	
+
 	public static int[] getCodigosAristas() {
 		int[] codigos = new int[grafo.getAristas().size()];
 		int cont = 0;
@@ -54,14 +54,15 @@ public class Ctrl {
 	}
 
 	public static int[] getNodosDeArista(int codigoArista) {
-		for(Arista arista : grafo.getAristas()) {
-			if(arista.getCodigo() == codigoArista) {
-				return new int[]{arista.getOrigen().getCodigo(), arista.getDestino().getCodigo()};
+		for (Arista arista : grafo.getAristas()) {
+			if (arista.getCodigo() == codigoArista) {
+				return new int[] { arista.getOrigen().getCodigo(),
+						arista.getDestino().getCodigo() };
 			}
 		}
 		return null;
 	}
-	
+
 	private static void extraerAristas() {
 		HashSet<Arista> aristas = new HashSet<Arista>();
 
@@ -135,8 +136,8 @@ public class Ctrl {
 
 		for (Nodo nodo : nodos) {
 			if (!(coloresNodos.containsKey(nodo.getTipo()))) {
-				coloresNodos.put(nodo.getTipo(), new ColorRGBA(r.nextInt(256), r
-						.nextInt(256), r.nextInt(256),100));
+				coloresNodos.put(nodo.getTipo(), new ColorRGBA(r.nextInt(256),
+						r.nextInt(256), r.nextInt(256), 100));
 			}
 		}
 		grafo.setColoresNodos(coloresNodos);
@@ -144,8 +145,8 @@ public class Ctrl {
 
 		for (Arista arista : aristas) {
 			if (!(coloresAristas.containsKey(arista.getTipo()))) {
-				coloresAristas.put(arista.getTipo(), new ColorRGBA(r.nextInt(256),
-						r.nextInt(256), r.nextInt(256),100));
+				coloresAristas.put(arista.getTipo(), new ColorRGBA(r
+						.nextInt(256), r.nextInt(256), r.nextInt(256), 100));
 			}
 		}
 		grafo.setColoresAristas(coloresAristas);
@@ -204,5 +205,13 @@ public class Ctrl {
 			}
 		}
 		return null;
+	}
+
+	public static String[] getTiposNodos() {
+		return ServiciosBD.getTiposNodos();
+	}
+
+	public static String[] getTiposAristas() {
+		return ServiciosBD.getTiposAristas();
 	}
 }
