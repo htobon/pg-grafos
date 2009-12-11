@@ -1,11 +1,31 @@
 package modelo;
 
+import java.awt.Color;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Grafo {
 
 	private HashSet<Nodo> nodos;
 	private HashSet<Arista> aristas;
+	private HashMap<String,Color> coloresNodos;
+	private HashMap<String,Color> coloresAristas;
+	
+	public HashMap<String, Color> getColoresNodos() {
+		return coloresNodos;
+	}
+
+	public void setColoresNodos(HashMap<String, Color> coloresNodos) {
+		this.coloresNodos = coloresNodos;
+	}
+
+	public HashMap<String, Color> getColoresAristas() {
+		return coloresAristas;
+	}
+
+	public void setColoresAristas(HashMap<String, Color> coloresAristas) {
+		this.coloresAristas = coloresAristas;
+	}
 
 	public Grafo() {
 		nodos = new HashSet<Nodo>();
