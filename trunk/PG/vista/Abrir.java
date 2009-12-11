@@ -158,13 +158,13 @@ public class Abrir extends javax.swing.JFrame {
 					lbd = new JLabel();
 					PanelAbrir.add(lbd);
 					lbd.setText("Nombre BD");
-					lbd.setBounds(43, 102, 64, 12);
+					lbd.setBounds(37, 102, 70, 12);
 				}
 				{
 					lcontraseña = new JLabel();
 					PanelAbrir.add(lcontraseña);
 					lcontraseña.setText("Contraseña");
-					lcontraseña.setBounds(356, 59, 68, 13);
+					lcontraseña.setBounds(351, 59, 73, 13);
 				}
 				{
 					lpuerto = new JLabel();
