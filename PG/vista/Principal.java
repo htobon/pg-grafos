@@ -47,6 +47,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.util.concurrent.Callable;
 
 import jmetest.util.JMESwingTest;
@@ -66,6 +67,7 @@ public class Principal extends javax.swing.JFrame {
 	private JPanel panelPrincipal;
 	private JPanel panelVisualizacion;
 	private JScrollPane scrollPanelIzquierdo;
+	private JButton botonEditarPropiedades;
 	private JMenuItem acercaDeMenu;
 	private JSplitPane divisor;
 	private JPanel panelNorteIconos;
@@ -78,6 +80,7 @@ public class Principal extends javax.swing.JFrame {
 	private JMenuItem abrirMenu;
 	private JMenu jMenu1;
 	private JMenuBar menuPrincipal;
+	private ImageIcon iconoEditar;
 
 	// JMONKEY
 	private LWJGLCanvas canvas = null;
@@ -99,8 +102,8 @@ public class Principal extends javax.swing.JFrame {
 		JDialog.setDefaultLookAndFeelDecorated(true);
 		try {
 			NapkinLookAndFeel laf = new NapkinLookAndFeel();
-			NapkinTheme tema = NapkinTheme.Manager.getTheme("blueprint");
-			// NapkinTheme tema = NapkinTheme.Manager.getTheme("napkin");
+			//NapkinTheme tema = NapkinTheme.Manager.getTheme("blueprint");
+			NapkinTheme tema = NapkinTheme.Manager.getTheme("napkin");
 			for (String t : NapkinTheme.Manager.themeNames()) {
 				System.out.println(t);
 			}
@@ -236,7 +239,17 @@ public class Principal extends javax.swing.JFrame {
 					panelNorteIconos.setLayout(panelNorteIconosLayout);
 					panelNorteIconos.setBackground(Color.black);
 					panelPrincipal.add(panelNorteIconos, BorderLayout.NORTH);
-					panelNorteIconos.add(new JButton("1"));
+					{
+						botonEditarPropiedades = new JButton();
+						panelNorteIconos.add(botonEditarPropiedades);
+						botonEditarPropiedades.setBorder(null);
+						iconoEditar = new ImageIcon(getClass().getClassLoader()
+								.getResource("imagenes/draw.png"));
+						iconoEditar = new ImageIcon(iconoEditar.getImage()
+								.getScaledInstance(48, 48,
+										Image.SCALE_AREA_AVERAGING));
+						botonEditarPropiedades.setIcon(iconoEditar);
+					}
 					panelNorteIconos.add(new JButton("2"));
 					panelNorteIconos.add(new JButton("3"));
 					panelNorteIconos.add(new JButton("4"));
