@@ -89,7 +89,7 @@ public class ServiciosBD {
 		}
 		return null;
 	}
-	
+
 	public static HashMap<String, Object> getAtributosArista(int codigo) {
 		HashMap<String, Object> aristas = new HashMap<String, Object>();
 		try {
@@ -169,5 +169,48 @@ public class ServiciosBD {
 		return null;
 	}
 
+	public static String[] getTiposAristas() {
+		try {
+			PreparedStatement query = conexion
+					.prepareStatement("SELECT DISTINCT codigo, nombre FROM aristas_tipo");
+			ResultSet res = query.executeQuery();
+			res.last();
+			String[] tipos = new String[res.getRow()];
+			res.first();
+			for (int c = 0; c < tipos.length; c++, res.next()) {
+				tipos[c] = res.getString("codigo") + " - "
+				+ res.getString("nombre");
+			}
+			query.close();
+			res.close();
+			return tipos;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String[] getTiposNodos() {
+		try {
+			PreparedStatement query = conexion
+					.prepareStatement("SELECT DISTINCT codigo, nombre FROM nodos_tipo");
+			ResultSet res = query.executeQuery();
+			res.last();
+			String[] tipos = new String[res.getRow()];
+			res.first();
+			for (int c = 0; c < tipos.length; c++, res.next()) {
+				tipos[c] = res.getString("codigo") + " - "
+						+ res.getString("nombre");
+			}
+			query.close();
+			res.close();
+			return tipos;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="libs/jdom-1.0.jar"/>
 	<classpathentry kind="lib" path="libs/napkinlaf-1.2.jar"/>
 	<classpathentry kind="lib" path="libs/napkinlaf-swingset-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/TableLayout.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
