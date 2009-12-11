@@ -1,6 +1,5 @@
 package ctrl;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,6 +31,15 @@ public class Ctrl {
 		}
 		return codigos;
 	}
+	
+	public static int[] getCodigosAristas() {
+		int[] codigos = new int[grafo.getAristas().size()];
+		int cont = 0;
+		for (Iterator<Arista> i = grafo.getAristas().iterator(); i.hasNext(); cont++) {
+			codigos[cont] = i.next().getCodigo();
+		}
+		return codigos;
+	}
 
 	public static Grafo getGrafo() {
 		return grafo;
@@ -40,12 +48,20 @@ public class Ctrl {
 	public static boolean crearGrafo() {
 		grafo = new Grafo();
 		extraerNodos();
-		asignarColoresNodos();
 		extraerAristas();
-		asignarColoresAristas();
+		llenarMapaColores();
 		return true;
 	}
 
+	public static int[] getNodosDeArista(int codigoArista) {
+		for(Arista arista : grafo.getAristas()) {
+			if(arista.getCodigo() == codigoArista) {
+				return new int[]{arista.getOrigen().getCodigo(), arista.getDestino().getCodigo()};
+			}
+		}
+		return null;
+	}
+	
 	private static void extraerAristas() {
 		HashSet<Arista> aristas = new HashSet<Arista>();
 
@@ -124,6 +140,7 @@ public class Ctrl {
 			}
 		}
 		grafo.setColoresNodos(coloresNodos);
+		asignarColoresNodos();
 
 		for (Arista arista : aristas) {
 			if (!(coloresAristas.containsKey(arista.getTipo()))) {
@@ -132,6 +149,7 @@ public class Ctrl {
 			}
 		}
 		grafo.setColoresAristas(coloresAristas);
+		asignarColoresAristas();
 	}
 
 	public static void asignarColoresNodos() {
@@ -151,8 +169,7 @@ public class Ctrl {
 	}
 
 	public static ColorRGBA getColorNodo(int codNodo) {
-		HashSet<Nodo> nodos = grafo.getNodos();
-		for (Nodo nodo : nodos) {
+		for (Nodo nodo : grafo.getNodos()) {
 			if (nodo.getCodigo() == codNodo) {
 				return nodo.getColor();
 			}
@@ -161,8 +178,7 @@ public class Ctrl {
 	}
 
 	public static ColorRGBA getColorArista(int codArista) {
-		HashSet<Arista> aristas = grafo.getAristas();
-		for (Arista arista : aristas) {
+		for (Arista arista : grafo.getAristas()) {
 			if (arista.getCodigo() == codArista) {
 				return arista.getColor();
 			}

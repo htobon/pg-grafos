@@ -9,6 +9,7 @@ import com.jme.math.FastMath;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Renderer;
+import com.jme.scene.Line;
 import com.jme.scene.Spatial.NormalsMode;
 import com.jme.scene.shape.Box;
 import com.jme.scene.shape.Sphere;
@@ -36,19 +37,49 @@ public class Espacio3D extends SimpleCanvasImpl {
 	public void dibujarGrafo() {
 
 		rootNode.detachAllChildren();
+		rootNode.setRenderState(null);
 		
 		
 		// Se crea Esfera en el centro para comprobar eje centro.
-		Sphere esfera = new Sphere("Esfera", new Vector3f(0, 0, 0), 15, 15,
-				1.5f);
-		esfera.setModelBound(new BoundingBox());
-		esfera.updateModelBound();
-		rootNode.attachChild(esfera);
+		// Sphere esfera = new Sphere("Esfera", new Vector3f(0, 0, 0), 15, 15,
+		// 1.5f);
+		// esfera.setModelBound(new BoundingBox());
+		// esfera.updateModelBound();
+		// rootNode.attachChild(esfera);
 		// ///////////////////////////////////////////////////////////
 
 		int[] codigosNodos = Ctrl.getCodigosNodos();
-
 		dibujarNodos(codigosNodos);
+		
+		int[] codigosAristas = Ctrl.getCodigosAristas();
+		dibujarAristas(codigosAristas);
+	}
+	
+	private void dibujarAristas(int[] codigosAristas) {
+		
+		
+		int[] verticesNodos; 
+		
+		for(int codigoArista : codigosAristas) {
+			
+			verticesNodos = Ctrl.getNodosDeArista(codigoArista);
+			Vector3f[] vertices = new Vector3f[2];
+			vertices[0] = ((Sphere)rootNode.getChild("Nodo "+verticesNodos[0])).getLocalTranslation(); 
+				
+			vertices[1] = ((Sphere)rootNode.getChild("Nodo "+verticesNodos[1])).getLocalTranslation();
+			
+			Line arista = new Line("Arista "+codigoArista, vertices , null, null, null);
+			
+			arista.setModelBound(new BoundingBox());
+			
+			arista.setRenderQueueMode(Renderer.QUEUE_SKIP);
+			rootNode.attachChild(arista);
+			arista.updateGeometricState(0, true);
+			arista.updateRenderState();
+			
+		}
+		
+		
 	}
 
 	/**
@@ -73,30 +104,32 @@ public class Espacio3D extends SimpleCanvasImpl {
 				+ (distanciaNodos * (cantidadX - 1));
 		float mitadPerimetroX = perimetroX / 2;
 
-		//float location_x = -mitadPerimetroX + (anchoNodo / 2); // Debido a que
+		float location_x = -mitadPerimetroX + (anchoNodo / 2); // Debido a que
 																// es un Box por
 																// eso se hace
 																// la suma.
-		float location_x = -mitadPerimetroX;
 		
-		//float location_y = mitadPerimetroX + (anchoNodo / 2);
-		float location_y = mitadPerimetroX;
+		float location_y = mitadPerimetroX + (anchoNodo / 2);
+		
 		
 		for (int codigoNodo : codigosNodos) {
-			Sphere nodo = new Sphere("" + codigoNodo, 10, 10, 1f);
+			Sphere nodo = new Sphere("Nodo " + codigoNodo, 10, 10, 1f);
 			nodo.setModelBound(new BoundingBox());
 			nodo.updateModelBound();
 
 			nodo.setLocalTranslation(new Vector3f(location_x, location_y, 0));
 			nodo.setRenderQueueMode(Renderer.QUEUE_SKIP);
 			rootNode.attachChild(nodo);
-			nodo.setRandomColors();
+			
+			System.out.println(Ctrl.getColorNodo(codigoNodo));
+			nodo.setSolidColor(Ctrl.getColorNodo(codigoNodo));
+			
+			
 			location_x += (anchoNodo + distanciaNodos);
 			if (location_x >= mitadPerimetroX + (anchoNodo / 2)) {
 				location_y -= (anchoNodo + distanciaNodos);
 				
-				//location_x = -mitadPerimetroX + (anchoNodo / 2);
-				location_x = -mitadPerimetroX;
+				location_x = -mitadPerimetroX + (anchoNodo / 2);
 			}
 			nodo.updateGeometricState(0, true);
 			nodo.updateRenderState();
