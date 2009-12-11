@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.*;
 
 public class Nodo {
-	private Map<String, Object> atributos;
+	private HashMap<String, Object> atributos;
 	private String tipo;
 	private int codigo;
 	private Color color;
@@ -31,7 +31,7 @@ public class Nodo {
 		return tipo;
 	}
 	
-	public Map<String, Object> getAtributos() {
+	public HashMap<String, Object> getAtributos() {
 		return atributos;
 	}
 

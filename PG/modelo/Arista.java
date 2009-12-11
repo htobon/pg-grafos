@@ -9,7 +9,7 @@ public class Arista {
 	private String tipo;
 	private Nodo origen, destino;
 	private Color color;
-	private Map<String, Object> atributos;
+	private HashMap<String, Object> atributos;
 
 	public Arista(int codigo, String tipo, Nodo origen, Nodo destino) {
 		this.codigo = codigo;
@@ -35,7 +35,7 @@ public class Arista {
 		return destino;
 	}
 
-	public Map<String, Object> getAtributos() {
+	public HashMap<String, Object> getAtributos() {
 		return atributos;
 	}
 
