@@ -136,7 +136,7 @@ public class Ctrl {
 
 	public static void asignarColoresNodos() {
 		HashSet<Nodo> nodos = grafo.getNodos();
-		HashMap<String, ColorRGBA> coloresNodos = new HashMap<String, ColorRGBA>();
+		HashMap<String, ColorRGBA> coloresNodos = grafo.getColoresNodos();
 		for (Nodo nodo : nodos) {
 			nodo.setColor(coloresNodos.get(nodo.getTipo()));
 		}
@@ -144,7 +144,7 @@ public class Ctrl {
 
 	public static void asignarColoresAristas() {
 		HashSet<Arista> aristas = grafo.getAristas();
-		HashMap<String, ColorRGBA> coloresAristas = new HashMap<String, ColorRGBA>();
+		HashMap<String, ColorRGBA> coloresAristas = grafo.getColoresAristas();
 		for (Arista arista : aristas) {
 			arista.setColor(coloresAristas.get(arista.getTipo()));
 		}
