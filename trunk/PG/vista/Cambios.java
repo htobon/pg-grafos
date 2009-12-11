@@ -12,6 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,11 +49,10 @@ public class Cambios extends JFrame {
 	private JFrame principal;
 
 	public Cambios(JFrame principal) {
-		super();
 		this.principal = principal;
 		initGUI();
 		inicializarListas();
-		pack();
+
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
@@ -65,7 +65,7 @@ public class Cambios extends JFrame {
 				.getModel());
 		modeloNodos.removeAllElements();
 		String[] tiposNodos = Ctrl.getTiposNodos();
-		for(int i=0;i<tiposNodos.length;i++){
+		for (int i = 0; i < tiposNodos.length; i++) {
 			modeloNodos.addElement(tiposNodos[i]);
 		}
 
@@ -73,7 +73,7 @@ public class Cambios extends JFrame {
 				.getModel());
 		modeloAristas.removeAllElements();
 		String[] tiposAristas = Ctrl.getTiposAristas();
-		for(int i=0;i<tiposAristas.length;i++){
+		for (int i = 0; i < tiposAristas.length; i++) {
 			modeloAristas.addElement(tiposAristas[i]);
 		}
 	}
@@ -198,20 +198,20 @@ public class Cambios extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void jbtnColorNodoActionPerformed(ActionEvent evt) {
-		JColorChooser colorSelec= new JColorChooser();
-		Color elegido= colorSelec.showDialog(this, "Color", jbtnColorNodo.getBackground());
-		if(elegido != null){
+
+		Color elegido = JColorChooser.showDialog(null, "Color Nodo", jbtnColorNodo
+				.getBackground());
+		if (elegido != null) {
 			jbtnColorNodo.setBackground(elegido);
 		}
 	}
-	
+
 	private void jbtnColorAristaActionPerformed(ActionEvent evt) {
-		JColorChooser colorSelec= new JColorChooser();
-		
-		Color elegido=colorSelec.showDialog(this, "Color", jbtnColorArista.getBackground());
-		if(elegido != null) {
+		Color elegido = JColorChooser.showDialog(null, "Color Arista", jbtnColorArista
+				.getBackground());
+		if (elegido != null) {
 			jbtnColorArista.setBackground(elegido);
 		}
 	}

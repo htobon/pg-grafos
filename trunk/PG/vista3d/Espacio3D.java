@@ -128,7 +128,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 			
 			/////ASIGNAR COLOR//////
 			nodo.setDefaultColor(Ctrl.getColorNodo(codigoNodo));
-			nodo.setSolidColor(ColorRGBA.blue);
+			nodo.setSolidColor(ColorRGBA.red);
 //			MaterialState material = DisplaySystem.getDisplaySystem().getRenderer().createMaterialState(); 
 //			material.setEnabled(true);
 //	        material.setDiffuse(Ctrl.getColorNodo(codigoNodo));

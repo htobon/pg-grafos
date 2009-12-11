@@ -102,8 +102,8 @@ public class Principal extends javax.swing.JFrame {
 		JDialog.setDefaultLookAndFeelDecorated(true);
 		try {
 			NapkinLookAndFeel laf = new NapkinLookAndFeel();
-			//NapkinTheme tema = NapkinTheme.Manager.getTheme("blueprint");
-			NapkinTheme tema = NapkinTheme.Manager.getTheme("napkin");
+			NapkinTheme tema = NapkinTheme.Manager.getTheme("blueprint");
+			// NapkinTheme tema = NapkinTheme.Manager.getTheme("napkin");
 			for (String t : NapkinTheme.Manager.themeNames()) {
 				System.out.println(t);
 			}
@@ -141,29 +141,29 @@ public class Principal extends javax.swing.JFrame {
 				doResize();
 			}
 		});
-		
-		// Setup key and mouse input
-        KeyInput.setProvider(KeyInput.INPUT_AWT);
-        KeyListener kl = (KeyListener) KeyInput.get();
-        canvas.addKeyListener(kl);
-        AWTMouseInput.setup(canvas, false);
-        
-        // Important! Here is where we add the guts to the panel:
-        impl = new Espacio3D(panelVisualizacion.getWidth(), panelVisualizacion.getHeight());
-        canvas.setImplementor(impl);
 
-        Callable<?> call = new Callable<Object>() {
-            public Object call() throws Exception {
-                canvas.setBackground(new Color(0,0,72));
-                return null;
-            }
-        };
-        GameTaskQueueManager.getManager().render(call);
-        
-        
-        
-        canvas.setBounds(0, 0, panelVisualizacion.getWidth(), panelVisualizacion.getHeight());
-        panelVisualizacion.add(canvas, BorderLayout.CENTER);
+		// Setup key and mouse input
+		KeyInput.setProvider(KeyInput.INPUT_AWT);
+		KeyListener kl = (KeyListener) KeyInput.get();
+		canvas.addKeyListener(kl);
+		AWTMouseInput.setup(canvas, false);
+
+		// Important! Here is where we add the guts to the panel:
+		impl = new Espacio3D(panelVisualizacion.getWidth(), panelVisualizacion
+				.getHeight());
+		canvas.setImplementor(impl);
+
+		Callable<?> call = new Callable<Object>() {
+			public Object call() throws Exception {
+				canvas.setBackground(new Color(0, 0, 72));
+				return null;
+			}
+		};
+		GameTaskQueueManager.getManager().render(call);
+
+		canvas.setBounds(0, 0, panelVisualizacion.getWidth(),
+				panelVisualizacion.getHeight());
+		panelVisualizacion.add(canvas, BorderLayout.CENTER);
 	}
 
 	protected void doResize() {
@@ -214,7 +214,7 @@ public class Principal extends javax.swing.JFrame {
 				{
 					informacinoMenu = new JMenu();
 					menuPrincipal.add(informacinoMenu);
-					informacinoMenu.setText("Información");					
+					informacinoMenu.setText("Información");
 					{
 						acercaDeMenu = new JMenuItem();
 						informacinoMenu.add(acercaDeMenu);
@@ -249,6 +249,12 @@ public class Principal extends javax.swing.JFrame {
 								.getScaledInstance(48, 48,
 										Image.SCALE_AREA_AVERAGING));
 						botonEditarPropiedades.setIcon(iconoEditar);
+						botonEditarPropiedades
+								.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										botonEditarPropiedadesActionPerformed(evt);
+									}
+								});
 					}
 					panelNorteIconos.add(new JButton("2"));
 					panelNorteIconos.add(new JButton("3"));
@@ -295,8 +301,10 @@ public class Principal extends javax.swing.JFrame {
 											255));
 							panelVisualizacion.setBorder(BorderFactory
 									.createEtchedBorder(BevelBorder.LOWERED));
-							
-							panelVisualizacion.setPreferredSize(new java.awt.Dimension(580, 290));
+
+							panelVisualizacion
+									.setPreferredSize(new java.awt.Dimension(
+											580, 290));
 
 						}
 
@@ -330,11 +338,19 @@ public class Principal extends javax.swing.JFrame {
 		impl.dibujarGrafo();
 
 	}
-	
+
 	private void acercaDeMenuActionPerformed(ActionEvent evt) {
 		Creditos creditos = new Creditos(this);
 		this.setEnabled(false);
 		creditos.setVisible(true);
+	}
+
+	private void botonEditarPropiedadesActionPerformed(ActionEvent evt) {
+		if (Ctrl.hayConexion()) {
+			Cambios cambios = new Cambios(this);
+			this.setVisible(false);
+			cambios.setVisible(true);
+		}
 	}
 
 }
