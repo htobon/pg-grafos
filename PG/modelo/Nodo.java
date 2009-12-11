@@ -1,13 +1,15 @@
 package modelo;
 
-import java.awt.Color;
+
 import java.util.*;
+
+import com.jme.renderer.ColorRGBA;
 
 public class Nodo {
 	private HashMap<String, Object> atributos;
 	private String tipo;
 	private int codigo;
-	private Color color;
+	private ColorRGBA color;
 	
 	public Nodo(int codigo, String tipo) {
 		this.codigo = codigo;
@@ -40,11 +42,11 @@ public class Nodo {
 		
 	}
 	
-	public void setColor(Color color){
+	public void setColor(ColorRGBA color){
 		this.color=color;
 	}
 	
-	public Color getColor(){
+	public ColorRGBA getColor(){
 		return color;
 	}
 	
