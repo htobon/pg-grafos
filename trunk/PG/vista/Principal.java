@@ -108,7 +108,7 @@ public class Principal extends javax.swing.JFrame {
 				System.out.println(t);
 			}
 			NapkinTheme.Manager.setCurrentTheme(tema);
-			SwingUtilities.updateComponentTreeUI(this);
+			//SwingUtilities.updateComponentTreeUI(this);
 			UIManager.setLookAndFeel(laf);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -348,7 +348,7 @@ public class Principal extends javax.swing.JFrame {
 	private void botonEditarPropiedadesActionPerformed(ActionEvent evt) {
 		if (Ctrl.hayConexion()) {
 			Cambios cambios = new Cambios(this);
-			this.setVisible(false);
+			this.setEnabled(false);
 			cambios.setVisible(true);
 		}
 	}
