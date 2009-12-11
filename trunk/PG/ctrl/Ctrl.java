@@ -3,7 +3,6 @@ package ctrl;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
 
 import com.jme.renderer.ColorRGBA;
 
@@ -140,12 +139,10 @@ public class Ctrl {
 		HashMap<String, ColorRGBA> coloresAristas = new HashMap<String, ColorRGBA>();
 		HashSet<Nodo> nodos = grafo.getNodos();
 		HashSet<Arista> aristas = grafo.getAristas();
-		Random r = new Random();
 
 		for (Nodo nodo : nodos) {
 			if (!(coloresNodos.containsKey(nodo.getTipo()))) {
-				coloresNodos.put(nodo.getTipo(), new ColorRGBA(r.nextInt(256),
-						r.nextInt(256), r.nextInt(256), 100));
+				coloresNodos.put(nodo.getTipo(), ColorRGBA.randomColor());
 			}
 		}
 		grafo.setColoresNodos(coloresNodos);
@@ -153,8 +150,7 @@ public class Ctrl {
 
 		for (Arista arista : aristas) {
 			if (!(coloresAristas.containsKey(arista.getTipo()))) {
-				coloresAristas.put(arista.getTipo(), new ColorRGBA(r
-						.nextInt(256), r.nextInt(256), r.nextInt(256), 100));
+				coloresAristas.put(arista.getTipo(), ColorRGBA.randomColor());
 			}
 		}
 		grafo.setColoresAristas(coloresAristas);
