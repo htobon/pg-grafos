@@ -56,6 +56,7 @@ public class Cambios extends JFrame {
 	private JLabel jlblAristas;
 	private JLabel jlblNodos;
 	private JFrame principal;
+	private JPanel panelPrincipal;
 
 	public Cambios(JFrame principal) {
 		this.principal = principal;
@@ -123,14 +124,16 @@ public class Cambios extends JFrame {
 
 	private void initGUI() {
 		try {
+			panelPrincipal = new JPanel();
+			panelPrincipal.setLayout(new BorderLayout());
+			getContentPane().add(panelPrincipal);
 			{
 				jspTipos = new JSplitPane();
-				getContentPane().add(jspTipos, BorderLayout.CENTER);
+				panelPrincipal.add(jspTipos, BorderLayout.CENTER);
 				jspTipos.setPreferredSize(new java.awt.Dimension(603, 302));
 				{
 					jpAristas = new JPanel();
 					jspTipos.add(jpAristas, JSplitPane.RIGHT);
-					jpAristas.setBackground(new java.awt.Color(255, 255, 255));
 					jpAristas.setLayout(null);
 					{
 						ComboBoxModel cbxTiposAristasModel = new DefaultComboBoxModel(
@@ -175,7 +178,6 @@ public class Cambios extends JFrame {
 					jpNodos = new JPanel();
 					jspTipos.add(jpNodos, JSplitPane.LEFT);
 					jpNodos.setPreferredSize(new java.awt.Dimension(297, 309));
-					jpNodos.setBackground(new java.awt.Color(255, 255, 255));
 					jpNodos.setLayout(null);
 					{
 						ComboBoxModel jcbxFigurasNodosModel = new DefaultComboBoxModel(
@@ -239,7 +241,7 @@ public class Cambios extends JFrame {
 			}
 			{
 				jpPrincipal = new JPanel();
-				getContentPane().add(jpPrincipal, BorderLayout.SOUTH);
+				panelPrincipal.add(jpPrincipal, BorderLayout.SOUTH);
 				jpPrincipal.setPreferredSize(new java.awt.Dimension(603, 40));
 				jpPrincipal.setBackground(new java.awt.Color(255,255,255));
 				jpPrincipal.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
