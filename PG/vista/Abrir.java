@@ -44,7 +44,7 @@ public class Abrir extends javax.swing.JFrame {
 	private JTextField usuario;
 	private JPanel PanelAbrir;
 	private Principal ventanaPrincipal;
-	private ImageIcon iconoOk, iconoBad;
+	private ImageIcon iconoBad;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -174,22 +174,11 @@ public class Abrir extends javax.swing.JFrame {
 				{
 					pincorrecto = new JLabel();
 					PanelAbrir.add(pincorrecto);
-					// iconoOk = new
-					// ImageIcon(getClass().getClassLoader().getResource("imagenes/accepted_48.png"));
-					// iconoBad = new
-					// ImageIcon(getClass().getClassLoader().getResource("imagenes/cancel_48.png"));
-					iconoOk = new ImageIcon(getClass().getClassLoader()
-							.getResource("imagenes/Select.png"));
-					iconoOk = new ImageIcon(iconoOk.getImage()
-							.getScaledInstance(48, 48,
-									Image.SCALE_AREA_AVERAGING));
-
 					iconoBad = new ImageIcon(getClass().getClassLoader()
 							.getResource("imagenes/Error.png"));
 					iconoBad = new ImageIcon(iconoBad.getImage()
 							.getScaledInstance(48, 48,
 									Image.SCALE_AREA_AVERAGING));
-					pincorrecto.setIcon(iconoOk);
 					pincorrecto.setBounds(450, 119, 51, 47);
 					pincorrecto.setVisible(false);
 				}
@@ -202,9 +191,7 @@ public class Abrir extends javax.swing.JFrame {
 	}
 
 	public void cambiarIcono(boolean isOk) {
-		if (isOk) {
-			pincorrecto.setIcon(iconoOk);
-		} else {
+		if (!isOk) {
 			pincorrecto.setIcon(iconoBad);
 		}
 		pincorrecto.repaint();
