@@ -304,14 +304,14 @@ public class Cambios extends JFrame {
 				colorArista.getGreen() / 255f, colorArista.getBlue() / 255f, colorArista.getAlpha() / 255f));
 		
 		//Cerrar Ventana
-		this.dispose();
 		principal.setEnabled(true);
+		this.dispose();
 	}
 	
 	private void jbtnCancelarActionPerformed(ActionEvent evt) {
 		//Cerrar Ventana
-		this.dispose();
 		principal.setEnabled(true);
+		this.dispose();
 	}
 
 }
