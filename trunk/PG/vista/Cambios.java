@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.BorderFactory;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -17,6 +20,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.border.BevelBorder;
+
+import com.jme.renderer.ColorRGBA;
 
 import ctrl.Ctrl;
 
@@ -41,6 +47,9 @@ public class Cambios extends JFrame {
 	private JLabel jlblColorArista;
 	private JLabel jlblColorNodo;
 	private JLabel jlblArista;
+	private JButton jbtnCancelar;
+	private JButton jbtnAceptar;
+	private JPanel jpPrincipal;
 	private JComboBox jcboxFigura;
 	private JLabel jlblFiguraNodo;
 	private JLabel jlblNodo;
@@ -52,7 +61,16 @@ public class Cambios extends JFrame {
 		this.principal = principal;
 		initGUI();
 		inicializarListas();
+		inicializarColores();
+		this.setTitle("Modificaciones");
+	}
 
+	private void inicializarColores() {
+		ColorRGBA colorN= Ctrl.getColorTipoNodo((String)jcbxTiposNodos.getItemAt(0));
+		jbtnColorNodo.setBackground(new Color(colorN.asIntARGB()));
+		
+		ColorRGBA colorA= Ctrl.getColorTipoArista((String)cbxTiposAristas.getItemAt(0));
+		jbtnColorArista.setBackground(new Color(colorA.asIntARGB()));
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
@@ -68,7 +86,20 @@ public class Cambios extends JFrame {
 		for (int i = 0; i < tiposNodos.length; i++) {
 			modeloNodos.addElement(tiposNodos[i]);
 		}
+		jcbxTiposNodos.setSelectedIndex(0);
 
+		jcbxTiposNodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {								
+												
+				ColorRGBA colorN= Ctrl.getColorTipoNodo(jcbxTiposNodos.getSelectedItem().toString());
+				jbtnColorNodo.setBackground(new Color(colorN.asIntARGB()));
+				
+				String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getSelectedItem().toString());
+				jcboxFigura.setSelectedItem(figura);
+				
+			}
+		});
+		
 		DefaultComboBoxModel modeloAristas = (DefaultComboBoxModel) (cbxTiposAristas
 				.getModel());
 		modeloAristas.removeAllElements();
@@ -76,6 +107,18 @@ public class Cambios extends JFrame {
 		for (int i = 0; i < tiposAristas.length; i++) {
 			modeloAristas.addElement(tiposAristas[i]);
 		}
+		cbxTiposAristas.setSelectedIndex(0);
+		
+		cbxTiposAristas.addItemListener(new ItemListener(){
+	        public void itemStateChanged(ItemEvent e) {
+				ColorRGBA colorA= Ctrl.getColorTipoArista((String)cbxTiposAristas.getSelectedItem());
+				jbtnColorArista.setBackground(new Color(colorA.asIntARGB()));
+			}
+		});
+		
+		String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getItemAt(0));
+		jcboxFigura.setSelectedItem(figura);
+		
 	}
 
 	private void initGUI() {
@@ -83,7 +126,7 @@ public class Cambios extends JFrame {
 			{
 				jspTipos = new JSplitPane();
 				getContentPane().add(jspTipos, BorderLayout.CENTER);
-				jspTipos.setPreferredSize(new java.awt.Dimension(603, 361));
+				jspTipos.setPreferredSize(new java.awt.Dimension(603, 302));
 				{
 					jpAristas = new JPanel();
 					jspTipos.add(jpAristas, JSplitPane.RIGHT);
@@ -131,7 +174,7 @@ public class Cambios extends JFrame {
 				{
 					jpNodos = new JPanel();
 					jspTipos.add(jpNodos, JSplitPane.LEFT);
-					jpNodos.setPreferredSize(new java.awt.Dimension(297, 353));
+					jpNodos.setPreferredSize(new java.awt.Dimension(297, 309));
 					jpNodos.setBackground(new java.awt.Color(255, 255, 255));
 					jpNodos.setLayout(null);
 					{
@@ -141,6 +184,7 @@ public class Cambios extends JFrame {
 						jpNodos.add(jcbxTiposNodos);
 						jcbxTiposNodos.setModel(jcbxFigurasNodosModel);
 						jcbxTiposNodos.setBounds(62, 93, 170, 23);
+						
 					}
 					{
 						jlblNodos = new JLabel();
@@ -193,6 +237,36 @@ public class Cambios extends JFrame {
 					}
 				});
 			}
+			{
+				jpPrincipal = new JPanel();
+				getContentPane().add(jpPrincipal, BorderLayout.SOUTH);
+				jpPrincipal.setPreferredSize(new java.awt.Dimension(603, 40));
+				jpPrincipal.setBackground(new java.awt.Color(255,255,255));
+				jpPrincipal.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+				jpPrincipal.setLayout(null);
+				{
+					jbtnAceptar = new JButton();
+					jpPrincipal.add(jbtnAceptar);
+					jbtnAceptar.setText("Aceptar");
+					jbtnAceptar.setBounds(171, 9, 89, 23);
+					jbtnAceptar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							jbtnAceptarActionPerformed(evt);
+						}
+					});
+				}
+				{
+					jbtnCancelar = new JButton();
+					jpPrincipal.add(jbtnCancelar);
+					jbtnCancelar.setText("Cancelar");
+					jbtnCancelar.setBounds(342, 9, 87, 23);
+					jbtnCancelar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							jbtnCancelarActionPerformed(evt);
+						}
+					});
+				}
+			}
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -215,4 +289,29 @@ public class Cambios extends JFrame {
 			jbtnColorArista.setBackground(elegido);
 		}
 	}
+	
+	private void jbtnAceptarActionPerformed(ActionEvent evt) {
+		//Cambios en Nodos
+		Ctrl.setFiguraNodos(jcbxTiposNodos.getSelectedItem().toString(), jcboxFigura.getSelectedItem().toString());
+		Color colorNodo= jbtnColorNodo.getBackground();
+		Ctrl.setColoresNodos(jcbxTiposNodos.getSelectedItem().toString(), new ColorRGBA(colorNodo.getRed() / 255f, 
+				colorNodo.getGreen() / 255f, colorNodo.getBlue() / 255f, colorNodo.getAlpha() / 255f));
+
+		
+		//Cambios en Aristas
+		Color colorArista= jbtnColorArista.getBackground();
+		Ctrl.setColoresAristas(cbxTiposAristas.getSelectedItem().toString(),  new ColorRGBA(colorArista.getRed() / 255f, 
+				colorArista.getGreen() / 255f, colorArista.getBlue() / 255f, colorArista.getAlpha() / 255f));
+		
+		//Cerrar Ventana
+		this.dispose();
+		principal.setEnabled(true);
+	}
+	
+	private void jbtnCancelarActionPerformed(ActionEvent evt) {
+		//Cerrar Ventana
+		this.dispose();
+		principal.setEnabled(true);
+	}
+
 }
