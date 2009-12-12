@@ -21,9 +21,9 @@ public class Ctrl {
 		return ServiciosBD.crearConexion(servidor, puerto, usuario, clave,
 				nombreBD);
 	}
-	
+
 	public static boolean hayConexion() {
-		if(ServiciosBD.conexion != null) {
+		if (ServiciosBD.conexion != null) {
 			return true;
 		} else {
 			return false;
@@ -57,6 +57,7 @@ public class Ctrl {
 		extraerNodos();
 		extraerAristas();
 		llenarMapaColores();
+		llenarFiguras();
 		return true;
 	}
 
@@ -218,4 +219,57 @@ public class Ctrl {
 	public static String[] getTiposAristas() {
 		return ServiciosBD.getTiposAristas();
 	}
+
+	public static ColorRGBA getColorTipoNodo(String codigoYtipo) {
+		HashMap<String, ColorRGBA> colores = grafo.getColoresNodos();
+		String codigo = codigoYtipo.split(" ")[2];
+		return colores.get(codigo);
+	}
+	
+	public static ColorRGBA getColorTipoArista(String codigoYtipo) {
+		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
+		String codigo = codigoYtipo.split(" ")[2];
+		return colores.get(codigo);
+	}
+	
+	public static String getFiguraNodo(String codigoYtipo){
+		HashSet<Nodo> nodos = grafo.getNodos();
+		String tipo = codigoYtipo.split(" ")[2];
+		for (Nodo nodo : nodos) {
+			if (nodo.getTipo().equalsIgnoreCase(tipo)) {
+				return nodo.getFigura();
+			}
+		}
+		return null;
+	}
+	
+	public static void setFiguraNodos(String codigoYtipo, String figura){
+		HashSet<Nodo> nodos = grafo.getNodos();
+		String tipo = codigoYtipo.split(" ")[2];
+		for (Nodo nodo : nodos) {
+			if (nodo.getTipo().equalsIgnoreCase(tipo)) {
+				nodo.setFigura(figura);
+			}
+		}
+	}
+	
+	public static void setColoresNodos(String codigoYtipo, ColorRGBA color){
+		String tipo = codigoYtipo.split(" ")[2];
+		HashMap<String, ColorRGBA> colores = grafo.getColoresNodos();
+		colores.put(tipo, color);
+	}
+	
+	public static void setColoresAristas(String codigoYtipo, ColorRGBA color){
+		String tipo = codigoYtipo.split(" ")[2];
+		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
+		colores.put(tipo, color);
+	}
+	
+	public static void llenarFiguras(){
+		HashSet<Nodo> nodos = grafo.getNodos();
+		for (Nodo nodo : nodos) {
+			nodo.setFigura("Esfera");
+		}
+	}
 }
+

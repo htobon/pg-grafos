@@ -10,7 +10,16 @@ public class Nodo {
 	private String tipo;
 	private int codigo;
 	private ColorRGBA color;
+	private String figura;
 	
+	public String getFigura() {
+		return figura;
+	}
+
+	public void setFigura(String figura) {
+		this.figura = figura;
+	}
+
 	public Nodo(int codigo, String tipo) {
 		this.codigo = codigo;
 		this.tipo = tipo;
