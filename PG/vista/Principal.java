@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -101,6 +102,7 @@ public class Principal extends javax.swing.JFrame {
 	private JMenu jMenu1;
 	private JMenuBar menuPrincipal;
 	private ImageIcon iconoEditar, iconoGrafo;
+	private JTextArea jtaInfo;
 	private JButton botonAbrirGrafo;
 
 	// JMONKEY
@@ -286,7 +288,8 @@ public class Principal extends javax.swing.JFrame {
 						botonAbrirGrafo = new JButton("");
 						botonAbrirGrafo.setBorder(null);
 						panelNorteIconos.add(botonAbrirGrafo);
-						iconoGrafo = new ImageIcon(getClass().getClassLoader().getResource("imagenes/icono-grafo.png"));
+						iconoGrafo = new ImageIcon(getClass().getClassLoader()
+								.getResource("imagenes/icono-grafo.png"));
 						iconoGrafo = new ImageIcon(iconoGrafo.getImage()
 								.getScaledInstance(43, 46,
 										Image.SCALE_AREA_AVERAGING));
@@ -349,6 +352,14 @@ public class Principal extends javax.swing.JFrame {
 									255, 255, 255));
 							panelIzquierdo.setBorder(BorderFactory
 									.createEtchedBorder(BevelBorder.LOWERED));
+							{
+								jtaInfo = new JTextArea();
+								panelIzquierdo.add(jtaInfo);
+								jtaInfo.setText("Información");
+								jtaInfo.setPreferredSize(new java.awt.Dimension(202, 466));
+								jtaInfo.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+								jtaInfo.setEditable(false);
+							}
 
 						}
 						{
@@ -411,7 +422,7 @@ public class Principal extends javax.swing.JFrame {
 			cambios.setVisible(true);
 		}
 	}
-	
+
 	private void botonAbrirGrafoActionPerformed(ActionEvent evt) {
 		abrirMenuActionPerformed(evt);
 	}
