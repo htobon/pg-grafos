@@ -100,7 +100,8 @@ public class Principal extends javax.swing.JFrame {
 	private JMenuItem abrirMenu;
 	private JMenu jMenu1;
 	private JMenuBar menuPrincipal;
-	private ImageIcon iconoEditar;
+	private ImageIcon iconoEditar, iconoGrafo;
+	private JButton jButton_IL;
 
 	// JMONKEY
 	private LWJGLCanvas canvas = null;
@@ -282,6 +283,17 @@ public class Principal extends javax.swing.JFrame {
 					panelNorteIconos.setBackground(Color.black);
 					panelPrincipal.add(panelNorteIconos, BorderLayout.NORTH);
 					{
+						jButton_IL = new JButton("");
+						jButton_IL.setBorder(null);
+						panelNorteIconos.add(jButton_IL);
+						iconoGrafo = new ImageIcon(getClass().getClassLoader().getResource("imagenes/icono-grafo.png"));
+						iconoGrafo = new ImageIcon(iconoGrafo.getImage()
+								.getScaledInstance(43, 46,
+										Image.SCALE_AREA_AVERAGING));
+						jButton_IL.setIcon(iconoGrafo);
+					}
+					{
+
 						botonEditarPropiedades = new JButton();
 						panelNorteIconos.add(botonEditarPropiedades);
 						botonEditarPropiedades.setBorder(null);
@@ -298,7 +310,6 @@ public class Principal extends javax.swing.JFrame {
 									}
 								});
 					}
-					panelNorteIconos.add(new JButton("2"));
 					panelNorteIconos.add(new JButton("3"));
 					panelNorteIconos.add(new JButton("4"));
 					panelNorteIconos.add(new JButton("5"));
