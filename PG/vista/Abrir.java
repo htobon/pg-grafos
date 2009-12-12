@@ -30,14 +30,14 @@ import ctrl.Ctrl;
  */
 public class Abrir extends javax.swing.JFrame {
 	private JTextField servidor;
-	private JButton probar;
+	private JButton aceptar;
 	private JLabel pincorrecto;
 	private JLabel lcontraseña;
 	private JLabel lpuerto;
 	private JLabel lbd;
 	private JLabel lusuario;
 	private JLabel lservidor;
-	private JButton aceptar;
+	private JButton cancelar;
 	private JTextField puerto;
 	private JTextField nombreBD;
 	private JPasswordField contraseña;
@@ -119,28 +119,27 @@ public class Abrir extends javax.swing.JFrame {
 					puerto.setBounds(438, 12, 142, 23);
 				}
 				{
-					probar = new JButton();
-					PanelAbrir.add(probar, "probar");
-					probar.setText("Probar");
-					probar.setBounds(124, 143, 81, 23);
-					probar.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							probarActionPerformed(evt);
-						}
-					});
-
-				}
-				{
 					aceptar = new JButton();
 					PanelAbrir.add(aceptar, "aceptar");
 					aceptar.setText("Aceptar");
-					aceptar.setBounds(233, 143, 82, 23);
+					aceptar.setBounds(124, 143, 81, 23);
 					aceptar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							aceptarActionPerformed(evt);
 						}
 					});
-					aceptar.setEnabled(false);
+
+				}
+				{
+					cancelar = new JButton();
+					PanelAbrir.add(cancelar, "cancelar");
+					cancelar.setText("Cancelar");
+					cancelar.setBounds(233, 143, 82, 23);
+					cancelar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							cancelarActionPerformed(evt);
+						}
+					});
 				}
 				{
 					lservidor = new JLabel();
@@ -212,8 +211,9 @@ public class Abrir extends javax.swing.JFrame {
 		pincorrecto.updateUI();
 	}
 
-	private void probarActionPerformed(ActionEvent evt) {
-		boolean creaConexion;
+	private void aceptarActionPerformed(ActionEvent evt) {	
+		
+		boolean creaConexion=true;
 		if (puerto.getText().equals("") || usuario.getText().equals("")
 				|| nombreBD.getText().equals("")) {
 			creaConexion = false;
@@ -221,32 +221,24 @@ public class Abrir extends javax.swing.JFrame {
 			creaConexion = Ctrl.probarConexion(servidor.getText(), puerto
 					.getText(), usuario.getText(), contraseña.getPassword(),
 					nombreBD.getText());
+			if (creaConexion) {
+				ventanaPrincipal.setEnabled(true);
+				this.dispose();
+				ventanaPrincipal.cargarGrafo();
+			} else {
+				this.cambiarIcono(false);
+				pincorrecto.setVisible(true);
+				//cancelar.setEnabled(false);
+			}			
 		}
-
-		pincorrecto.setVisible(true);
-		if (creaConexion) {
-			aceptar.setEnabled(true);
-			this.cambiarIcono(true);
-		} else {
-			aceptar.setEnabled(false);
-			this.cambiarIcono(false);
-		}
-
 	}
 
-	private void aceptarActionPerformed(ActionEvent evt) {
-		boolean creaConexion = Ctrl.probarConexion(servidor.getText(), puerto
-				.getText(), usuario.getText(), contraseña.getPassword(),
-				nombreBD.getText());
-		if (creaConexion) {
+	private void cancelarActionPerformed(ActionEvent evt) {
+		
 			ventanaPrincipal.setEnabled(true);
 			this.dispose();
 			ventanaPrincipal.cargarGrafo();
-		} else {
-			this.cambiarIcono(false);
-			pincorrecto.setVisible(true);
-			aceptar.setEnabled(false);
-		}
+		
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
