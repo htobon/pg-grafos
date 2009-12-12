@@ -101,7 +101,8 @@ public class Principal extends javax.swing.JFrame {
 	private JMenuItem abrirMenu;
 	private JMenu jMenu1;
 	private JMenuBar menuPrincipal;
-	private ImageIcon iconoEditar, iconoGrafo;
+	private ImageIcon iconoEditar, iconoGrafo, iconoGuardar;
+	private JButton botonGuardar;
 	private JTextArea jtaInfo;
 	private JButton botonAbrirGrafo;
 
@@ -318,7 +319,17 @@ public class Principal extends javax.swing.JFrame {
 									}
 								});
 					}
-					panelNorteIconos.add(new JButton("3"));
+					{
+						botonGuardar = new JButton("");
+						botonGuardar.setBorder(null);
+						panelNorteIconos.add(botonGuardar);
+						iconoGuardar = new ImageIcon(getClass().getClassLoader()
+								.getResource("imagenes/icono-guardar.png"));
+						iconoGuardar = new ImageIcon(iconoGuardar.getImage()
+								.getScaledInstance(43, 46,
+										Image.SCALE_AREA_AVERAGING));
+						botonGuardar.setIcon(iconoGuardar);
+					}
 					panelNorteIconos.add(new JButton("4"));
 					panelNorteIconos.add(new JButton("5"));
 				}
