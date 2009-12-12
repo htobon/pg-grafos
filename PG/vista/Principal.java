@@ -4,7 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.HierarchyBoundsAdapter;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.VetoableChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -22,6 +33,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import vista3d.Espacio3D;
@@ -31,7 +44,9 @@ import net.sourceforge.napkinlaf.NapkinTheme;
 
 import com.cloudgarden.layout.AnchorConstraint;
 import com.cloudgarden.layout.AnchorLayout;
+import com.jme.input.InputSystem;
 import com.jme.input.KeyInput;
+import com.jme.input.MouseInput;
 import com.jme.renderer.ColorRGBA;
 import com.jme.system.DisplaySystem;
 import com.jme.system.canvas.JMECanvas;
@@ -41,6 +56,11 @@ import com.jme.util.GameTaskQueueManager;
 import com.jmex.awt.input.AWTMouseInput;
 import com.jmex.awt.lwjgl.LWJGLAWTCanvasConstructor;
 import com.jmex.awt.lwjgl.LWJGLCanvas;
+import com.jmex.awt.swingui.JMEDesktop;
+import com.jmex.swt.input.SWTKeyInput;
+import com.jmex.swt.input.SWTMouseInput;
+import com.jmex.swt.lwjgl.LWJGLSWTCanvas;
+import com.jmex.swt.lwjgl.LWJGLSWTCanvasConstructor;
 
 import ctrl.Ctrl;
 import java.awt.BorderLayout;
@@ -84,6 +104,8 @@ public class Principal extends javax.swing.JFrame {
 
 	// JMONKEY
 	private LWJGLCanvas canvas = null;
+	// private LWJGLSWTCanvas canvas = null;
+
 	private Espacio3D impl;
 
 	/**
@@ -108,7 +130,7 @@ public class Principal extends javax.swing.JFrame {
 				System.out.println(t);
 			}
 			NapkinTheme.Manager.setCurrentTheme(tema);
-			//SwingUtilities.updateComponentTreeUI(this);
+			// SwingUtilities.updateComponentTreeUI(this);
 			UIManager.setLookAndFeel(laf);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -129,24 +151,44 @@ public class Principal extends javax.swing.JFrame {
 				.getDisplaySystem(LWJGLSystemProvider.LWJGL_SYSTEM_IDENTIFIER);
 		display.registerCanvasConstructor("AWT",
 				LWJGLAWTCanvasConstructor.class);
+
 		canvas = (LWJGLCanvas) display.createCanvas(panelVisualizacion
 				.getWidth(), panelVisualizacion.getHeight());
+
+		// canvas = (LWJGLSWTCanvas) display.createCanvas(panelVisualizacion
+		// .getWidth(), panelVisualizacion.getHeight());
 		canvas.setUpdateInput(true);
 		canvas.setTargetRate(60);
 
 		// add a listener... if window is resized, we can do something about
 		// it.
+
 		canvas.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
 				doResize();
 			}
 		});
 
-		// Setup key and mouse input
-		KeyInput.setProvider(KeyInput.INPUT_AWT);
+		// ------------------------------------------------------------
+		if (!KeyInput.isInited())
+			KeyInput.setProvider(InputSystem.INPUT_SYSTEM_AWT);
 		KeyListener kl = (KeyListener) KeyInput.get();
 		canvas.addKeyListener(kl);
-		AWTMouseInput.setup(canvas, false);
+
+		if (!MouseInput.isInited())
+			MouseInput.setProvider(InputSystem.INPUT_SYSTEM_AWT);
+		((AWTMouseInput) MouseInput.get()).setDragOnly(true);
+		canvas.addMouseListener((MouseListener) MouseInput.get());
+		canvas.addMouseWheelListener((MouseWheelListener) MouseInput.get());
+		canvas.addMouseMotionListener((MouseMotionListener) MouseInput.get());
+		// ------------------------------------------------------------
+
+		// Setup key and mouse input
+
+		// KeyInput.setProvider(KeyInput.INPUT_AWT);
+		// KeyListener kl = (KeyListener) KeyInput.get();
+		// canvas.addKeyListener(kl);
+		// AWTMouseInput.setup(canvas, false);
 
 		// Important! Here is where we add the guts to the panel:
 		impl = new Espacio3D(panelVisualizacion.getWidth(), panelVisualizacion
@@ -161,8 +203,8 @@ public class Principal extends javax.swing.JFrame {
 		};
 		GameTaskQueueManager.getManager().render(call);
 
-		canvas.setBounds(0, 0, panelVisualizacion.getWidth(),
-				panelVisualizacion.getHeight());
+		// canvas.setBounds(0, 0, panelVisualizacion.getWidth(),
+		// panelVisualizacion.getHeight());
 		panelVisualizacion.add(canvas, BorderLayout.CENTER);
 	}
 
@@ -271,6 +313,7 @@ public class Principal extends javax.swing.JFrame {
 						// Divisor
 						divisor = new JSplitPane();
 						panelSurContenido.add(divisor, BorderLayout.CENTER);
+						divisor.setContinuousLayout(true);
 						{
 							// Panel Izquierdo (Informacion del Grafo)
 							scrollPanelIzquierdo = new JScrollPane();
