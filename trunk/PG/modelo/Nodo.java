@@ -1,11 +1,12 @@
 package modelo;
 
 
+import java.io.Serializable;
 import java.util.*;
 
 import com.jme.renderer.ColorRGBA;
 
-public class Nodo {
+public class Nodo implements Serializable {
 	private HashMap<String, Object> atributos;
 	private String tipo;
 	private int codigo;
