@@ -325,8 +325,9 @@ public class Principal extends javax.swing.JFrame {
 						botonGuardar = new JButton("");
 						botonGuardar.setBorder(null);
 						panelNorteIconos.add(botonGuardar);
-						iconoGuardar = new ImageIcon(getClass().getClassLoader()
-								.getResource("imagenes/icono-guardar.png"));
+						iconoGuardar = new ImageIcon(getClass()
+								.getClassLoader().getResource(
+										"imagenes/icono-guardar.png"));
 						iconoGuardar = new ImageIcon(iconoGuardar.getImage()
 								.getScaledInstance(43, 46,
 										Image.SCALE_AREA_AVERAGING));
@@ -370,8 +371,11 @@ public class Principal extends javax.swing.JFrame {
 								jtaInfo = new JTextArea();
 								panelIzquierdo.add(jtaInfo);
 								jtaInfo.setText("Información");
-								jtaInfo.setPreferredSize(new java.awt.Dimension(202, 466));
-								jtaInfo.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+								jtaInfo
+										.setPreferredSize(new java.awt.Dimension(
+												202, 466));
+								jtaInfo.setBorder(BorderFactory
+										.createEmptyBorder(0, 0, 0, 0));
 								jtaInfo.setEditable(false);
 							}
 
@@ -443,19 +447,25 @@ public class Principal extends javax.swing.JFrame {
 
 	public void cambiarPropiedadesGrafos() {
 		// TODO
-		//impl.dibujarGrafo();
-//		Callable<?> call = new Callable<Object>() {
-//			public Object call() throws Exception {
-				int[] codigosNodos = Ctrl.getCodigosNodos();				
-				for(int codigoNodo : codigosNodos) {
-					impl.cambiarColorNodo("Nodo "+codigoNodo, Ctrl.getColorNodo(codigoNodo));
-				}
-//				return null;
-//			}
-//		};
-//		GameTaskQueueManager.getManager().render(call);
-		impl.doUpdate();
+		// impl.dibujarGrafo();
+		// Callable<?> call = new Callable<Object>() {
+		// public Object call() throws Exception {
+		int[] codigosNodos = Ctrl.getCodigosNodos();
+		for (int codigoNodo : codigosNodos) {
+			impl.cambiarColorNodo("Nodo " + codigoNodo, Ctrl
+					.getColorNodo(codigoNodo));
+		}
 		
+		int[] codigosAristas = Ctrl.getCodigosAristas();
+		for(int codigoArista : codigosAristas) {
+			impl.cambiarColorArista("Arista "+codigoArista, Ctrl.getColorArista(codigoArista));
+		}
+		// return null;
+		// }
+		// };
+		// GameTaskQueueManager.getManager().render(call);
+		impl.doUpdate();
+
 	}
 
 }
