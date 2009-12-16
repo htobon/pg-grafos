@@ -158,22 +158,6 @@ public class Ctrl {
 		asignarColoresAristas();
 	}
 
-	public static void asignarColoresNodos() {
-		HashSet<Nodo> nodos = grafo.getNodos();
-		HashMap<String, ColorRGBA> coloresNodos = grafo.getColoresNodos();
-		for (Nodo nodo : nodos) {
-			nodo.setColor(coloresNodos.get(nodo.getTipo()));
-		}
-	}
-
-	public static void asignarColoresAristas() {
-		HashSet<Arista> aristas = grafo.getAristas();
-		HashMap<String, ColorRGBA> coloresAristas = grafo.getColoresAristas();
-		for (Arista arista : aristas) {
-			arista.setColor(coloresAristas.get(arista.getTipo()));
-		}
-	}
-
 	public static ColorRGBA getColorNodo(int codNodo) {
 		for (Nodo nodo : grafo.getNodos()) {
 			if (nodo.getCodigo() == codNodo) {
@@ -225,14 +209,14 @@ public class Ctrl {
 		String codigo = codigoYtipo.split(" ")[2];
 		return colores.get(codigo);
 	}
-	
+
 	public static ColorRGBA getColorTipoArista(String codigoYtipo) {
 		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
 		String codigo = codigoYtipo.split(" ")[2];
 		return colores.get(codigo);
 	}
-	
-	public static String getFiguraNodo(String codigoYtipo){
+
+	public static String getFiguraNodo(String codigoYtipo) {
 		HashSet<Nodo> nodos = grafo.getNodos();
 		String tipo = codigoYtipo.split(" ")[2];
 		for (Nodo nodo : nodos) {
@@ -242,8 +226,8 @@ public class Ctrl {
 		}
 		return null;
 	}
-	
-	public static void setFiguraNodos(String codigoYtipo, String figura){
+
+	public static void setFiguraNodos(String codigoYtipo, String figura) {
 		HashSet<Nodo> nodos = grafo.getNodos();
 		String tipo = codigoYtipo.split(" ")[2];
 		for (Nodo nodo : nodos) {
@@ -252,24 +236,41 @@ public class Ctrl {
 			}
 		}
 	}
-	
-	public static void setColoresNodos(String codigoYtipo, ColorRGBA color){
+
+	public static void setColoresNodos(String codigoYtipo, ColorRGBA color) {
 		String tipo = codigoYtipo.split(" ")[2];
 		HashMap<String, ColorRGBA> colores = grafo.getColoresNodos();
 		colores.put(tipo, color);
+		asignarColoresNodos();
 	}
-	
-	public static void setColoresAristas(String codigoYtipo, ColorRGBA color){
+
+	private static void asignarColoresNodos() {
+		HashSet<Nodo> nodos = grafo.getNodos();
+		HashMap<String, ColorRGBA> coloresNodos = grafo.getColoresNodos();
+		for (Nodo nodo : nodos) {
+			nodo.setColor(coloresNodos.get(nodo.getTipo()));
+		}
+	}
+
+	public static void setColoresAristas(String codigoYtipo, ColorRGBA color) {
 		String tipo = codigoYtipo.split(" ")[2];
 		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
 		colores.put(tipo, color);
+		asignarColoresAristas();
 	}
-	
-	public static void llenarFiguras(){
+
+	private static void asignarColoresAristas() {
+		HashSet<Arista> aristas = grafo.getAristas();
+		HashMap<String, ColorRGBA> coloresAristas = grafo.getColoresAristas();
+		for (Arista arista : aristas) {
+			arista.setColor(coloresAristas.get(arista.getTipo()));
+		}
+	}
+
+	public static void llenarFiguras() {
 		HashSet<Nodo> nodos = grafo.getNodos();
 		for (Nodo nodo : nodos) {
 			nodo.setFigura("Esfera");
 		}
 	}
 }
-
