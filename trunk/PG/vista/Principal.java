@@ -295,6 +295,7 @@ public class Principal extends javax.swing.JFrame {
 								.getScaledInstance(43, 46,
 										Image.SCALE_AREA_AVERAGING));
 						botonAbrirGrafo.setIcon(iconoGrafo);
+						botonAbrirGrafo.setToolTipText("Abrir Grafo");
 						botonAbrirGrafo.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								botonAbrirGrafoActionPerformed(evt);
@@ -312,6 +313,7 @@ public class Principal extends javax.swing.JFrame {
 								.getScaledInstance(48, 48,
 										Image.SCALE_AREA_AVERAGING));
 						botonEditarPropiedades.setIcon(iconoEditar);
+						botonEditarPropiedades.setToolTipText("Editar Grafo");
 						botonEditarPropiedades
 								.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
@@ -329,6 +331,7 @@ public class Principal extends javax.swing.JFrame {
 								.getScaledInstance(43, 46,
 										Image.SCALE_AREA_AVERAGING));
 						botonGuardar.setIcon(iconoGuardar);
+						botonGuardar.setToolTipText("Guardar Grafo");
 					}
 					panelNorteIconos.add(new JButton("4"));
 					panelNorteIconos.add(new JButton("5"));
@@ -436,6 +439,23 @@ public class Principal extends javax.swing.JFrame {
 
 	private void botonAbrirGrafoActionPerformed(ActionEvent evt) {
 		abrirMenuActionPerformed(evt);
+	}
+
+	public void cambiarPropiedadesGrafos() {
+		// TODO
+		//impl.dibujarGrafo();
+//		Callable<?> call = new Callable<Object>() {
+//			public Object call() throws Exception {
+				int[] codigosNodos = Ctrl.getCodigosNodos();				
+				for(int codigoNodo : codigosNodos) {
+					impl.cambiarColorNodo("Nodo "+codigoNodo, Ctrl.getColorNodo(codigoNodo));
+				}
+//				return null;
+//			}
+//		};
+//		GameTaskQueueManager.getManager().render(call);
+		impl.doUpdate();
+		
 	}
 
 }

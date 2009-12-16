@@ -252,5 +252,13 @@ public class Espacio3D extends SimpleCanvasImpl {
 		// fps = 0;
 		// }
 	}
+	
+	public void cambiarColorNodo(String nombreNodo, ColorRGBA color) {
+		((Sphere)rootNode.getChild(nombreNodo)).setSolidColor(color);
+		((Sphere)rootNode.getChild(nombreNodo)).updateRenderState();
+		
+		
+		System.out.println("cambiando nodo " +nombreNodo+" - "+color );
+	}
 
 }
