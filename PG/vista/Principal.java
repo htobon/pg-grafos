@@ -17,6 +17,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.io.File;
+import java.io.FileFilter;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -343,7 +344,7 @@ public class Principal extends javax.swing.JFrame {
 							}
 						});
 					}
-					
+
 					{
 						btnAbrirGrafo = new JButton("");
 						btnAbrirGrafo.setBorder(null);
@@ -441,31 +442,39 @@ public class Principal extends javax.swing.JFrame {
 	}
 
 	private void botonGuardarActionPerformed(ActionEvent evt) {
-		// Crear el JFileChooser
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		
-		int returnVal = fileChooser.showSaveDialog(this);
+		//new Thread() {
+			//public void run() {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Guardar");
+				jfc.setApproveButtonText("Guardar");
+				jfc.setMultiSelectionEnabled(false);
+				jfc.addChoosableFileFilter(Ctrl.filtro());
+				
+				int opción = jfc.showOpenDialog(null);
+				if (opción == JFileChooser.APPROVE_OPTION) {
 
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			
-			File file = fileChooser.getSelectedFile();
-			
-			//Verificar existencia
-			int respuesta=-1;
-			if(file.exists()){
-				int response=JOptionPane.showConfirmDialog(null,"El archivo ya existe.¿Quiéres reemplazarlo?",
-						"Confirmar Reemplazo",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-			}
-			else{
-				respuesta= JOptionPane.YES_OPTION;
-			}
-			
-			//Si el archivo no existe o si se va a sobreescribir
-			if(respuesta== JOptionPane.YES_OPTION){				
-				Ctrl.guardarGrafo(file);
-			}
-		}		
+					File file = jfc.getSelectedFile();
+					
+					// Verificar existencia
+					int respuesta = -1;
+					if ((new File(file.getAbsoluteFile()+".grafo")).exists()) {
+						respuesta = JOptionPane.showConfirmDialog(null,
+								"El archivo ya existe.¿Quiéres reemplazarlo?",
+								"Confirmar Reemplazo",
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
+					} else {
+						respuesta = JOptionPane.YES_OPTION;
+					}
+
+					// Si el archivo no existe o si se va a sobreescribir
+					if (respuesta == JOptionPane.YES_OPTION) {
+						Ctrl.guardarGrafo(file);
+					}
+
+				}
+			//}
+		//}.start();
 	}
 
 	private void abrirMenuActionPerformed(ActionEvent evt) {
@@ -498,20 +507,28 @@ public class Principal extends javax.swing.JFrame {
 	private void botonAbrirGrafoActionPerformed(ActionEvent evt) {
 		abrirMenuActionPerformed(evt);
 	}
-	
+
 	private void btnAbrirGrafoActionPerformed(ActionEvent evt) {
-		JFileChooser fc = new JFileChooser();
 
-        fc.addChoosableFileFilter(Ctrl.filtro());
+		//new Thread() {
+			//public void run() {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setMultiSelectionEnabled(false);
+				jfc.addChoosableFileFilter(Ctrl.filtro());
+				int opción = jfc.showOpenDialog(null);
+				if (opción == JFileChooser.APPROVE_OPTION) {
 
-        int returnVal = fc.showDialog(this, "Agregar");
+					File file = jfc.getSelectedFile();
+					boolean ret = Ctrl.abrirGrafo(file);
+					if (ret) {
+						impl.dibujarGrafo();
+					}
+				}
+			//}
+		//}.start();
 
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            Ctrl.abrirGrafo(file);
-        } 
 	}
-	
+
 	public void cambiarPropiedadesGrafos() {
 		// TODO
 		// impl.dibujarGrafo();
@@ -522,10 +539,11 @@ public class Principal extends javax.swing.JFrame {
 			impl.cambiarColorNodo("Nodo " + codigoNodo, Ctrl
 					.getColorNodo(codigoNodo));
 		}
-		
+
 		int[] codigosAristas = Ctrl.getCodigosAristas();
-		for(int codigoArista : codigosAristas) {
-			impl.cambiarColorArista("Arista "+codigoArista, Ctrl.getColorArista(codigoArista));
+		for (int codigoArista : codigosAristas) {
+			impl.cambiarColorArista("Arista " + codigoArista, Ctrl
+					.getColorArista(codigoArista));
 		}
 		// return null;
 		// }

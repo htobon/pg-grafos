@@ -90,7 +90,7 @@ public class Abrir extends javax.swing.JFrame {
 				// PanelAbrir.setFocusable(false);
 				{
 					servidor = new JTextField();
-					servidor.setText("localhost");
+					servidor.setText("190.144.167.148");
 					PanelAbrir.add(servidor, "servidor");
 					servidor.setBounds(124, 12, 191, 23);
 				}
@@ -98,13 +98,13 @@ public class Abrir extends javax.swing.JFrame {
 					usuario = new JTextField();
 					PanelAbrir.add(usuario, "usuario");
 					usuario.setBounds(124, 54, 191, 23);
-					usuario.setText("root");
+					usuario.setText("guest");
 				}
 				{
 					contraseña = new JPasswordField();
 					PanelAbrir.add(contraseña, "contraseña");
 					contraseña.setBounds(438, 54, 142, 23);
-					contraseña.setText("123456");
+					contraseña.setText("aesculus");
 				}
 				{
 					nombreBD = new JTextField();

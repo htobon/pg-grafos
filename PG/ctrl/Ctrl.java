@@ -283,35 +283,35 @@ public class Ctrl {
 	public static int guardarGrafo(File archivo){
 		
 		try  {
-            ObjectOutputStream salida=new ObjectOutputStream(new FileOutputStream(archivo));
+			File file= new File(archivo.getAbsoluteFile()+".grafo");
+            ObjectOutputStream salida=new ObjectOutputStream(new FileOutputStream(file));
             salida.writeObject(grafo);
             salida.close();
+            return 1;
             
         }catch (IOException ex) {
             System.out.println(ex);
          }
 		
-		return -1;
+		return 0;
 	}
 	
 	public static FiltroArchivo filtro(){
 		return new FiltroArchivo();
 	}
 	
-	public static Grafo abrirGrafo(File archivo){
+	public static boolean abrirGrafo(File archivo){
 		try  {
 
             ObjectInputStream entrada=new ObjectInputStream(new FileInputStream(archivo));
             grafo=(Grafo)entrada.readObject();
-            System.out.println("Valor medio "+grafo.getNodos());
-            System.out.println("-----------------------------");
             entrada.close();
+            return true;
         }catch (IOException ex) {
             System.out.println(ex);
          }catch (ClassNotFoundException ex) {
             System.out.println(ex);
         }
-   
-		return null;
+         return false;
 	}
 }

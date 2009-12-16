@@ -1,12 +1,13 @@
 package modelo;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 
 import com.jme.renderer.ColorRGBA;
 
-public class Arista {
+public class Arista implements Serializable {
 	private int codigo;
 	private String tipo;
 	private Nodo origen, destino;
