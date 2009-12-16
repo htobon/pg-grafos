@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -20,7 +21,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 
 import com.jme.renderer.ColorRGBA;
 
@@ -127,6 +130,7 @@ public class Cambios extends JFrame {
 			panelPrincipal = new JPanel();
 			panelPrincipal.setLayout(new BorderLayout());
 			getContentPane().add(panelPrincipal);
+			panelPrincipal.setPreferredSize(new java.awt.Dimension(603, 238));
 			{
 				jspTipos = new JSplitPane();
 				panelPrincipal.add(jspTipos, BorderLayout.CENTER);
@@ -141,30 +145,35 @@ public class Cambios extends JFrame {
 						cbxTiposAristas = new JComboBox();
 						jpAristas.add(cbxTiposAristas);
 						cbxTiposAristas.setModel(cbxTiposAristasModel);
-						cbxTiposAristas.setBounds(60, 93, 182, 23);
+						cbxTiposAristas.setBounds(84, 63, 182, 23);
 					}
 					{
 						jlblAristas = new JLabel();
 						jpAristas.add(jlblAristas);
 						jlblAristas.setText("Aristas");
-						jlblAristas.setBounds(34, 23, 120, 16);
+						jlblAristas.setBounds(86, 20, 120, 21);
+						jlblAristas.setFont(jlblAristas.getFont().deriveFont(18f));
+						jlblAristas.setFont(jlblAristas.getFont().deriveFont(Font.BOLD));
+						
+						//jlblAristas.setFont(new java.awt.Font("Tahoma",1,16));
+						jlblAristas.setHorizontalAlignment(SwingConstants.CENTER);
 					}
 					{
 						jlblArista = new JLabel();
 						jpAristas.add(jlblArista);
 						jlblArista.setText("Tipo");
-						jlblArista.setBounds(60, 66, 34, 16);
+						jlblArista.setBounds(26, 66, 34, 16);
 					}
 					{
 						jlblColorArista = new JLabel();
 						jpAristas.add(jlblColorArista);
 						jlblColorArista.setText("Color");
-						jlblColorArista.setBounds(60, 145, 40, 16);
+						jlblColorArista.setBounds(26, 107, 40, 16);
 					}
 					{
 						jbtnColorArista = new JButton();
 						jpAristas.add(jbtnColorArista);
-						jbtnColorArista.setBounds(111, 143, 35, 35);
+						jbtnColorArista.setBounds(84, 106, 119, 26);
 						jbtnColorArista.setBackground(new java.awt.Color(0, 0,
 								255));
 						jbtnColorArista.addActionListener(new ActionListener() {
@@ -185,31 +194,34 @@ public class Cambios extends JFrame {
 						jcbxTiposNodos = new JComboBox();
 						jpNodos.add(jcbxTiposNodos);
 						jcbxTiposNodos.setModel(jcbxFigurasNodosModel);
-						jcbxTiposNodos.setBounds(62, 93, 170, 23);
-						
+						jcbxTiposNodos.setBounds(93, 65, 170, 23);
+
 					}
 					{
 						jlblNodos = new JLabel();
 						jpNodos.add(jlblNodos);
 						jlblNodos.setText("Nodos");
-						jlblNodos.setBounds(25, 23, 83, 16);
+						jlblNodos.setBounds(74, 22, 142, 18);
+						jlblNodos.setHorizontalAlignment(SwingConstants.CENTER);
+						jlblNodos.setFont(jlblNodos.getFont().deriveFont(18f));
+						jlblNodos.setFont(jlblNodos.getFont().deriveFont(Font.BOLD));
 					}
 					{
 						jlblNodo = new JLabel();
 						jpNodos.add(jlblNodo);
 						jlblNodo.setText("Tipo");
-						jlblNodo.setBounds(62, 66, 35, 16);
+						jlblNodo.setBounds(42, 68, 35, 16);
 					}
 					{
 						jlblColorNodo = new JLabel();
 						jpNodos.add(jlblColorNodo);
 						jlblColorNodo.setText("Color");
-						jlblColorNodo.setBounds(62, 145, 44, 16);
+						jlblColorNodo.setBounds(42, 107, 44, 16);
 					}
 					{
 						jbtnColorNodo = new JButton();
 						jpNodos.add(jbtnColorNodo);
-						jbtnColorNodo.setBounds(113, 143, 35, 35);
+						jbtnColorNodo.setBounds(93, 106, 116, 26);
 						jbtnColorNodo.setBackground(new java.awt.Color(255, 0,
 								0));
 						jbtnColorNodo.addActionListener(new ActionListener() {
@@ -222,7 +234,7 @@ public class Cambios extends JFrame {
 						jlblFiguraNodo = new JLabel();
 						jpNodos.add(jlblFiguraNodo);
 						jlblFiguraNodo.setText("Figura");
-						jlblFiguraNodo.setBounds(62, 197, 44, 16);
+						jlblFiguraNodo.setBounds(42, 151, 44, 16);
 					}
 					{
 						ComboBoxModel jcboxFiguraModel = new DefaultComboBoxModel(
@@ -230,7 +242,7 @@ public class Cambios extends JFrame {
 						jcboxFigura = new JComboBox();
 						jpNodos.add(jcboxFigura);
 						jcboxFigura.setModel(jcboxFiguraModel);
-						jcboxFigura.setBounds(62, 221, 170, 23);
+						jcboxFigura.setBounds(93, 148, 170, 23);
 					}
 				}
 				this.addWindowListener(new WindowAdapter() {
@@ -243,7 +255,6 @@ public class Cambios extends JFrame {
 				jpPrincipal = new JPanel();
 				panelPrincipal.add(jpPrincipal, BorderLayout.SOUTH);
 				jpPrincipal.setPreferredSize(new java.awt.Dimension(603, 40));
-				jpPrincipal.setBackground(new java.awt.Color(255,255,255));
 				jpPrincipal.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 				jpPrincipal.setLayout(null);
 				{
@@ -304,6 +315,8 @@ public class Cambios extends JFrame {
 		Color colorArista= jbtnColorArista.getBackground();
 		Ctrl.setColoresAristas(cbxTiposAristas.getSelectedItem().toString(),  new ColorRGBA(colorArista.getRed() / 255f, 
 				colorArista.getGreen() / 255f, colorArista.getBlue() / 255f, colorArista.getAlpha() / 255f));
+		
+		((Principal)principal).cambiarPropiedadesGrafos();
 		
 		//Cerrar Ventana
 		principal.setEnabled(true);
