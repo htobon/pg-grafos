@@ -224,7 +224,7 @@ public class Abrir extends javax.swing.JFrame {
 		
 			ventanaPrincipal.setEnabled(true);
 			this.dispose();
-			ventanaPrincipal.cargarGrafo();
+			//ventanaPrincipal.cargarGrafo();
 		
 	}
 

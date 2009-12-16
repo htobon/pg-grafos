@@ -16,15 +16,18 @@ import java.awt.event.MouseWheelListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -105,6 +108,7 @@ public class Principal extends javax.swing.JFrame {
 	private JButton botonGuardar;
 	private JTextArea jtaInfo;
 	private JButton botonAbrirGrafo;
+	private JButton btnAbrirGrafo;
 
 	// JMONKEY
 	private LWJGLCanvas canvas = null;
@@ -295,7 +299,7 @@ public class Principal extends javax.swing.JFrame {
 								.getScaledInstance(43, 46,
 										Image.SCALE_AREA_AVERAGING));
 						botonAbrirGrafo.setIcon(iconoGrafo);
-						botonAbrirGrafo.setToolTipText("Abrir Grafo");
+						botonAbrirGrafo.setToolTipText("Generar grafo");
 						botonAbrirGrafo.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								botonAbrirGrafoActionPerformed(evt);
@@ -313,7 +317,7 @@ public class Principal extends javax.swing.JFrame {
 								.getScaledInstance(48, 48,
 										Image.SCALE_AREA_AVERAGING));
 						botonEditarPropiedades.setIcon(iconoEditar);
-						botonEditarPropiedades.setToolTipText("Editar Grafo");
+						botonEditarPropiedades.setToolTipText("Editar");
 						botonEditarPropiedades
 								.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
@@ -332,9 +336,31 @@ public class Principal extends javax.swing.JFrame {
 								.getScaledInstance(43, 46,
 										Image.SCALE_AREA_AVERAGING));
 						botonGuardar.setIcon(iconoGuardar);
-						botonGuardar.setToolTipText("Guardar Grafo");
+						botonGuardar.setToolTipText("Guardar grafo");
+						botonGuardar.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								botonGuardarActionPerformed(evt);
+							}
+						});
 					}
-					panelNorteIconos.add(new JButton("4"));
+					
+					{
+						btnAbrirGrafo = new JButton("");
+						btnAbrirGrafo.setBorder(null);
+						panelNorteIconos.add(btnAbrirGrafo);
+						iconoGrafo = new ImageIcon(getClass().getClassLoader()
+								.getResource("imagenes/icono-grafo.png"));
+						iconoGrafo = new ImageIcon(iconoGrafo.getImage()
+								.getScaledInstance(43, 46,
+										Image.SCALE_AREA_AVERAGING));
+						btnAbrirGrafo.setIcon(iconoGrafo);
+						btnAbrirGrafo.setToolTipText("Abrir grafo");
+						btnAbrirGrafo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								btnAbrirGrafoActionPerformed(evt);
+							}
+						});
+					}
 					panelNorteIconos.add(new JButton("5"));
 				}
 
@@ -414,6 +440,34 @@ public class Principal extends javax.swing.JFrame {
 		}
 	}
 
+	private void botonGuardarActionPerformed(ActionEvent evt) {
+		// Crear el JFileChooser
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		int returnVal = fileChooser.showSaveDialog(this);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			
+			File file = fileChooser.getSelectedFile();
+			
+			//Verificar existencia
+			int respuesta=-1;
+			if(file.exists()){
+				int response=JOptionPane.showConfirmDialog(null,"El archivo ya existe.¿Quiéres reemplazarlo?",
+						"Confirmar Reemplazo",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+			}
+			else{
+				respuesta= JOptionPane.YES_OPTION;
+			}
+			
+			//Si el archivo no existe o si se va a sobreescribir
+			if(respuesta== JOptionPane.YES_OPTION){				
+				Ctrl.guardarGrafo(file);
+			}
+		}		
+	}
+
 	private void abrirMenuActionPerformed(ActionEvent evt) {
 		Abrir ventanaAbrir = new Abrir(this);
 		this.setEnabled(false);
@@ -444,7 +498,20 @@ public class Principal extends javax.swing.JFrame {
 	private void botonAbrirGrafoActionPerformed(ActionEvent evt) {
 		abrirMenuActionPerformed(evt);
 	}
+	
+	private void btnAbrirGrafoActionPerformed(ActionEvent evt) {
+		JFileChooser fc = new JFileChooser();
 
+        fc.addChoosableFileFilter(Ctrl.filtro());
+
+        int returnVal = fc.showDialog(this, "Agregar");
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            Ctrl.abrirGrafo(file);
+        } 
+	}
+	
 	public void cambiarPropiedadesGrafos() {
 		// TODO
 		// impl.dibujarGrafo();

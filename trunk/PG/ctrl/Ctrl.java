@@ -1,5 +1,11 @@
 package ctrl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -272,5 +278,40 @@ public class Ctrl {
 		for (Nodo nodo : nodos) {
 			nodo.setFigura("Esfera");
 		}
+	}
+	
+	public static int guardarGrafo(File archivo){
+		
+		try  {
+            ObjectOutputStream salida=new ObjectOutputStream(new FileOutputStream(archivo));
+            salida.writeObject(grafo);
+            salida.close();
+            
+        }catch (IOException ex) {
+            System.out.println(ex);
+         }
+		
+		return -1;
+	}
+	
+	public static FiltroArchivo filtro(){
+		return new FiltroArchivo();
+	}
+	
+	public static Grafo abrirGrafo(File archivo){
+		try  {
+
+            ObjectInputStream entrada=new ObjectInputStream(new FileInputStream(archivo));
+            grafo=(Grafo)entrada.readObject();
+            System.out.println("Valor medio "+grafo.getNodos());
+            System.out.println("-----------------------------");
+            entrada.close();
+        }catch (IOException ex) {
+            System.out.println(ex);
+         }catch (ClassNotFoundException ex) {
+            System.out.println(ex);
+        }
+   
+		return null;
 	}
 }
