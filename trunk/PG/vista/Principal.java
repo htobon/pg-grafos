@@ -105,11 +105,12 @@ public class Principal extends javax.swing.JFrame {
 	private JMenuItem abrirMenu;
 	private JMenu jMenu1;
 	private JMenuBar menuPrincipal;
-	private ImageIcon iconoEditar, iconoGrafo, iconoGuardar;
+	private ImageIcon iconoEditar, iconoGrafo, iconoGuardar, iconoReset;
 	private JButton botonGuardar;
 	private JTextArea jtaInfo;
 	private JButton botonAbrirGrafo;
 	private JButton btnAbrirGrafo;
+	private JButton botonReset;
 
 	// JMONKEY
 	private LWJGLCanvas canvas = null;
@@ -362,7 +363,16 @@ public class Principal extends javax.swing.JFrame {
 							}
 						});
 					}
-					panelNorteIconos.add(new JButton("5"));
+					botonReset = new JButton();
+					botonReset.setBorder(null);
+					panelNorteIconos.add(botonReset);
+					iconoReset = new ImageIcon(getClass().getClassLoader()
+							.getResource("imagenes/icono-reset.png"));
+					iconoReset = new ImageIcon(iconoReset.getImage()
+							.getScaledInstance(43, 46,
+									Image.SCALE_AREA_AVERAGING));
+					botonReset.setIcon(iconoReset);
+					botonReset.setToolTipText("Reestablecer Cámara");
 				}
 
 				{
