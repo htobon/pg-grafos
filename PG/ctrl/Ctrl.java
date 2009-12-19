@@ -22,20 +22,31 @@ public class Ctrl {
 
 	private static Grafo grafo = null;
 
+	/**
+	 * Este método crea una conexión a la base de datos MySQL.
+	 * @param servidor
+	 *            dirección ip.
+	 * @param puerto
+	 *            de escucha de la base de datos MySQL.
+	 * @param usuario
+	 *            MySQL
+	 * @param clave
+	 * @param nombreBD
+	 *            nombre de la base de datos.
+	 * @return true si la conexion con la base de datos ha sido efectiva. Falso
+	 *         en caso contrario.
+	 */
 	public static boolean probarConexion(String servidor, String puerto,
 			String usuario, char[] clave, String nombreBD) {
 		return ServiciosBD.crearConexion(servidor, puerto, usuario, clave,
 				nombreBD);
 	}
 
-	public static boolean hayConexion() {
-		if (ServiciosBD.conexion != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
+	/**
+	 * Busca cada uno de los identificadores de los nodos que tiene el grafo.
+	 * @return Retorna un arreglo de enteros correspondiente a los códigos de
+	 *         identificación de cada uno de los nodos.
+	 */
 	public static int[] getCodigosNodos() {
 		int[] codigos = new int[grafo.getNodos().size()];
 		int cont = 0;
@@ -45,6 +56,11 @@ public class Ctrl {
 		return codigos;
 	}
 
+	/**
+	 * Busca cada uno de los identificadores de las aristas que tiene el grafo.
+	 * @return Retorna un arreglo de enteros correspondiente a los códigos de
+	 *         identificación de cada una de las aristas.
+	 */
 	public static int[] getCodigosAristas() {
 		int[] codigos = new int[grafo.getAristas().size()];
 		int cont = 0;
@@ -54,10 +70,18 @@ public class Ctrl {
 		return codigos;
 	}
 
+	/**
+	 * 
+	 * @return Retorna el objeto grafo utilizado en la aplicación.
+	 */
 	public static Grafo getGrafo() {
 		return grafo;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static boolean crearGrafo() {
 		grafo = new Grafo();
 		extraerNodos();
