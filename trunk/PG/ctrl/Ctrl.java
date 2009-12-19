@@ -300,10 +300,6 @@ public class Ctrl {
 		return 0;
 	}
 	
-	public static FiltroArchivo filtro(){
-		return new FiltroArchivo();
-	}
-	
 	public static boolean abrirGrafo(File archivo){
 		try  {
 
