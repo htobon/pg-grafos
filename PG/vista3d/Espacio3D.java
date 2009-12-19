@@ -190,13 +190,10 @@ public class Espacio3D extends SimpleCanvasImpl {
 		// input = new InputHandler();
 		// input = new FirstPersonHandler(this.getCamera());
 
-		
 		FirstPersonHandler firstPersonHandler = new FirstPersonHandler(cam,
 				10f, 1f);
 		input = firstPersonHandler;
 
-		
-		
 		input.addAction(new InputAction() {
 			public void performAction(InputActionEvent evt) {
 				((FirstPersonHandler) input).getMouseLookHandler().setEnabled(
@@ -206,7 +203,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 						.setButtonPressRequired(true);
 
 			}
-		}, InputHandler.DEVICE_MOUSE, InputHandler.BUTTON_ALL,	InputHandler.AXIS_NONE, false);
+		}, InputHandler.DEVICE_MOUSE, InputHandler.BUTTON_ALL,
+				InputHandler.AXIS_NONE, false);
 
 		input.addAction(new InputAction() {
 			public void performAction(InputActionEvent evt) {
@@ -225,12 +223,12 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 		// PARA DESAPARECER EL PUNTERO DEL MOUSE: (Todavía no se donde ponerlo
 		// ya que no funciona bien)
-//		if (MouseInput.get().isButtonDown(0)) {
-//
-//			MouseInput.get().setCursorVisible(true);
-//		} else {
-//			MouseInput.get().setCursorVisible(false);
-//		}
+		// if (MouseInput.get().isButtonDown(0)) {
+		//
+		// MouseInput.get().setCursorVisible(true);
+		// } else {
+		// MouseInput.get().setCursorVisible(false);
+		// }
 
 		// Code for rotating the box... no surprises here.
 		// if (tpf < 1) {
@@ -252,10 +250,10 @@ public class Espacio3D extends SimpleCanvasImpl {
 		// fps = 0;
 		// }
 	}
-	
+
 	public void cambiarColorNodo(String nombreNodo, ColorRGBA color) {
-		((Sphere)rootNode.getChild(nombreNodo)).setSolidColor(color);
-		((Sphere)rootNode.getChild(nombreNodo)).updateRenderState();
+		((Sphere) rootNode.getChild(nombreNodo)).setSolidColor(color);
+		((Sphere) rootNode.getChild(nombreNodo)).updateRenderState();
 	}
 
 	public void cambiarColorArista(String nombreArista, ColorRGBA color) {

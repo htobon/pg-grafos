@@ -99,8 +99,7 @@ public class Cambios extends JFrame {
 				jbtnColorNodo.setBackground(new Color(colorN.asIntARGB()));
 				
 				String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getSelectedItem().toString());
-				jcboxFigura.setSelectedItem(figura);
-				
+				jcboxFigura.setSelectedItem(figura);				
 			}
 		});
 		
