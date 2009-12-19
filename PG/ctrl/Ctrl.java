@@ -204,14 +204,14 @@ public class Ctrl {
 
 	public static String[] getTiposNodos() {
 		HashMap<String, ColorRGBA> colores = grafo.getColoresNodos();
-		String[] llaves= new String[colores.size()];
-		return (String[])colores.keySet().toArray(llaves);
+		String[] llaves = new String[colores.size()];
+		return (String[]) colores.keySet().toArray(llaves);
 	}
 
 	public static String[] getTiposAristas() {
 		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
-		String[] llaves= new String[colores.size()];
-		return (String[])colores.keySet().toArray(llaves);
+		String[] llaves = new String[colores.size()];
+		return (String[]) colores.keySet().toArray(llaves);
 	}
 
 	public static ColorRGBA getColorTipoNodo(String codigoYtipo) {
@@ -283,35 +283,44 @@ public class Ctrl {
 			nodo.setFigura("Esfera");
 		}
 	}
-	
-	public static int guardarGrafo(File archivo){
-		
-		try  {
-			File file= new File(archivo.getAbsoluteFile()+".grafo");
-            ObjectOutputStream salida=new ObjectOutputStream(new FileOutputStream(file));
-            salida.writeObject(grafo);
-            salida.close();
-            return 1;
-            
-        }catch (IOException ex) {
-            System.out.println(ex);
-         }
-		
+
+	public static int guardarGrafo(File archivo) {
+
+		try {
+			if (archivo.exists()) {
+				ObjectOutputStream salida = new ObjectOutputStream(
+						new FileOutputStream(archivo));
+				salida.writeObject(grafo);
+				salida.close();
+				return 1;
+			} else {
+				File file = new File(archivo.getAbsoluteFile() + ".grafo");
+				ObjectOutputStream salida = new ObjectOutputStream(
+						new FileOutputStream(file));
+				salida.writeObject(grafo);
+				salida.close();
+			}
+
+		} catch (IOException ex) {
+			System.out.println(ex);
+		}
+
 		return 0;
 	}
-	
-	public static boolean abrirGrafo(File archivo){
-		try  {
 
-            ObjectInputStream entrada=new ObjectInputStream(new FileInputStream(archivo));
-            grafo=(Grafo)entrada.readObject();
-            entrada.close();
-            return true;
-        }catch (IOException ex) {
-            System.out.println(ex);
-         }catch (ClassNotFoundException ex) {
-            System.out.println(ex);
-        }
-         return false;
+	public static boolean abrirGrafo(File archivo) {
+		try {
+
+			ObjectInputStream entrada = new ObjectInputStream(
+					new FileInputStream(archivo));
+			grafo = (Grafo) entrada.readObject();
+			entrada.close();
+			return true;
+		} catch (IOException ex) {
+			System.out.println(ex);
+		} catch (ClassNotFoundException ex) {
+			System.out.println(ex);
+		}
+		return false;
 	}
 }
