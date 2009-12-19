@@ -315,7 +315,7 @@ public class Principal extends javax.swing.JFrame {
 						iconoEditar = new ImageIcon(getClass().getClassLoader()
 								.getResource("imagenes/draw.png"));
 						iconoEditar = new ImageIcon(iconoEditar.getImage()
-								.getScaledInstance(48, 48,
+								.getScaledInstance(43, 46,
 										Image.SCALE_AREA_AVERAGING));
 						botonEditarPropiedades.setIcon(iconoEditar);
 						botonEditarPropiedades.setToolTipText("Editar");
