@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_2258826" name="model">
+  <packagedElement xsi:type="uml:Package" xmi:id="JupePrimititvesTypesPackage_17413578" name="JupePrimititvesTypesPackage">
+    <packageMerge xmi:id="unnamed_element_18593692">
+      <mergedPackage href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#_0"/>
+    </packageMerge>
+    <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.boolean_20732168" name="boolean"/>
+    <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.byte_16329001" name="byte"/>
+    <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.char_33384492" name="char"/>
+    <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.double_29511913" name="double"/>
+    <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.float_5113187" name="float"/>
+    <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.int_4442788" name="int"/>
+    <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.long_11332528" name="long"/>
+    <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.short_10845041" name="short"/>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Package" xmi:id="JupeUnresolvedTypesPackage_14697163" name="JupeUnresolvedTypesPackage"/>
+</uml:Model>

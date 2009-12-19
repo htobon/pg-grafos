@@ -58,10 +58,10 @@ public class Cambios extends JFrame {
 	private JLabel jlblNodo;
 	private JLabel jlblAristas;
 	private JLabel jlblNodos;
-	private JFrame principal;
+	private Principal principal;
 	private JPanel panelPrincipal;
 
-	public Cambios(JFrame principal) {
+	public Cambios(Principal principal) {
 		this.principal = principal;
 		initGUI();
 		inicializarListas();

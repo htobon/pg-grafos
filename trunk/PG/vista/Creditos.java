@@ -33,9 +33,9 @@ public class Creditos extends javax.swing.JFrame{
 	private JPanel  creditos;
 	private JLabel imagen;
 	private ImageIcon icono;
-	private JFrame principal;
+	private Principal principal;
 	
-	public Creditos(JFrame principal){
+	public Creditos(Principal principal){
 		super();
 		this.principal = principal;
 		inicializar();
