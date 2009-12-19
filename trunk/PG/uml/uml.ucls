@@ -1,0 +1,163 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="true" generalizations="false" 
+  realizations="false" associations="true" dependencies="false" nesting-relationships="false">  
+  <class corner="BOTTOM_RIGHT" language="java" name="vista.Principal" project="PG" file="/PG/vista/Principal.java" 
+    binary="false">    
+    <position x="1588" y="177" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="vista.Cambios" project="PG" file="/PG/vista/Cambios.java" 
+    binary="false">    
+    <position x="1930" y="116" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="vista.Creditos" project="PG" file="/PG/vista/Creditos.java" 
+    binary="false">    
+    <position x="1936" y="526" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="vista.Abrir" project="PG" file="/PG/vista/Abrir.java" 
+    binary="false">    
+    <position x="2160" y="348" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="ctrl.Ctrl" project="PG" file="/PG/ctrl/Ctrl.java" binary="false">    
+    <position x="950" y="266" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="modelo.Grafo" project="PG" file="/PG/modelo/Grafo.java" 
+    binary="false">    
+    <position x="308" y="891" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="modelo.Nodo" project="PG" file="/PG/modelo/Nodo.java" 
+    binary="false">    
+    <position x="282" y="1293" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="modelo.Arista" project="PG" file="/PG/modelo/Arista.java" 
+    binary="false">    
+    <position x="740" y="1131" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="bd.ServiciosBD" project="PG" file="/PG/bd/ServiciosBD.java" 
+    binary="false">    
+    <position x="364" y="228" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="vista3d.Espacio3D" project="PG" file="/PG/vista3d/Espacio3D.java" 
+    binary="false">    
+    <position x="1348" y="932" width="-1" height="-1"/>    
+    <display autosize="true" package="false" initial-value="true" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <association>    
+    <source project="PG" name="ctrl.Ctrl" file="/PG/ctrl/Ctrl.java" binary="false" navigable="false">      
+      <attribute name="grafo"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="PG" name="modelo.Grafo" file="/PG/modelo/Grafo.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="522" y="1276"/>    
+    <source project="PG" name="modelo.Arista" file="/PG/modelo/Arista.java" binary="false" navigable="false">      
+      <attribute name="destino"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="PG" name="modelo.Nodo" file="/PG/modelo/Nodo.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="1656" y="492"/>    
+    <source project="PG" name="vista.Creditos" file="/PG/vista/Creditos.java" binary="false" navigable="false">      
+      <attribute name="principal"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="PG" name="vista.Principal" file="/PG/vista/Principal.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="PG" name="vista.Cambios" file="/PG/vista/Cambios.java" binary="false" navigable="false">      
+      <attribute name="principal"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="PG" name="vista.Principal" file="/PG/vista/Principal.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="500" y="1218"/>    
+    <source project="PG" name="modelo.Arista" file="/PG/modelo/Arista.java" binary="false" navigable="false">      
+      <attribute name="origen"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="PG" name="modelo.Nodo" file="/PG/modelo/Nodo.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="PG" name="modelo.Grafo" file="/PG/modelo/Grafo.java" binary="false" navigable="false">      
+      <attribute name="aristas"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="PG" name="modelo.Arista" file="/PG/modelo/Arista.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="PG" name="vista.Principal" file="/PG/vista/Principal.java" binary="false" navigable="false">      
+      <attribute name="impl"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="PG" name="vista3d.Espacio3D" file="/PG/vista3d/Espacio3D.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="1784" y="340"/>    
+    <source project="PG" name="vista.Abrir" file="/PG/vista/Abrir.java" binary="false" navigable="false">      
+      <attribute name="ventanaPrincipal"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="PG" name="vista.Principal" file="/PG/vista/Principal.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="PG" name="modelo.Grafo" file="/PG/modelo/Grafo.java" binary="false" navigable="false">      
+      <attribute name="nodos"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="PG" name="modelo.Nodo" file="/PG/modelo/Nodo.java" binary="false" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" package="false" initial-value="true" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="false"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="true"/>
+</class-diagram>
