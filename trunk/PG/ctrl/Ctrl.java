@@ -203,28 +203,32 @@ public class Ctrl {
 	}
 
 	public static String[] getTiposNodos() {
-		return ServiciosBD.getTiposNodos();
+		HashMap<String, ColorRGBA> colores = grafo.getColoresNodos();
+		String[] llaves= new String[colores.size()];
+		return (String[])colores.keySet().toArray(llaves);
 	}
 
 	public static String[] getTiposAristas() {
-		return ServiciosBD.getTiposAristas();
+		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
+		String[] llaves= new String[colores.size()];
+		return (String[])colores.keySet().toArray(llaves);
 	}
 
 	public static ColorRGBA getColorTipoNodo(String codigoYtipo) {
 		HashMap<String, ColorRGBA> colores = grafo.getColoresNodos();
-		String codigo = codigoYtipo.split(" ")[2];
+		String codigo = codigoYtipo.split(" ")[0];
 		return colores.get(codigo);
 	}
 
 	public static ColorRGBA getColorTipoArista(String codigoYtipo) {
 		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
-		String codigo = codigoYtipo.split(" ")[2];
+		String codigo = codigoYtipo.split(" ")[0];
 		return colores.get(codigo);
 	}
 
 	public static String getFiguraNodo(String codigoYtipo) {
 		HashSet<Nodo> nodos = grafo.getNodos();
-		String tipo = codigoYtipo.split(" ")[2];
+		String tipo = codigoYtipo.split(" ")[0];
 		for (Nodo nodo : nodos) {
 			if (nodo.getTipo().equalsIgnoreCase(tipo)) {
 				return nodo.getFigura();
@@ -235,7 +239,7 @@ public class Ctrl {
 
 	public static void setFiguraNodos(String codigoYtipo, String figura) {
 		HashSet<Nodo> nodos = grafo.getNodos();
-		String tipo = codigoYtipo.split(" ")[2];
+		String tipo = codigoYtipo.split(" ")[0];
 		for (Nodo nodo : nodos) {
 			if (nodo.getTipo().equalsIgnoreCase(tipo)) {
 				nodo.setFigura(figura);
@@ -244,7 +248,7 @@ public class Ctrl {
 	}
 
 	public static void setColoresNodos(String codigoYtipo, ColorRGBA color) {
-		String tipo = codigoYtipo.split(" ")[2];
+		String tipo = codigoYtipo.split(" ")[0];
 		HashMap<String, ColorRGBA> colores = grafo.getColoresNodos();
 		colores.put(tipo, color);
 		asignarColoresNodos();
@@ -259,7 +263,7 @@ public class Ctrl {
 	}
 
 	public static void setColoresAristas(String codigoYtipo, ColorRGBA color) {
-		String tipo = codigoYtipo.split(" ")[2];
+		String tipo = codigoYtipo.split(" ")[0];
 		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
 		colores.put(tipo, color);
 		asignarColoresAristas();
