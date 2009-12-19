@@ -242,6 +242,12 @@ public class Cambios extends JFrame {
 						jpNodos.add(jcboxFigura);
 						jcboxFigura.setModel(jcboxFiguraModel);
 						jcboxFigura.setBounds(93, 148, 170, 23);
+						
+						jcboxFigura.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {								
+								Ctrl.setFiguraNodos(jcbxTiposNodos.getSelectedItem().toString(), jcboxFigura.getSelectedItem().toString());
+							}
+						});
 					}
 				}
 				this.addWindowListener(new WindowAdapter() {
@@ -291,6 +297,10 @@ public class Cambios extends JFrame {
 				.getBackground());
 		if (elegido != null) {
 			jbtnColorNodo.setBackground(elegido);
+			Color colorNodo= jbtnColorNodo.getBackground();
+			Ctrl.setColoresNodos(jcbxTiposNodos.getSelectedItem().toString(), new ColorRGBA(colorNodo.getRed() / 255f, 
+					colorNodo.getGreen() / 255f, colorNodo.getBlue() / 255f, colorNodo.getAlpha() / 255f));
+
 		}
 	}
 
@@ -299,22 +309,14 @@ public class Cambios extends JFrame {
 				.getBackground());
 		if (elegido != null) {
 			jbtnColorArista.setBackground(elegido);
+			Color colorArista= jbtnColorArista.getBackground();
+			Ctrl.setColoresAristas(cbxTiposAristas.getSelectedItem().toString(),  new ColorRGBA(colorArista.getRed() / 255f, 
+					colorArista.getGreen() / 255f, colorArista.getBlue() / 255f, colorArista.getAlpha() / 255f));
 		}
 	}
 	
 	private void jbtnAceptarActionPerformed(ActionEvent evt) {
-		//Cambios en Nodos
-		Ctrl.setFiguraNodos(jcbxTiposNodos.getSelectedItem().toString(), jcboxFigura.getSelectedItem().toString());
-		Color colorNodo= jbtnColorNodo.getBackground();
-		Ctrl.setColoresNodos(jcbxTiposNodos.getSelectedItem().toString(), new ColorRGBA(colorNodo.getRed() / 255f, 
-				colorNodo.getGreen() / 255f, colorNodo.getBlue() / 255f, colorNodo.getAlpha() / 255f));
 
-		
-		//Cambios en Aristas
-		Color colorArista= jbtnColorArista.getBackground();
-		Ctrl.setColoresAristas(cbxTiposAristas.getSelectedItem().toString(),  new ColorRGBA(colorArista.getRed() / 255f, 
-				colorArista.getGreen() / 255f, colorArista.getBlue() / 255f, colorArista.getAlpha() / 255f));
-		
 		((Principal)principal).cambiarPropiedadesGrafos();
 		
 		//Cerrar Ventana
