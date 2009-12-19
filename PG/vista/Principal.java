@@ -350,7 +350,7 @@ public class Principal extends javax.swing.JFrame {
 						btnAbrirGrafo.setBorder(null);
 						panelNorteIconos.add(btnAbrirGrafo);
 						iconoGrafo = new ImageIcon(getClass().getClassLoader()
-								.getResource("imagenes/icono-grafo.png"));
+								.getResource("imagenes/icono-abrir.png"));
 						iconoGrafo = new ImageIcon(iconoGrafo.getImage()
 								.getScaledInstance(43, 46,
 										Image.SCALE_AREA_AVERAGING));
