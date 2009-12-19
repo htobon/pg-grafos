@@ -1,19 +1,22 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.HierarchyBoundsAdapter;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.VetoableChangeListener;
 import java.io.File;
-import java.util.concurrent.Callable;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -30,26 +33,49 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+
+import vista3d.Espacio3D;
 
 import net.sourceforge.napkinlaf.NapkinLookAndFeel;
 import net.sourceforge.napkinlaf.NapkinTheme;
-import vista3d.Espacio3D;
 
+import com.cloudgarden.layout.AnchorConstraint;
+import com.cloudgarden.layout.AnchorLayout;
 import com.jme.input.InputSystem;
 import com.jme.input.KeyInput;
 import com.jme.input.MouseInput;
+import com.jme.renderer.ColorRGBA;
 import com.jme.system.DisplaySystem;
 import com.jme.system.canvas.JMECanvas;
+import com.jme.system.canvas.JMECanvasImplementor;
 import com.jme.system.lwjgl.LWJGLSystemProvider;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.awt.input.AWTMouseInput;
 import com.jmex.awt.lwjgl.LWJGLAWTCanvasConstructor;
 import com.jmex.awt.lwjgl.LWJGLCanvas;
+import com.jmex.awt.swingui.JMEDesktop;
+import com.jmex.swt.input.SWTKeyInput;
+import com.jmex.swt.input.SWTMouseInput;
+import com.jmex.swt.lwjgl.LWJGLSWTCanvas;
+import com.jmex.swt.lwjgl.LWJGLSWTCanvasConstructor;
 
 import ctrl.Ctrl;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Image;
+import java.util.concurrent.Callable;
+
+import jmetest.util.JMESwingTest;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -416,13 +442,21 @@ public class Principal extends javax.swing.JFrame {
 	}
 
 	private void botonGuardarActionPerformed(ActionEvent evt) {
-		//new Thread() {
-			//public void run() {
+
 				JFileChooser jfc = new JFileChooser();
 				jfc.setDialogTitle("Guardar");
 				jfc.setApproveButtonText("Guardar");
 				jfc.setMultiSelectionEnabled(false);
-				jfc.addChoosableFileFilter(Ctrl.filtro());
+				jfc.setFileFilter(new FileFilter() {
+					public boolean accept(File f) {
+						return (f.getName().endsWith(".grafo") || f
+								.isDirectory());
+					}
+
+					public String getDescription() {
+						return ".grafo";
+					}
+				});
 				
 				int opción = jfc.showOpenDialog(null);
 				if (opción == JFileChooser.APPROVE_OPTION) {
@@ -447,8 +481,6 @@ public class Principal extends javax.swing.JFrame {
 					}
 
 				}
-			//}
-		//}.start();
 	}
 
 	private void abrirMenuActionPerformed(ActionEvent evt) {
@@ -484,11 +516,18 @@ public class Principal extends javax.swing.JFrame {
 
 	private void btnAbrirGrafoActionPerformed(ActionEvent evt) {
 
-		//new Thread() {
-			//public void run() {
 				JFileChooser jfc = new JFileChooser();
 				jfc.setMultiSelectionEnabled(false);
-				jfc.addChoosableFileFilter(Ctrl.filtro());
+				jfc.setFileFilter(new FileFilter() {
+					public boolean accept(File f) {
+						return (f.getName().endsWith(".grafo") || f
+								.isDirectory());
+					}
+
+					public String getDescription() {
+						return ".grafo";
+					}
+				});
 				int opción = jfc.showOpenDialog(null);
 				if (opción == JFileChooser.APPROVE_OPTION) {
 
@@ -498,9 +537,6 @@ public class Principal extends javax.swing.JFrame {
 						impl.dibujarGrafo();
 					}
 				}
-			//}
-		//}.start();
-
 	}
 
 	public void cambiarPropiedadesGrafos() {
