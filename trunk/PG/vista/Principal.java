@@ -465,7 +465,7 @@ public class Principal extends javax.swing.JFrame {
 					
 					// Verificar existencia
 					int respuesta = -1;
-					if ((new File(file.getAbsoluteFile()+".grafo")).exists()) {
+					if ((new File(file.getAbsoluteFile()+".grafo")).exists()||file.exists()) {
 						respuesta = JOptionPane.showConfirmDialog(null,
 								"El archivo ya existe.¿Quiéres reemplazarlo?",
 								"Confirmar Reemplazo",
