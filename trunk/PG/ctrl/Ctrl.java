@@ -20,7 +20,7 @@ import modelo.Nodo;
 
 public class Ctrl {
 
-	private static Grafo grafo = new Grafo();
+	private static Grafo grafo = null;
 
 	public static boolean probarConexion(String servidor, String puerto,
 			String usuario, char[] clave, String nombreBD) {

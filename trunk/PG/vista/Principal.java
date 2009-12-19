@@ -497,7 +497,7 @@ public class Principal extends javax.swing.JFrame {
 	}
 
 	private void botonEditarPropiedadesActionPerformed(ActionEvent evt) {
-		if (Ctrl.hayConexion()) {
+		if (Ctrl.getGrafo() != null) {
 			Cambios cambios = new Cambios(this);
 			this.setEnabled(false);
 			cambios.setVisible(true);
