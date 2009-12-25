@@ -14,4 +14,71 @@
     <packagedElement xsi:type="uml:PrimitiveType" xmi:id="JupePrimititvesTypesPackage.short_10845041" name="short"/>
   </packagedElement>
   <packagedElement xsi:type="uml:Package" xmi:id="JupeUnresolvedTypesPackage_14697163" name="JupeUnresolvedTypesPackage"/>
+  <packagedElement xsi:type="uml:Package" xmi:id="modelo_20879656" name="modelo">
+    <packagedElement xsi:type="uml:Class" xmi:id="modelo.Arista_7950362" name="Arista">
+      <ownedAttribute xmi:id="modelo.Arista.codigo_20867856" name="codigo" visibility="private" type="JupePrimititvesTypesPackage.int_4442788"/>
+      <ownedAttribute xmi:id="modelo.Arista.tipo_10128978" name="tipo" visibility="private" type="java.lang.String_7188558">
+        <defaultValue xsi:type="uml:LiteralInteger"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="modelo.Arista.origen_31218059" name="origen" visibility="private" type="JupePrimititvesTypesPackage.int_4442788">
+        <defaultValue xsi:type="uml:LiteralInteger"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xsi:type="uml:Class" xmi:id="modelo.Nodo_29394850" name="Nodo">
+      <ownedAttribute xmi:id="modelo.Nodo.atributos_13292209" name="atributos" visibility="private" type="java.util.HashMap_8876692">
+        <defaultValue xsi:type="uml:LiteralInteger"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="modelo.Nodo.tipo_33417151" name="tipo" visibility="private" type="java.lang.String_7188558">
+        <defaultValue xsi:type="uml:LiteralInteger"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="modelo.Nodo.codigo_7155026" name="codigo" visibility="private" type="JupePrimititvesTypesPackage.int_4442788"/>
+      <ownedAttribute xmi:id="modelo.Nodo.color_21621940" name="color" visibility="private" type="com.jme.renderer.ColorRGBA_25707098">
+        <defaultValue xsi:type="uml:LiteralInteger"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="modelo.Nodo.figura_3019973" name="figura" visibility="private" type="java.lang.String_7188558">
+        <defaultValue xsi:type="uml:LiteralInteger"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="modelo.Nodo.getFigura_2033264" name="getFigura" visibility="public">
+        <ownedParameter name="" type="java.lang.String_7188558" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="modelo.Nodo.setFigura_2054747" name="setFigura" visibility="public">
+        <ownedParameter name="" direction="return"/>
+        <ownedParameter xmi:id="modelo.Nodo.setFigura.figura_16164526" name="figura" type="java.lang.String_7188558"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="modelo.Nodo.Nodo_20516065" name="Nodo" visibility="public">
+        <ownedParameter name="" direction="return"/>
+        <ownedParameter xmi:id="modelo.Nodo.Nodo.codigo_7526451" name="codigo" type="JupePrimititvesTypesPackage.int_4442788"/>
+        <ownedParameter xmi:id="modelo.Nodo.Nodo.tipo_30411221" name="tipo" type="java.lang.String_7188558"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="modelo.Nodo.setAtributo_20297016" name="setAtributo" visibility="public">
+        <ownedParameter name="" direction="return"/>
+        <ownedParameter xmi:id="modelo.Nodo.setAtributo.atributos_13688762" name="atributos" type="java.util.HashMap_8876692"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="modelo.Nodo.agregarAtributo_5274719" name="agregarAtributo" visibility="public">
+        <ownedParameter name="" direction="return"/>
+        <ownedParameter xmi:id="modelo.Nodo.agregarAtributo.nombreAtributo_12882717" name="nombreAtributo" type="java.lang.String_7188558"/>
+        <ownedParameter xmi:id="modelo.Nodo.agregarAtributo.valor_2518954" name="valor"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xsi:type="uml:Class" xmi:id="modelo.Grafo_16005259" name="Grafo"/>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Package" xmi:id="java_10276356" name="java">
+    <packagedElement xsi:type="uml:Package" xmi:id="java.lang_16263304" name="lang">
+      <packagedElement xsi:type="uml:Class" xmi:id="java.lang.String_7188558" name="String"/>
+      <packagedElement xsi:type="uml:Class" xmi:id="java.lang.Object_15560174" name="Object"/>
+    </packagedElement>
+    <packagedElement xsi:type="uml:Package" xmi:id="java.util_12583290" name="util">
+      <packagedElement xsi:type="uml:Class" xmi:id="java.util.HashMap_8876692" name="HashMap"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Package" xmi:id="com_18126705" name="com">
+    <packagedElement xsi:type="uml:Package" xmi:id="com.jme_20911435" name="jme">
+      <packagedElement xsi:type="uml:Package" xmi:id="com.jme.renderer_24339189" name="renderer">
+        <packagedElement xsi:type="uml:Class" xmi:id="com.jme.renderer.ColorRGBA_25707098" name="ColorRGBA"/>
+      </packagedElement>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Package" xmi:id="ctrl_17282056" name="ctrl">
+    <packagedElement xsi:type="uml:Class" xmi:id="ctrl.Ctrl_21796820" name="Ctrl"/>
+  </packagedElement>
 </uml:Model>
