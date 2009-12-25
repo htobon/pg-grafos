@@ -88,7 +88,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 			arista.setSolidColor(Ctrl.getColorArista(codigoArista));
 
 			arista.setModelBound(new BoundingBox());
-
+			arista.updateModelBound();
 			arista.setRenderQueueMode(Renderer.QUEUE_SKIP);
 			rootNode.attachChild(arista);
 			arista.updateGeometricState(0, true);
@@ -215,6 +215,9 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 		input.update(10.5f);
 		((FirstPersonHandler) input).getMouseLookHandler().setEnabled(true);
+		
+		MousePicking pick = new MousePicking(cam, rootNode);
+		input.addAction(pick);
 
 	}
 
