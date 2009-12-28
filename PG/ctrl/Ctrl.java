@@ -24,6 +24,7 @@ public class Ctrl {
 
 	/**
 	 * Este método crea una conexión a la base de datos MySQL.
+	 * 
 	 * @param servidor
 	 *            dirección ip.
 	 * @param puerto
@@ -44,6 +45,7 @@ public class Ctrl {
 
 	/**
 	 * Busca cada uno de los identificadores de los nodos que tiene el grafo.
+	 * 
 	 * @return Retorna un arreglo de enteros correspondiente a los códigos de
 	 *         identificación de cada uno de los nodos.
 	 */
@@ -58,6 +60,7 @@ public class Ctrl {
 
 	/**
 	 * Busca cada uno de los identificadores de las aristas que tiene el grafo.
+	 * 
 	 * @return Retorna un arreglo de enteros correspondiente a los códigos de
 	 *         identificación de cada una de las aristas.
 	 */
@@ -79,8 +82,10 @@ public class Ctrl {
 	}
 
 	/**
+	 * Este método es el encargado de crear un objeto grafo en el modelo de la
+	 * aplicación.
 	 * 
-	 * @return
+	 * @return true si se creó efectivamente el grafo. false en caso contrario.
 	 */
 	public static boolean crearGrafo() {
 		grafo = new Grafo();
@@ -91,6 +96,16 @@ public class Ctrl {
 		return true;
 	}
 
+	/**
+	 * Este método se encarga de devolver un arreglo de 2 posiciones de los
+	 * nodos que componen a una arísta específica.
+	 * 
+	 * @param codigoArista
+	 *            correspondiente al id de la arista.
+	 * @return un arreglo de 2 posiciones de enteros correspondiente a los ids
+	 *         de los nodos que componen dicha arista. int[0]=NodoDesde
+	 *         int[1]=NodoHacia
+	 */
 	public static int[] getNodosDeArista(int codigoArista) {
 		for (Arista arista : grafo.getAristas()) {
 			if (arista.getCodigo() == codigoArista) {

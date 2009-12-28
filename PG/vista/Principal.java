@@ -107,7 +107,7 @@ public class Principal extends javax.swing.JFrame {
 	private JMenuBar menuPrincipal;
 	private ImageIcon iconoEditar, iconoGrafo, iconoGuardar, iconoReset;
 	private JButton botonGuardar;
-	private JTextArea jtaInfo;
+	public static JTextArea jtaInfo;
 	private JButton botonAbrirGrafo;
 	private JButton btnAbrirGrafo;
 	private JButton botonReset;
