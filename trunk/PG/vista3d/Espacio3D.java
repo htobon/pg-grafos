@@ -1,6 +1,7 @@
 package vista3d;
 
 import java.awt.event.KeyListener;
+import java.nio.FloatBuffer;
 
 import org.eclipse.swt.widgets.Display;
 
@@ -13,13 +14,19 @@ import com.jme.input.KeyInput;
 import com.jme.input.MouseInput;
 import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
+import com.jme.intersection.CollisionResults;
+import com.jme.intersection.TriangleCollisionResults;
 import com.jme.math.FastMath;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
+import com.jme.scene.Geometry;
 import com.jme.scene.Line;
+import com.jme.scene.Spatial;
+import com.jme.scene.Text;
 import com.jme.scene.Spatial.NormalsMode;
+import com.jme.scene.Spatial.TextureCombineMode;
 import com.jme.scene.shape.Box;
 import com.jme.scene.shape.Sphere;
 import com.jme.scene.state.MaterialState;
@@ -27,6 +34,7 @@ import com.jme.scene.state.TextureState;
 import com.jme.system.DisplaySystem;
 import com.jme.system.canvas.SimpleCanvasImpl;
 import com.jme.util.TextureManager;
+import com.jme.util.geom.BufferUtils;
 
 import ctrl.Ctrl;
 
@@ -59,6 +67,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 		// rootNode.attachChild(esfera);
 		// ///////////////////////////////////////////////////////////
 
+		dibujarCruz();
+
 		int[] codigosNodos = Ctrl.getCodigosNodos();
 		dibujarNodos(codigosNodos);
 
@@ -67,14 +77,26 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 	}
 
-	private void dibujarAristas(int[] codigosAristas) {
+	private void dibujarCruz() {
+		Text cruz = new Text("cruz", "+");
+		// Text cross = Text.createDefaultTextLabel("Cross hairs", "+");
+		cruz.setCullHint(Spatial.CullHint.Never);
+		// cruz.setTextureCombineMode(TextureCombineMode.Replace);
+		cruz.setLocalTranslation(new Vector3f(DisplaySystem.getDisplaySystem()
+				.getWidth() / 2f - 8f, // 8 is half the width
+				// of a font char
+				DisplaySystem.getDisplaySystem().getHeight() / 2f - 8f, 0));
+		rootNode.attachChild(cruz);
 
-		int[] verticesNodos;
+	}
+
+	private void dibujarAristas(int[] codigosAristas) {
 
 		for (int codigoArista : codigosAristas) {
 
-			verticesNodos = Ctrl.getNodosDeArista(codigoArista);
+			int[] verticesNodos = Ctrl.getNodosDeArista(codigoArista);
 			Vector3f[] vertices = new Vector3f[2];
+
 			vertices[0] = ((Sphere) rootNode.getChild("Nodo "
 					+ verticesNodos[0])).getLocalTranslation();
 
@@ -83,17 +105,17 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 			Line arista = new Line("Arista " + codigoArista, vertices, null,
 					null, null);
-			arista.setLineWidth(3f);
-
-			arista.setSolidColor(Ctrl.getColorArista(codigoArista));
+			System.out.println("Arista " + codigoArista + " - Colisiones: "
+					+ encontrarColisiones(arista));
+			arista.setLineWidth(4f);
 
 			arista.setModelBound(new BoundingBox());
 			arista.updateModelBound();
 			arista.setRenderQueueMode(Renderer.QUEUE_SKIP);
 			rootNode.attachChild(arista);
+			arista.setSolidColor(Ctrl.getColorArista(codigoArista));
 			arista.updateGeometricState(0, true);
 			arista.updateRenderState();
-
 		}
 
 	}
@@ -110,7 +132,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 		// Cantidad de nodos en el eje X
 		int cantidadX = (int) Math.ceil(Math.sqrt(codigosNodos.length));
 		// Distancia entre nodos
-		float distanciaNodos = 2.0f;
+		float distanciaNodos = 4.0f;
 
 		// Dimension Ancho de la Caja
 		float anchoNodo = max.getX() - min.getX();
@@ -127,7 +149,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 		for (int codigoNodo : codigosNodos) {
 			Sphere nodo = new Sphere("Nodo " + codigoNodo, 10, 10, 1f);
-			nodo.setModelBound(new BoundingBox());
+			BoundingBox bounding = new BoundingBox();
+			nodo.setModelBound(bounding);
 			nodo.updateModelBound();
 
 			nodo.setLocalTranslation(new Vector3f(location_x, location_y, 0));
@@ -159,6 +182,21 @@ public class Espacio3D extends SimpleCanvasImpl {
 		}
 	}
 
+	public int encontrarColisiones(Geometry arista) {
+		for (int codigoNodo : Ctrl.getCodigosNodos()) {
+			int codigoArista = Integer.parseInt(arista.getName().split(" ")[1]);
+			if (codigoNodo != Ctrl.getNodosDeArista(codigoArista)[0]
+					&& codigoNodo != Ctrl.getNodosDeArista(codigoArista)[1]) {
+
+				Sphere nodo = (Sphere) rootNode.getChild("Nodo " + codigoNodo);
+				CollisionResults colisiones = new TriangleCollisionResults();
+				arista.findCollisions(nodo, colisiones);
+				return colisiones.getNumber();
+			}
+		}
+		return -1;
+	}
+
 	public void simpleSetup() {
 
 		// Normal Scene setup stuff...
@@ -178,14 +216,14 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 		box.setRandomColors();
 
-		TextureState ts = renderer.createTextureState();
-		ts.setEnabled(true);
-		ts.setTexture(TextureManager.loadTexture(Grafo3D.class.getClassLoader()
-				.getResource("jmetest/data/images/Monkey.jpg"),
-				Texture.MinificationFilter.BilinearNearestMipMap,
-				Texture.MagnificationFilter.Bilinear));
-
-		rootNode.setRenderState(ts);
+		// TextureState ts = renderer.createTextureState();
+		// ts.setEnabled(true);
+		// ts.setTexture(TextureManager.loadTexture(Grafo3D.class.getClassLoader()
+		// .getResource("jmetest/data/images/Monkey.jpg"),
+		// Texture.MinificationFilter.BilinearNearestMipMap,
+		// Texture.MagnificationFilter.Bilinear));
+		//
+		// rootNode.setRenderState(ts);
 		startTime = System.currentTimeMillis() + 5000;
 		// input = new InputHandler();
 		// input = new FirstPersonHandler(this.getCamera());
@@ -215,17 +253,46 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 		input.update(10.5f);
 		((FirstPersonHandler) input).getMouseLookHandler().setEnabled(true);
-		
+
 		MousePicking pick = new MousePicking(cam, rootNode);
 		input.addAction(pick);
-		
-		
 
+	}
+
+	private void actualizarAristas() {
+		for (int codigoArista : Ctrl.getCodigosAristas()) {
+			int[] verticesNodos = Ctrl.getNodosDeArista(codigoArista);
+			Vector3f[] vertices = new Vector3f[2];
+
+			vertices[0] = ((Sphere) rootNode.getChild("Nodo "
+					+ verticesNodos[0])).getLocalTranslation();
+
+			vertices[1] = ((Sphere) rootNode.getChild("Nodo "
+					+ verticesNodos[1])).getLocalTranslation();
+			Line arista = (Line) rootNode.getChild("Arista " + codigoArista);
+
+			arista.reconstruct(BufferUtils.createFloatBuffer(vertices), null,
+					arista.getColorBuffer(), null);
+
+		}
 	}
 
 	public void simpleUpdate() {
 		input.update(tpf);
 
+		// Ejemplo..... MOVIENDO NODO
+//		if (rootNode.getChild("Nodo 300") != null) {
+//
+//			Sphere nodo = (Sphere) rootNode.getChild("Nodo 300");
+//			nodo.setLocalTranslation(nodo.getLocalTranslation().x + 0.1f, nodo
+//					.getLocalTranslation().y, nodo.getLocalTranslation().z);
+//			System.out.println(nodo.getLocalTranslation().x);
+//
+//			actualizarAristas();
+//		}
+		
+		
+		
 		// PARA DESAPARECER EL PUNTERO DEL MOUSE: (Todavía no se donde ponerlo
 		// ya que no funciona bien)
 		// if (MouseInput.get().isButtonDown(0)) {
@@ -265,16 +332,16 @@ public class Espacio3D extends SimpleCanvasImpl {
 		((Line) rootNode.getChild(nombreArista)).setSolidColor(color);
 		((Line) rootNode.getChild(nombreArista)).updateRenderState();
 	}
-	
+
 	public void resetCam() {
-		 Vector3f loc = new Vector3f(0.0f, 0.0f, 25.0f);
-	        Vector3f left = new Vector3f(-1.0f, 0.0f, 0.0f);
-	        Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
-	        Vector3f dir = new Vector3f(0.0f, 0f, -1.0f);
-	       
-	        cam.setFrame(loc, left, up, dir);
-	       
-	        cam.update();
+		Vector3f loc = new Vector3f(0.0f, 0.0f, 25.0f);
+		Vector3f left = new Vector3f(-1.0f, 0.0f, 0.0f);
+		Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
+		Vector3f dir = new Vector3f(0.0f, 0f, -1.0f);
+
+		cam.setFrame(loc, left, up, dir);
+
+		cam.update();
 	}
 
 }
