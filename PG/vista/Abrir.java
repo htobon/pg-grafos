@@ -90,7 +90,7 @@ public class Abrir extends javax.swing.JFrame {
 				// PanelAbrir.setFocusable(false);
 				{
 					servidor = new JTextField();
-					servidor.setText("192.168.2.2");
+					servidor.setText("localhost");
 					PanelAbrir.add(servidor, "servidor");
 					servidor.setBounds(124, 12, 191, 23);
 				}

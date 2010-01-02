@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Random;
 
 import com.jme.renderer.ColorRGBA;
 
@@ -21,6 +22,7 @@ import modelo.Nodo;
 public class Ctrl {
  
 	private static Grafo grafo = null;
+	private static Random random = new Random();
 
 	/**
 	 * Este método crea una conexión a la base de datos MySQL.
@@ -231,7 +233,10 @@ public class Ctrl {
 
 		for (Nodo nodo : nodos) {
 			if (!(coloresNodos.containsKey(nodo.getTipo()))) {
-				coloresNodos.put(nodo.getTipo(), ColorRGBA.randomColor());
+				//coloresNodos.put(nodo.getTipo(), ColorRGBA.randomColor());
+				coloresNodos.put(nodo.getTipo(), new ColorRGBA(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1));
+				//coloresNodos.put(nodo.getTipo(), new ColorRGBA((float)Math.random(), (float)Math.random(), (float)Math.random(), 1));
+				
 			}
 		}
 		grafo.setColoresNodos(coloresNodos);
@@ -239,7 +244,9 @@ public class Ctrl {
 
 		for (Arista arista : aristas) {
 			if (!(coloresAristas.containsKey(arista.getTipo()))) {
-				coloresAristas.put(arista.getTipo(), ColorRGBA.randomColor());
+				//coloresAristas.put(arista.getTipo(), ColorRGBA.randomColor());
+				coloresAristas.put(arista.getTipo(), new ColorRGBA(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1));
+				//coloresAristas.put(arista.getTipo(), new ColorRGBA((float)Math.random(), (float)Math.random(), (float)Math.random(), 1));
 			}
 		}
 		grafo.setColoresAristas(coloresAristas);
