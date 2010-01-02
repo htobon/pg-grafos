@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,7 +21,7 @@ import modelo.Grafo;
 import modelo.Nodo;
 
 public class Ctrl {
- 
+
 	private static Grafo grafo = null;
 	private static Random random = new Random();
 
@@ -119,8 +120,8 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método se encarga de crear las aristas a partir de la información de la base de datos
-	 * y luego asignarle la colección de aristas al grafo
+	 * Este método se encarga de crear las aristas a partir de la información de
+	 * la base de datos y luego asignarle la colección de aristas al grafo
 	 * 
 	 */
 	private static void extraerAristas() {
@@ -149,8 +150,8 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método se encarga de crear los nodos a partir de la información de la base de datos
-	 * y luego asignarle la colección de nodos al grafo
+	 * Este método se encarga de crear los nodos a partir de la información de
+	 * la base de datos y luego asignarle la colección de nodos al grafo
 	 * 
 	 */
 	private static void extraerNodos() {
@@ -179,9 +180,9 @@ public class Ctrl {
 	 * Este método agrega un nuevo nodo al grafo
 	 * 
 	 * @param codigo
-	 * 		  		Código del nodo
+	 *            Código del nodo
 	 * @param tipo
-	 * 				El tipo del nodo
+	 *            El tipo del nodo
 	 * @return true si el nodo se pudo agregar, false si el nodo no se agregó
 	 */
 	public static boolean agregarNodo(int codigo, String tipo) {
@@ -192,13 +193,13 @@ public class Ctrl {
 	 * Este método agrega una nueva arista al grafo
 	 * 
 	 * @param codigo
-	 * 		  		Código de la arista
+	 *            Código de la arista
 	 * @param tipo
-	 * 				El tipo de la arista
+	 *            El tipo de la arista
 	 * @param origen
-	 * 				Nodo origen
+	 *            Nodo origen
 	 * @param destino
-	 * 				Nodo destino
+	 *            Nodo destino
 	 * @return true si el nodo se pudo agregar, false si el nodo no se agregó
 	 */
 	public static boolean agregarArista(int codigo, String tipo, Nodo origen,
@@ -208,6 +209,7 @@ public class Ctrl {
 
 	/**
 	 * Este método permite obtener los nodos del grafo
+	 * 
 	 * @return HashSet<Nodo> con los nodos del grafo
 	 */
 	public static HashSet<Nodo> getNodos() {
@@ -216,7 +218,8 @@ public class Ctrl {
 
 	/**
 	 * Este método permite obtener las aristas del grafo
-	 * @return HashSet<Nodo> con las aristas del grafo 
+	 * 
+	 * @return HashSet<Nodo> con las aristas del grafo
 	 */
 	public static HashSet<Arista> getAristas() {
 		return grafo.getAristas();
@@ -233,10 +236,14 @@ public class Ctrl {
 
 		for (Nodo nodo : nodos) {
 			if (!(coloresNodos.containsKey(nodo.getTipo()))) {
-				//coloresNodos.put(nodo.getTipo(), ColorRGBA.randomColor());
-				coloresNodos.put(nodo.getTipo(), new ColorRGBA(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1));
-				//coloresNodos.put(nodo.getTipo(), new ColorRGBA((float)Math.random(), (float)Math.random(), (float)Math.random(), 1));
-				
+				// coloresNodos.put(nodo.getTipo(), ColorRGBA.randomColor());
+				coloresNodos.put(nodo.getTipo(),
+						new ColorRGBA(random.nextFloat(), random.nextFloat(),
+								random.nextFloat(), 1));
+				// coloresNodos.put(nodo.getTipo(), new
+				// ColorRGBA((float)Math.random(), (float)Math.random(),
+				// (float)Math.random(), 1));
+
 			}
 		}
 		grafo.setColoresNodos(coloresNodos);
@@ -244,9 +251,14 @@ public class Ctrl {
 
 		for (Arista arista : aristas) {
 			if (!(coloresAristas.containsKey(arista.getTipo()))) {
-				//coloresAristas.put(arista.getTipo(), ColorRGBA.randomColor());
-				coloresAristas.put(arista.getTipo(), new ColorRGBA(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1));
-				//coloresAristas.put(arista.getTipo(), new ColorRGBA((float)Math.random(), (float)Math.random(), (float)Math.random(), 1));
+				// coloresAristas.put(arista.getTipo(),
+				// ColorRGBA.randomColor());
+				coloresAristas.put(arista.getTipo(),
+						new ColorRGBA(random.nextFloat(), random.nextFloat(),
+								random.nextFloat(), 1));
+				// coloresAristas.put(arista.getTipo(), new
+				// ColorRGBA((float)Math.random(), (float)Math.random(),
+				// (float)Math.random(), 1));
 			}
 		}
 		grafo.setColoresAristas(coloresAristas);
@@ -254,10 +266,11 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener el color que tiene definido un nodo a través de su código
+	 * Este método permite obtener el color que tiene definido un nodo a través
+	 * de su código
 	 * 
 	 * @param codNodo
-	 * 				Codigo del nodo
+	 *            Codigo del nodo
 	 * @return ColorRGBA con el color del nodo
 	 */
 	public static ColorRGBA getColorNodo(int codNodo) {
@@ -270,10 +283,11 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener el color que tiene definido una arista a través de su código
+	 * Este método permite obtener el color que tiene definido una arista a
+	 * través de su código
 	 * 
 	 * @param codArista
-	 * 				Codigo de la arista
+	 *            Codigo de la arista
 	 * @return ColorRGBA con el color de la arista
 	 */
 	public static ColorRGBA getColorArista(int codArista) {
@@ -286,11 +300,11 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener una colección con los atributos que posee un nodo determinado. 
-	 * La información se obtiene a través del código del nodo
+	 * Este método permite obtener una colección con los atributos que posee un
+	 * nodo determinado. La información se obtiene a través del código del nodo
 	 * 
 	 * @param codNodo
-	 * 				Código del nodo
+	 *            Código del nodo
 	 * @return HashMap<String, Object> con los atributos del nodo
 	 */
 	public static HashMap<String, Object> getAtributosNodo(int codNodo) {
@@ -304,12 +318,13 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener una colección con los atributos que posee una arista determinada. 
-	 * La información se obtiene a través del código de la arista
+	 * Este método permite obtener una colección con los atributos que posee una
+	 * arista determinada. La información se obtiene a través del código de la
+	 * arista
 	 * 
 	 * @param codArista
-	 * 				Código de la arista
-	 * @return HashMap<String, Object> con los atributos de la arista 
+	 *            Código de la arista
+	 * @return HashMap<String, Object> con los atributos de la arista
 	 */
 	public static HashMap<String, Object> getAtributosArista(int codArista) {
 		HashSet<Arista> aristas = grafo.getAristas();
@@ -322,8 +337,9 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener un arreglo con los nombres de los tipos de nodos que hay en el grafo
-	 *  
+	 * Este método permite obtener un arreglo con los nombres de los tipos de
+	 * nodos que hay en el grafo
+	 * 
 	 * @return String[] con el los tipos de nodos que existen en el grafo
 	 */
 	public static String[] getTiposNodos() {
@@ -333,8 +349,9 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener un arreglo con los nombres de los tipos de aristas que hay en el grafo
-	 *  
+	 * Este método permite obtener un arreglo con los nombres de los tipos de
+	 * aristas que hay en el grafo
+	 * 
 	 * @return String[] con el los tipos de aristas que existen en el grafo
 	 */
 	public static String[] getTiposAristas() {
@@ -344,10 +361,11 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener el color del tipo de un nodo de acuerdo a su código
+	 * Este método permite obtener el color del tipo de un nodo de acuerdo a su
+	 * código
 	 * 
 	 * @param codigoYtipo
-	 * 					String con el código y el tipo del nodo
+	 *            String con el código y el tipo del nodo
 	 * @return ColorRGBA del tipo de nodo
 	 */
 	public static ColorRGBA getColorTipoNodo(String codigoYtipo) {
@@ -357,11 +375,12 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener el color del tipo de una arista de acuerdo a su código
+	 * Este método permite obtener el color del tipo de una arista de acuerdo a
+	 * su código
 	 * 
 	 * @param codigoYtipo
-	 * 					String con el código y el tipo de la arista
-	 * @return ColorRGBA del tipo de arista 
+	 *            String con el código y el tipo de la arista
+	 * @return ColorRGBA del tipo de arista
 	 */
 	public static ColorRGBA getColorTipoArista(String codigoYtipo) {
 		HashMap<String, ColorRGBA> colores = grafo.getColoresAristas();
@@ -370,11 +389,12 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite obtener la figura del tipo de un nodo de acuerdo a su código
+	 * Este método permite obtener la figura del tipo de un nodo de acuerdo a su
+	 * código
 	 * 
 	 * @param codigoYtipo
-	 * 					String con el código y el tipo del nodo
-	 * @return String con el nombre de la figura del nodo 
+	 *            String con el código y el tipo del nodo
+	 * @return String con el nombre de la figura del nodo
 	 */
 	public static String getFiguraNodo(String codigoYtipo) {
 		HashSet<Nodo> nodos = grafo.getNodos();
@@ -388,12 +408,13 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método define una nueva figura a los nodos de un mismo tipo al que se desea cambiar
+	 * Este método define una nueva figura a los nodos de un mismo tipo al que
+	 * se desea cambiar
 	 * 
 	 * @param codigoYtipo
-	 * 					String con el código y el tipo del nodo
+	 *            String con el código y el tipo del nodo
 	 * @param figura
-	 * 				Nombre de la nueva figura 
+	 *            Nombre de la nueva figura
 	 */
 	public static void setFiguraNodos(String codigoYtipo, String figura) {
 		HashSet<Nodo> nodos = grafo.getNodos();
@@ -406,12 +427,13 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método define un nuevo color a los nodos de un mismo tipo al que se desea cambiar
+	 * Este método define un nuevo color a los nodos de un mismo tipo al que se
+	 * desea cambiar
 	 * 
 	 * @param codigoYtipo
-	 * 					String con el código y el tipo del nodo
+	 *            String con el código y el tipo del nodo
 	 * @param color
-	 * 				Nuevo color
+	 *            Nuevo color
 	 */
 	public static void setColoresNodos(String codigoYtipo, ColorRGBA color) {
 		String tipo = codigoYtipo.split(" ")[0];
@@ -421,7 +443,8 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite asignarle el color a todos los nodos de acuerdo a su propio tipo 
+	 * Este método permite asignarle el color a todos los nodos de acuerdo a su
+	 * propio tipo
 	 */
 	private static void asignarColoresNodos() {
 		HashSet<Nodo> nodos = grafo.getNodos();
@@ -432,12 +455,13 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método define un nuevo color a las aristas de un mismo tipo al que se desea cambiar
+	 * Este método define un nuevo color a las aristas de un mismo tipo al que
+	 * se desea cambiar
 	 * 
 	 * @param codigoYtipo
-	 * 					String con el código y el tipo de la arista
+	 *            String con el código y el tipo de la arista
 	 * @param color
-	 * 				Nuevo color 
+	 *            Nuevo color
 	 */
 	public static void setColoresAristas(String codigoYtipo, ColorRGBA color) {
 		String tipo = codigoYtipo.split(" ")[0];
@@ -447,7 +471,8 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite asignarle el color a todas las aristas de acuerdo a su propio tipo
+	 * Este método permite asignarle el color a todas las aristas de acuerdo a
+	 * su propio tipo
 	 */
 	private static void asignarColoresAristas() {
 		HashSet<Arista> aristas = grafo.getAristas();
@@ -458,7 +483,8 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite definir una figura inicial a todos los nodos. Por default se definen como esferas
+	 * Este método permite definir una figura inicial a todos los nodos. Por
+	 * default se definen como esferas
 	 */
 	public static void llenarFiguras() {
 		HashSet<Nodo> nodos = grafo.getNodos();
@@ -468,12 +494,13 @@ public class Ctrl {
 	}
 
 	/**
-	 * Este método permite guardar la información del grafo en un archivo, para poder ser reutilizado y para
-	 * dar persistencia a los cambio realizados en el grafo
+	 * Este método permite guardar la información del grafo en un archivo, para
+	 * poder ser reutilizado y para dar persistencia a los cambio realizados en
+	 * el grafo
 	 * 
 	 * @param archivo
-	 * 				ruta donde se guardará el archivo
-	 * @return 1 si se guardó con éxito, 0 si se produjo algún error 
+	 *            ruta donde se guardará el archivo
+	 * @return 1 si se guardó con éxito, 0 si se produjo algún error
 	 */
 	public static int guardarGrafo(File archivo) {
 
@@ -504,8 +531,9 @@ public class Ctrl {
 	 * Este método permite abrir y leer un grafo que este almacenado
 	 * 
 	 * @param archivo
-	 * 				ruta del archivo que se desea abrir
-	 * @return true si se logró leer el archivo, false si se presentó algún error
+	 *            ruta del archivo que se desea abrir
+	 * @return true si se logró leer el archivo, false si se presentó algún
+	 *         error
 	 */
 	public static boolean abrirGrafo(File archivo) {
 		try {
@@ -517,9 +545,34 @@ public class Ctrl {
 			return true;
 		} catch (IOException ex) {
 			System.out.println(ex);
-		} catch (ClassNotFoundException ex) { 
+		} catch (ClassNotFoundException ex) {
 			System.out.println(ex);
 		}
 		return false;
+	}
+
+	/**
+	 * Este método permite reordenar los nodos para que los nodos que tienen
+	 * conexiones entre sí queden más cerca en el momento de ser graficadas
+	 * 
+	 * @return ArrayList<nodo> con los nodos organizados
+	 */
+	public static ArrayList<Nodo> reordenarNodos() {
+		ArrayList<Nodo> nodosRet = new ArrayList<Nodo>(grafo.getNodos().size());
+		for (Arista aristaA : grafo.getAristas()) {
+			if (!nodosRet.contains(aristaA.getOrigen())) {
+				nodosRet.add(aristaA.getOrigen());
+			}
+			if (!nodosRet.contains(aristaA.getDestino())) {
+				nodosRet.add(aristaA.getDestino());
+			}
+			for (Arista aristaB : grafo.getAristas()) {
+				if (aristaA.getOrigen() == aristaB.getDestino()
+						&& !nodosRet.contains(aristaB.getOrigen())) {
+					nodosRet.add(aristaB.getOrigen());
+				}
+			}
+		}
+		return nodosRet;
 	}
 }
