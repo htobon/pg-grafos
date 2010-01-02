@@ -53,10 +53,18 @@ public class Ctrl {
 	 *         identificación de cada uno de los nodos.
 	 */
 	public static int[] getCodigosNodos() {
-		int[] codigos = new int[grafo.getNodos().size()];
+		/*int[] codigos = new int[grafo.getNodos().size()];
 		int cont = 0;
 		for (Iterator<Nodo> i = grafo.getNodos().iterator(); i.hasNext(); cont++) {
 			codigos[cont] = i.next().getCodigo();
+		}
+		return codigos;*/
+		
+		int[] codigos = new int[grafo.getNodos().size()];
+		ArrayList<Nodo> nodos= reordenarNodos();
+		
+		for(int i=0;i<nodos.size();i++){
+			codigos[i]=nodos.get(i).getCodigo();
 		}
 		return codigos;
 	}
@@ -557,7 +565,7 @@ public class Ctrl {
 	 * 
 	 * @return ArrayList<nodo> con los nodos organizados
 	 */
-	public static ArrayList<Nodo> reordenarNodos() {
+	private static ArrayList<Nodo> reordenarNodos() {
 		ArrayList<Nodo> nodosRet = new ArrayList<Nodo>(grafo.getNodos().size());
 		for (Arista aristaA : grafo.getAristas()) {
 			if (!nodosRet.contains(aristaA.getOrigen())) {
