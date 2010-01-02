@@ -571,6 +571,10 @@ public class Ctrl {
 						&& !nodosRet.contains(aristaB.getOrigen())) {
 					nodosRet.add(aristaB.getOrigen());
 				}
+				if (aristaA.getOrigen() == aristaB.getOrigen()
+						&& !nodosRet.contains(aristaB.getDestino())) {
+					nodosRet.add(aristaB.getDestino());
+				}
 			}
 		}
 		return nodosRet;
