@@ -19,7 +19,7 @@ import modelo.Grafo;
 import modelo.Nodo;
 
 public class Ctrl {
-
+ 
 	private static Grafo grafo = null;
 
 	/**

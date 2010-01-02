@@ -1,12 +1,12 @@
 package modelo;
 
-
+   
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 
 import com.jme.renderer.ColorRGBA;
-
+ 
 public class Grafo implements Serializable{
 
 	private HashSet<Nodo> nodos;

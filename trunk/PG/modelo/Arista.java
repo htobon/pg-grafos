@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 
 import com.jme.renderer.ColorRGBA;
-
+ 
 public class Arista implements Serializable {
 	private int codigo;
 	private String tipo;
