@@ -69,6 +69,9 @@ public class Cambios extends JFrame {
 		this.setTitle("Modificaciones");
 	}
 
+	/**
+	 * Método para inicializar los botones de color de los nodos y las aristas
+	 */
 	private void inicializarColores() {
 		ColorRGBA colorN= Ctrl.getColorTipoNodo((String)jcbxTiposNodos.getItemAt(0));
 		jbtnColorNodo.setBackground(new Color(colorN.asIntARGB()));
@@ -82,7 +85,11 @@ public class Cambios extends JFrame {
 		this.dispose();
 	}
 
+	/**
+	 * Método para inicializar las listas que llenan los comboBox de la ventana 
+	 */
 	private void inicializarListas() {
+		// ComboBox Tipo de Nodos
 		DefaultComboBoxModel modeloNodos = (DefaultComboBoxModel) (jcbxTiposNodos
 				.getModel());
 		modeloNodos.removeAllElements();
@@ -94,15 +101,18 @@ public class Cambios extends JFrame {
 
 		jcbxTiposNodos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {								
-												
+				
+				// Cuando la lista cambie, el color del botón debe indicar el color del tipo de nodo
 				ColorRGBA colorN= Ctrl.getColorTipoNodo(jcbxTiposNodos.getSelectedItem().toString());
 				jbtnColorNodo.setBackground(new Color(colorN.asIntARGB()));
 				
+				// Cuando la lista cambie, la lista de figuras debe mostrar la figura del tipo de nodo
 				String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getSelectedItem().toString());
 				jcboxFigura.setSelectedItem(figura);				
 			}
 		});
 		
+		// ComboBox Tipo de  Aristas
 		DefaultComboBoxModel modeloAristas = (DefaultComboBoxModel) (cbxTiposAristas
 				.getModel());
 		modeloAristas.removeAllElements();
@@ -114,11 +124,13 @@ public class Cambios extends JFrame {
 		
 		cbxTiposAristas.addItemListener(new ItemListener(){
 	        public void itemStateChanged(ItemEvent e) {
+	        	// Cuando la lista cambie, el color del botón debe indicar el color del tipo de arista
 				ColorRGBA colorA= Ctrl.getColorTipoArista((String)cbxTiposAristas.getSelectedItem());
 				jbtnColorArista.setBackground(new Color(colorA.asIntARGB()));
 			}
 		});
 		
+		// ComboBox con la figura establecida para el tipo de nodo indicado en el ComboBox de tipo de nodo
 		String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getItemAt(0));
 		jcboxFigura.setSelectedItem(figura);
 		
