@@ -373,6 +373,11 @@ public class Principal extends javax.swing.JFrame {
 									Image.SCALE_AREA_AVERAGING));
 					botonReset.setIcon(iconoReset);
 					botonReset.setToolTipText("Reestablecer Cámara");
+					botonReset.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							botonResetActionPerformed(evt);
+						}
+					});
 				}
 
 				{
@@ -571,6 +576,10 @@ public class Principal extends javax.swing.JFrame {
 		// GameTaskQueueManager.getManager().render(call);
 		impl.doUpdate();
 
+	}
+	
+	private void botonResetActionPerformed(ActionEvent evt) {
+		impl.resetCam();
 	}
 
 }

@@ -218,6 +218,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 		
 		MousePicking pick = new MousePicking(cam, rootNode);
 		input.addAction(pick);
+		
+		
 
 	}
 
@@ -262,6 +264,17 @@ public class Espacio3D extends SimpleCanvasImpl {
 	public void cambiarColorArista(String nombreArista, ColorRGBA color) {
 		((Line) rootNode.getChild(nombreArista)).setSolidColor(color);
 		((Line) rootNode.getChild(nombreArista)).updateRenderState();
+	}
+	
+	public void resetCam() {
+		 Vector3f loc = new Vector3f(0.0f, 0.0f, 25.0f);
+	        Vector3f left = new Vector3f(-1.0f, 0.0f, 0.0f);
+	        Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
+	        Vector3f dir = new Vector3f(0.0f, 0f, -1.0f);
+	       
+	        cam.setFrame(loc, left, up, dir);
+	       
+	        cam.update();
 	}
 
 }
