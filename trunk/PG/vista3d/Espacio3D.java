@@ -2,6 +2,7 @@ package vista3d;
 
 import java.awt.event.KeyListener;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Display;
 
@@ -15,6 +16,7 @@ import com.jme.input.MouseInput;
 import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
 import com.jme.intersection.BoundingCollisionResults;
+import com.jme.intersection.CollisionData;
 import com.jme.intersection.CollisionResults;
 import com.jme.intersection.TriangleCollisionResults;
 import com.jme.intersection.TrianglePickResults;
@@ -77,6 +79,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 		int[] codigosAristas = Ctrl.getCodigosAristas();
 		dibujarAristas(codigosAristas);
+		
+		extruirGrafo();
 
 	}
 
@@ -196,7 +200,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 				+ codigosNodos[1]);
 
 		Ray rayo = new Ray(nodoOrigen.getLocalTranslation(), nodoDestino
-				.getLocalTranslation().clone().subtractLocal(nodoOrigen.getLocalTranslation()));
+				.getLocalTranslation().clone().subtractLocal(
+						nodoOrigen.getLocalTranslation()));
 		TrianglePickResults picker = new TrianglePickResults();
 		picker.setCheckDistance(true);
 		rootNode.findPick(rayo, picker);
@@ -353,6 +358,154 @@ public class Espacio3D extends SimpleCanvasImpl {
 		cam.setFrame(loc, left, up, dir);
 
 		cam.update();
+	}
+
+	public ArrayList<Sphere> buscarColisiones(Line arista, int codigoArista) {
+		ArrayList<Sphere> coleccion = new ArrayList<Sphere>();
+		int[] codigosNodos = Ctrl.getNodosDeArista(codigoArista);
+		Sphere nodoOrigen = (Sphere) rootNode.getChild("Nodo "
+				+ codigosNodos[0]);
+		Sphere nodoDestino = (Sphere) rootNode.getChild("Nodo "
+				+ codigosNodos[1]);
+
+		Ray rayo = new Ray(nodoOrigen.getLocalTranslation(), nodoDestino
+				.getLocalTranslation().clone().subtractLocal(
+						nodoOrigen.getLocalTranslation()));
+		TrianglePickResults picker = new TrianglePickResults();
+		picker.setCheckDistance(true);
+		rootNode.findPick(rayo, picker);
+		for (int c = 0; c < picker.getNumber(); c++) {
+			if (picker.getPickData(c).getTargetMesh() instanceof Sphere) {
+				coleccion.add((Sphere) picker.getPickData(c).getTargetMesh());
+			}
+		}
+		return coleccion;
+	}
+
+	public void extruirGrafo() {
+
+		ArrayList<Sphere> colisiones = new ArrayList<Sphere>();
+		// Recorrer Aristas
+		for (int codigoArista : Ctrl.getCodigosAristas()) {
+			System.out.println("Revisando: "+codigoArista);
+			// Obtener Arista
+			Line arista = (Line) rootNode.getChild("Arista " + codigoArista);
+			// Revisar colisiones por arista
+			int numColisiones = encontrarColisiones(arista, codigoArista);
+			if (numColisiones > 0) {
+				// Obtener colisiones
+				for (int codigoNodo : Ctrl.getCodigosNodos()) {
+					if (codigoNodo != Ctrl.getNodosDeArista(codigoArista)[0]
+							&& codigoNodo != Ctrl
+									.getNodosDeArista(codigoArista)[1]) {
+
+						// Crear contador de oportunidades
+						int oportunidad = 0;
+						
+						colisiones.clear();
+						colisiones = buscarColisiones(arista,
+								codigoArista);
+						
+						while (colisiones.size() > 0 && oportunidad < 10) {
+							colisiones.clear();
+							colisiones = buscarColisiones(arista,
+									codigoArista);
+							System.out.println(oportunidad);
+							// Recorrer coleccion de colisiones
+							for (int i = 0; i < colisiones.size(); i++) {
+
+								// Identificar nodo problema
+								Vector3f[] prob = new Vector3f[1];
+								prob[0] = colisiones.get(i).getLocalTranslation();
+
+								// Obtener Nodos principales
+								int[] verticesNodos = Ctrl
+										.getNodosDeArista(codigoArista);
+								Vector3f[] vertices = new Vector3f[2];
+
+								vertices[0] = ((Sphere) rootNode
+										.getChild("Nodo " + verticesNodos[0]))
+										.getLocalTranslation();
+
+								vertices[1] = ((Sphere) rootNode
+										.getChild("Nodo " + verticesNodos[1]))
+										.getLocalTranslation();
+
+								// Verificar el nodo más cercano a la
+								// colision
+								if (vertices[0].distance(prob[0]) > vertices[1]
+										.distance(prob[0])) {
+									// El más cercano está en la posición 1
+									
+									if(vertices[1].y<= prob[0].y){
+										Sphere cambio = (Sphere) rootNode
+												.getChild("Nodo "
+														+ verticesNodos[1]);
+										cambio
+												.setLocalTranslation(
+														cambio
+																.getLocalTranslation().x,
+														cambio
+																.getLocalTranslation().y,
+														cambio
+																.getLocalTranslation().z + 2.0f);
+										actualizarAristas();
+										oportunidad++;
+									} else {
+										Sphere cambio = (Sphere) rootNode
+												.getChild("Nodo "
+														+ verticesNodos[1]);
+										cambio
+												.setLocalTranslation(
+														cambio
+																.getLocalTranslation().x,
+														cambio
+																.getLocalTranslation().y,
+														cambio
+																.getLocalTranslation().z - 2.0f);
+										actualizarAristas();
+										oportunidad++;
+									}
+
+								} else {
+									// El más cercano está en la posición 0
+									if (vertices[0].y<= prob[0].y) {
+										Sphere cambio = (Sphere) rootNode
+												.getChild("Nodo "
+														+ verticesNodos[0]);
+										cambio
+												.setLocalTranslation(
+														cambio
+																.getLocalTranslation().x,
+														cambio
+																.getLocalTranslation().y,
+														cambio
+																.getLocalTranslation().z + 2.0f);
+										actualizarAristas();
+										oportunidad++;
+									} else {
+										Sphere cambio = (Sphere) rootNode
+												.getChild("Nodo "
+														+ verticesNodos[0]);
+										cambio
+												.setLocalTranslation(
+														cambio
+																.getLocalTranslation().x,
+														cambio
+																.getLocalTranslation().y,
+														cambio
+																.getLocalTranslation().z - 2.0f);
+										actualizarAristas();
+										oportunidad++;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 }
