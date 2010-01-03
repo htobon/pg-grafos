@@ -14,10 +14,13 @@ import com.jme.input.KeyInput;
 import com.jme.input.MouseInput;
 import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
+import com.jme.intersection.BoundingCollisionResults;
 import com.jme.intersection.CollisionResults;
 import com.jme.intersection.TriangleCollisionResults;
+import com.jme.intersection.TrianglePickResults;
 import com.jme.math.FastMath;
 import com.jme.math.Quaternion;
+import com.jme.math.Ray;
 import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
@@ -105,8 +108,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 			Line arista = new Line("Arista " + codigoArista, vertices, null,
 					null, null);
-			System.out.println("Arista " + codigoArista + " - Colisiones: "
-					+ encontrarColisiones(arista));
+
 			arista.setLineWidth(4f);
 
 			arista.setModelBound(new BoundingBox());
@@ -116,6 +118,9 @@ public class Espacio3D extends SimpleCanvasImpl {
 			arista.setSolidColor(Ctrl.getColorArista(codigoArista));
 			arista.updateGeometricState(0, true);
 			arista.updateRenderState();
+
+			System.out.println("Arista " + codigoArista + " - Colisiones: "
+					+ encontrarColisiones(arista, codigoArista));
 		}
 
 	}
@@ -182,19 +187,27 @@ public class Espacio3D extends SimpleCanvasImpl {
 		}
 	}
 
-	public int encontrarColisiones(Geometry arista) {
-		for (int codigoNodo : Ctrl.getCodigosNodos()) {
-			int codigoArista = Integer.parseInt(arista.getName().split(" ")[1]);
-			if (codigoNodo != Ctrl.getNodosDeArista(codigoArista)[0]
-					&& codigoNodo != Ctrl.getNodosDeArista(codigoArista)[1]) {
+	public int encontrarColisiones(Line arista, int codigoArista) {
+		// int cantidad = 0;
+		int[] codigosNodos = Ctrl.getNodosDeArista(codigoArista);
+		Sphere nodoOrigen = (Sphere) rootNode.getChild("Nodo "
+				+ codigosNodos[0]);
+		Sphere nodoDestino = (Sphere) rootNode.getChild("Nodo "
+				+ codigosNodos[1]);
 
-				Sphere nodo = (Sphere) rootNode.getChild("Nodo " + codigoNodo);
-				CollisionResults colisiones = new TriangleCollisionResults();
-				arista.findCollisions(nodo, colisiones);
-				return colisiones.getNumber();
+		Ray rayo = new Ray(nodoOrigen.getLocalTranslation(), nodoDestino
+				.getLocalTranslation().clone().subtractLocal(nodoOrigen.getLocalTranslation()));
+		TrianglePickResults picker = new TrianglePickResults();
+		picker.setCheckDistance(true);
+		rootNode.findPick(rayo, picker);
+		for (int c = 0; c < picker.getNumber(); c++) {
+			if (picker.getPickData(c).getTargetMesh() instanceof Sphere) {
+				System.out.println(arista.getName() + " - Colisiona con Nodo: "
+						+ picker.getPickData(c).getTargetMesh().getName());
 			}
 		}
-		return -1;
+
+		return picker.getNumber();
 	}
 
 	public void simpleSetup() {
@@ -281,18 +294,16 @@ public class Espacio3D extends SimpleCanvasImpl {
 		input.update(tpf);
 
 		// Ejemplo..... MOVIENDO NODO
-//		if (rootNode.getChild("Nodo 300") != null) {
-//
-//			Sphere nodo = (Sphere) rootNode.getChild("Nodo 300");
-//			nodo.setLocalTranslation(nodo.getLocalTranslation().x + 0.1f, nodo
-//					.getLocalTranslation().y, nodo.getLocalTranslation().z);
-//			System.out.println(nodo.getLocalTranslation().x);
-//
-//			actualizarAristas();
-//		}
-		
-		
-		
+		// if (rootNode.getChild("Nodo 300") != null) {
+		//
+		// Sphere nodo = (Sphere) rootNode.getChild("Nodo 300");
+		// nodo.setLocalTranslation(nodo.getLocalTranslation().x + 0.1f, nodo
+		// .getLocalTranslation().y, nodo.getLocalTranslation().z);
+		// System.out.println(nodo.getLocalTranslation().x);
+		//
+		// actualizarAristas();
+		// }
+
 		// PARA DESAPARECER EL PUNTERO DEL MOUSE: (Todavía no se donde ponerlo
 		// ya que no funciona bien)
 		// if (MouseInput.get().isButtonDown(0)) {
