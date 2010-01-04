@@ -448,7 +448,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 														cambio
 																.getLocalTranslation().y,
 														cambio
-																.getLocalTranslation().z + 2.0f);
+																.getLocalTranslation().z + 3.0f);
 										actualizarAristas();
 										oportunidad++;
 									} else {
@@ -462,7 +462,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 														cambio
 																.getLocalTranslation().y,
 														cambio
-																.getLocalTranslation().z - 2.0f);
+																.getLocalTranslation().z - 3.0f);
 										actualizarAristas();
 										oportunidad++;
 									}
@@ -480,7 +480,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 														cambio
 																.getLocalTranslation().y,
 														cambio
-																.getLocalTranslation().z + 2.0f);
+																.getLocalTranslation().z + 3.0f);
 										actualizarAristas();
 										oportunidad++;
 									} else {
@@ -494,7 +494,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 														cambio
 																.getLocalTranslation().y,
 														cambio
-																.getLocalTranslation().z - 2.0f);
+																.getLocalTranslation().z - 3.0f);
 										actualizarAristas();
 										oportunidad++;
 									}
