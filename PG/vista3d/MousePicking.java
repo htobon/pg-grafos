@@ -1,5 +1,7 @@
 package vista3d;
 
+import java.util.HashMap;
+
 import vista.Principal;
 
 import com.jme.input.MouseInput;
@@ -14,6 +16,8 @@ import com.jme.math.Vector3f;
 import com.jme.renderer.Camera;
 import com.jme.scene.Node;
 import com.jme.system.DisplaySystem;
+
+import ctrl.Ctrl;
 
 /**
  * <code>MousePick</code>
@@ -48,26 +52,11 @@ public class MousePicking extends MouseInputAction {
 
 		if (MouseInput.get().isButtonDown(1) && shotTime > 0.1f) {
 			shotTime = 0;
-			float xScreen = MouseInput.get().getXAbsolute(); // mouseAdapter is
-			// a class I use
-			// to be able to
-			// use the same
-			// classes in an
-			// applet and in
-			// a desktop
-			// application,
-			// because I've
-			// found it to
-			// behave
-			// differently
-			// for the two
-			// types of
-			// apps. For a
-			// desktop app,
-			// I believe
-			// MouseInput.get().getXAbsolute()
-			// will work
-			// here.
+			float xScreen = MouseInput.get().getXAbsolute();
+			// mouseAdapter is a class I use to be able to use the same classes
+			// in an applet and in a desktop application, because I've found it
+			// to behave differently for the two types of apps. For a desktop
+			// app, I believe MouseInput.get().getXAbsolute() will work here.
 			float yScreen = MouseInput.get().getYAbsolute();
 
 			Vector2f screenPos = new Vector2f(xScreen, yScreen);
@@ -80,7 +69,6 @@ public class MousePicking extends MouseInputAction {
 			Vector3f endPoint = worldCoordsEnd.subtractLocal(worldCoordsStart);
 
 			Ray rayLine = new Ray(startPoint, camera.getDirection());
-			
 
 			picker = new TrianglePickResults();
 			picker.setCheckDistance(true);
@@ -88,46 +76,36 @@ public class MousePicking extends MouseInputAction {
 			// geometry to pick. For
 			// example, it can be the root
 			// node
-			System.out.println("cualquier cosa");
-			if (picker.getNumber() > 0) {
-				System.out.println(picker.getNumber());
-				texto = "";
-				for (int n = 0; n < picker.getNumber(); n++) {
-					texto += picker.getPickData(n).getTargetMesh().getName()
-							+ "\n";
-				}
-				Principal.jtaInfo.setText(texto);
+			try {
+				if (picker.getNumber() > 0) {
+					System.out.println(picker.getNumber());
 
+					String codigo = picker.getPickData(0).getTargetMesh()
+							.getName().split(" ")[1];
+					HashMap<String, Object> atributos = new HashMap<String, Object>();
+					if (picker.getPickData(0).getTargetMesh().getName().split(
+							" ")[0].equals("Arista")) {
+						atributos = Ctrl.getAtributosArista(Integer
+								.parseInt(codigo));
+					}
+					if (picker.getPickData(0).getTargetMesh().getName().split(
+							" ")[0].equals("Nodo")) {
+						atributos = Ctrl.getAtributosNodo(Integer
+								.parseInt(codigo));
+					}
+					texto = "";
+
+					for (String atributo : atributos.keySet()) {
+						texto += atributo + ": "
+								+ ((String) atributos.get(atributo)) + "\n";
+					}
+
+					Principal.jtaInfo.setText(texto);
+
+				}
+			} catch (Exception e) {
 			}
 		}
-
-		// shotTime = 0;
-		// ray.setOrigin(camera.getLocation());
-		// ray.setDirection(camera.getDirection());
-		// // camera direction is already normalized
-		// ray.getDirection().normalizeLocal();
-		//			
-		// PickResults results = new BoundingPickResults();
-		// results.setCheckDistance(true);
-		// scene.findPick(ray, results);
-		//
-		// hits += results.getNumber();
-		// hitItems = "";
-		// if (results.getNumber() > 0) {
-		// texto = results.getPickData(0).getTargetMesh().getName();
-		// Principal.jtaInfo.setText(texto);
-		// for (int i = 0; i < results.getNumber(); i++) {
-		// hitItems += results.getPickData(i).getTargetMesh()
-		// .getName()
-		// + " " + results.getPickData(i).getDistance();
-		// if (i != results.getNumber() - 1) {
-		// hitItems += ", ";
-		// }
-		// }
-		// }
-		// shots++;
-		// results.clear();
-		// System.out.println(hitItems);
 	}
 
 }
