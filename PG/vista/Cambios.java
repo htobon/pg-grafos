@@ -53,8 +53,8 @@ public class Cambios extends JFrame {
 	private JButton jbtnCancelar;
 	private JButton jbtnAceptar;
 	private JPanel jpPrincipal;
-	private JComboBox jcboxFigura;
-	private JLabel jlblFiguraNodo;
+	//private JComboBox jcboxFigura;
+	//private JLabel jlblFiguraNodo;
 	private JLabel jlblNodo;
 	private JLabel jlblAristas;
 	private JLabel jlblNodos;
@@ -107,8 +107,8 @@ public class Cambios extends JFrame {
 				jbtnColorNodo.setBackground(new Color(colorN.asIntARGB()));
 				
 				// Cuando la lista cambie, la lista de figuras debe mostrar la figura del tipo de nodo
-				String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getSelectedItem().toString());
-				jcboxFigura.setSelectedItem(figura);				
+				//String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getSelectedItem().toString());
+				//jcboxFigura.setSelectedItem(figura);				
 			}
 		});
 		
@@ -131,8 +131,8 @@ public class Cambios extends JFrame {
 		});
 		
 		// ComboBox con la figura establecida para el tipo de nodo indicado en el ComboBox de tipo de nodo
-		String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getItemAt(0));
-		jcboxFigura.setSelectedItem(figura);
+		//String figura = Ctrl.getFiguraNodo((String)jcbxTiposNodos.getItemAt(0));
+		//jcboxFigura.setSelectedItem(figura);
 		
 	}
 
@@ -200,11 +200,11 @@ public class Cambios extends JFrame {
 					jpNodos.setPreferredSize(new java.awt.Dimension(297, 309));
 					jpNodos.setLayout(null);
 					{
-						ComboBoxModel jcbxFigurasNodosModel = new DefaultComboBoxModel(
-								new String[] { "Item One", "Item Two" });
+						/*ComboBoxModel jcbxFigurasNodosModel = new DefaultComboBoxModel(
+								new String[] { "Item One", "Item Two" });*/
 						jcbxTiposNodos = new JComboBox();
 						jpNodos.add(jcbxTiposNodos);
-						jcbxTiposNodos.setModel(jcbxFigurasNodosModel);
+						//jcbxTiposNodos.setModel(jcbxFigurasNodosModel);
 						jcbxTiposNodos.setBounds(93, 65, 170, 23);
 
 					}
@@ -241,7 +241,7 @@ public class Cambios extends JFrame {
 							}
 						});
 					}
-					{
+					/*{
 						jlblFiguraNodo = new JLabel();
 						jpNodos.add(jlblFiguraNodo);
 						jlblFiguraNodo.setText("Figura");
@@ -260,7 +260,7 @@ public class Cambios extends JFrame {
 								Ctrl.setFiguraNodos(jcbxTiposNodos.getSelectedItem().toString(), jcboxFigura.getSelectedItem().toString());
 							}
 						});
-					}
+					}*/
 				}
 				this.addWindowListener(new WindowAdapter() {
 					public void windowClosing(WindowEvent evt) {
