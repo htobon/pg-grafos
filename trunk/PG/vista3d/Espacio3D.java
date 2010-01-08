@@ -123,8 +123,10 @@ public class Espacio3D extends SimpleCanvasImpl {
 			arista.updateGeometricState(0, true);
 			arista.updateRenderState();
 
-			/*System.out.println("Arista " + codigoArista + " - Colisiones: "
-					+ encontrarColisiones(arista, codigoArista));*/
+			/*
+			 * System.out.println("Arista " + codigoArista + " - Colisiones: " +
+			 * encontrarColisiones(arista, codigoArista));
+			 */
 		}
 
 	}
@@ -207,8 +209,11 @@ public class Espacio3D extends SimpleCanvasImpl {
 		rootNode.findPick(rayo, picker);
 		for (int c = 0; c < picker.getNumber(); c++) {
 			if (picker.getPickData(c).getTargetMesh() instanceof Sphere) {
-				/*System.out.println(arista.getName() + " - Colisiona con Nodo: "
-						+ picker.getPickData(c).getTargetMesh().getName());*/
+				/*
+				 * System.out.println(arista.getName() +
+				 * " - Colisiona con Nodo: " +
+				 * picker.getPickData(c).getTargetMesh().getName());
+				 */
 			}
 		}
 
@@ -387,327 +392,485 @@ public class Espacio3D extends SimpleCanvasImpl {
 		ArrayList<Sphere> colisiones = new ArrayList<Sphere>();
 		// Recorrer Aristas
 		for (int codigoArista : Ctrl.getCodigosAristas()) {
-			
+
 			// Obtener Arista
 			Line arista = (Line) rootNode.getChild("Arista " + codigoArista);
 			// Revisar colisiones por arista
-			int numColisiones = encontrarColisiones(arista, codigoArista);
-			if (numColisiones > 0) {
+			colisiones = buscarColisiones(arista, codigoArista);
+			//int numColisiones = encontrarColisiones(arista, codigoArista);
+			// if (numColisiones > 0) {
+			int oportunidad = 0;
+			while (colisiones.size() > 0 && oportunidad < 15) {
 				// Obtener colisiones
-				for (int codigoNodo : Ctrl.getCodigosNodos()) {
-					if (codigoNodo != Ctrl.getNodosDeArista(codigoArista)[0]
-							&& codigoNodo != Ctrl
-									.getNodosDeArista(codigoArista)[1]) {
+				colisiones.clear();
+				colisiones = buscarColisiones(arista, codigoArista);
+				// Obtener los nodos de la arista
+				int[] nodosArista = Ctrl.getNodosDeArista(codigoArista);
 
-						// Crear contador de oportunidades
-						int oportunidad = 0;
+				// Recorrer coleccion de colisiones
+				for (int i = 0; i < colisiones.size(); i++) {
+					// Identificar nodo problema
+					Vector3f[] prob = new Vector3f[1];
+					prob[0] = colisiones.get(i).getLocalTranslation();
 
-						colisiones.clear();
-						colisiones = buscarColisiones(arista, codigoArista);
+					// Nodos Arista
+					Vector3f[] vertices = new Vector3f[2];
+					vertices[0] = ((Sphere) rootNode.getChild("Nodo "
+							+ nodosArista[0])).getLocalTranslation();
 
-						while (colisiones.size() > 0) {
-							if (oportunidad < 5) {
-								colisiones.clear();
-								colisiones = buscarColisiones(arista,
-										codigoArista);
-								
-								// Recorrer coleccion de colisiones
-								for (int i = 0; i < colisiones.size(); i++) {
+					vertices[1] = ((Sphere) rootNode.getChild("Nodo "
+							+ nodosArista[1])).getLocalTranslation();
 
-									// Identificar nodo problema
-									Vector3f[] prob = new Vector3f[1];
-									prob[0] = colisiones.get(i)
-											.getLocalTranslation();
+					// Verificar el nodo más cercano a la colision
+					if (vertices[0].distance(prob[0]) > vertices[1]
+							.distance(prob[0])) {
+						// El más cercano está en la posición 1
 
-									// Obtener Nodos principales
-									int[] verticesNodos = Ctrl
-											.getNodosDeArista(codigoArista);
-									Vector3f[] vertices = new Vector3f[2];
-
-									vertices[0] = ((Sphere) rootNode
-											.getChild("Nodo "
-													+ verticesNodos[0]))
-											.getLocalTranslation();
-
-									vertices[1] = ((Sphere) rootNode
-											.getChild("Nodo "
-													+ verticesNodos[1]))
-											.getLocalTranslation();
-
-									// Verificar el nodo más cercano a la
-									// colision
-									if (vertices[0].distance(prob[0]) > vertices[1]
-											.distance(prob[0])) {
-										// El más cercano está en la posición 1
-
-										if (vertices[1].y <= prob[0].y) {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[1]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x,
-															cambio
-																	.getLocalTranslation().y,
-															cambio
-																	.getLocalTranslation().z + 3.0f);
-											actualizarAristas();
-											oportunidad++;
-										} else {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[1]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x,
-															cambio
-																	.getLocalTranslation().y,
-															cambio
-																	.getLocalTranslation().z - 3.0f);
-											actualizarAristas();
-											oportunidad++;
-										}
-
-									} else {
-										// El más cercano está en la posición 0
-										if (vertices[0].y <= prob[0].y) {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[0]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x,
-															cambio
-																	.getLocalTranslation().y,
-															cambio
-																	.getLocalTranslation().z + 3.0f);
-											actualizarAristas();
-											oportunidad++;
-										} else {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[0]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x,
-															cambio
-																	.getLocalTranslation().y,
-															cambio
-																	.getLocalTranslation().z - 3.0f);
-											actualizarAristas();
-											oportunidad++;
-										}
-									}
-								}
+						// Mover en z
+						if (oportunidad < 5) {
+							if (vertices[1].z <= prob[0].z) {
+								Sphere cambio = (Sphere) rootNode
+										.getChild("Nodo " + nodosArista[1]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x, cambio
+										.getLocalTranslation().y, cambio
+										.getLocalTranslation().z - 4.0f);
+								actualizarAristas();
+								oportunidad++;
+							} else {
+								Sphere cambio = (Sphere) rootNode
+										.getChild("Nodo " + nodosArista[1]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x, cambio
+										.getLocalTranslation().y, cambio
+										.getLocalTranslation().z + 4.0f);
+								actualizarAristas();
+								oportunidad++;
 							}
-							if (oportunidad >= 5 && oportunidad < 10) {
-								// Si no se eliminaron las colisiones moviendo
-								// sobre el eje z, intentar con el eje y
-								colisiones.clear();
-								colisiones = buscarColisiones(arista,
-										codigoArista);
-								// Recorrer coleccion de colisiones
-								for (int i = 0; i < colisiones.size(); i++) {
-
-									// Identificar nodo problema
-									Vector3f[] prob = new Vector3f[1];
-									prob[0] = colisiones.get(i)
-											.getLocalTranslation();
-
-									// Obtener Nodos principales
-									int[] verticesNodos = Ctrl
-											.getNodosDeArista(codigoArista);
-									Vector3f[] vertices = new Vector3f[2];
-
-									vertices[0] = ((Sphere) rootNode
-											.getChild("Nodo "
-													+ verticesNodos[0]))
-											.getLocalTranslation();
-
-									vertices[1] = ((Sphere) rootNode
-											.getChild("Nodo "
-													+ verticesNodos[1]))
-											.getLocalTranslation();
-
-									// Verificar el nodo más cercano a la
-									// colision
-									if (vertices[0].distance(prob[0]) > vertices[1]
-											.distance(prob[0])) {
-										// El más cercano está en la posición 1
-
-										if (vertices[1].x <= prob[0].x) {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[1]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x,
-															cambio
-																	.getLocalTranslation().y + 3.0f,
-															cambio
-																	.getLocalTranslation().z);
-											actualizarAristas();
-											oportunidad++;
-										} else {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[1]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x,
-															cambio
-																	.getLocalTranslation().y - 3.0f,
-															cambio
-																	.getLocalTranslation().z);
-											actualizarAristas();
-											oportunidad++;
-										}
-
-									} else {
-										// El más cercano está en la posición 0
-										if (vertices[0].x <= prob[0].x) {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[0]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x,
-															cambio
-																	.getLocalTranslation().y + 3.0f,
-															cambio
-																	.getLocalTranslation().z);
-											actualizarAristas();
-											oportunidad++;
-										} else {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[0]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x,
-															cambio
-																	.getLocalTranslation().y - 3.0f,
-															cambio
-																	.getLocalTranslation().z);
-											actualizarAristas();
-											oportunidad++;
-										}
-									}
-								}
+						}//Mover en y
+						else if(oportunidad>=5&&oportunidad<10){
+							if (vertices[1].y <= prob[0].y) {
+								Sphere cambio = (Sphere) rootNode
+								.getChild("Nodo " + nodosArista[1]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x, cambio
+										.getLocalTranslation().y - 4.0f, cambio
+										.getLocalTranslation().z );
+								actualizarAristas();
+								oportunidad++;
+							} else {
+								Sphere cambio = (Sphere) rootNode
+								.getChild("Nodo " + nodosArista[1]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x, cambio
+										.getLocalTranslation().y + 4.0f, cambio
+										.getLocalTranslation().z);
+								actualizarAristas();
+								oportunidad++;
 							}
-							if (oportunidad >= 10 && oportunidad < 15) {
-								// Si no se eliminaron las colisiones moviendo
-								// sobre el eje z, ni y, intentar con el eje x
-								colisiones.clear();
-								colisiones = buscarColisiones(arista,
-										codigoArista);
-								// Recorrer coleccion de colisiones
-								for (int i = 0; i < colisiones.size(); i++) {
-
-									// Identificar nodo problema
-									Vector3f[] prob = new Vector3f[1];
-									prob[0] = colisiones.get(i)
-											.getLocalTranslation();
-
-									// Obtener Nodos principales
-									int[] verticesNodos = Ctrl
-											.getNodosDeArista(codigoArista);
-									Vector3f[] vertices = new Vector3f[2];
-
-									vertices[0] = ((Sphere) rootNode
-											.getChild("Nodo "
-													+ verticesNodos[0]))
-											.getLocalTranslation();
-
-									vertices[1] = ((Sphere) rootNode
-											.getChild("Nodo "
-													+ verticesNodos[1]))
-											.getLocalTranslation();
-
-									// Verificar el nodo más cercano a la
-									// colision
-									if (vertices[0].distance(prob[0]) > vertices[1]
-											.distance(prob[0])) {
-										// El más cercano está en la posición 1
-
-										if (vertices[1].y <= prob[0].y) {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[1]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x + 3.0f,
-															cambio
-																	.getLocalTranslation().y,
-															cambio
-																	.getLocalTranslation().z);
-											actualizarAristas();
-											oportunidad++;
-										} else {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[1]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x - 3.0f,
-															cambio
-																	.getLocalTranslation().y,
-															cambio
-																	.getLocalTranslation().z);
-											actualizarAristas();
-											oportunidad++;
-										}
-
-									} else {
-										// El más cercano está en la posición 0
-										if (vertices[0].x <= prob[0].x) {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[0]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x + 3.0f,
-															cambio
-																	.getLocalTranslation().y,
-															cambio
-																	.getLocalTranslation().z);
-											actualizarAristas();
-											oportunidad++;
-										} else {
-											Sphere cambio = (Sphere) rootNode
-													.getChild("Nodo "
-															+ verticesNodos[0]);
-											cambio
-													.setLocalTranslation(
-															cambio
-																	.getLocalTranslation().x - 3.0f,
-															cambio
-																	.getLocalTranslation().y,
-															cambio
-																	.getLocalTranslation().z);
-											actualizarAristas();
-											oportunidad++;
-										}
-									}
-								}
+						}else if(oportunidad>=10&& oportunidad<15){
+							if (vertices[1].x <= prob[0].x) {
+								Sphere cambio = (Sphere) rootNode
+								.getChild("Nodo " + nodosArista[1]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x - 4.0f, cambio
+										.getLocalTranslation().y, cambio
+										.getLocalTranslation().z );
+								actualizarAristas();
+								oportunidad++;
+							} else {
+								Sphere cambio = (Sphere) rootNode
+								.getChild("Nodo " + nodosArista[1]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x + 4.0f, cambio
+										.getLocalTranslation().y, cambio
+										.getLocalTranslation().z);
+								actualizarAristas();
+								oportunidad++;
+							}				
+						}
+					} else {
+						// El más cercano está en la posición 0
+						if (oportunidad < 5) {
+							if (vertices[0].z <= prob[0].z) {
+								Sphere cambio = (Sphere) rootNode
+										.getChild("Nodo " + nodosArista[0]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x, cambio
+										.getLocalTranslation().y, cambio
+										.getLocalTranslation().z - 4.0f);
+								actualizarAristas();
+								oportunidad++;
+							} else {
+								Sphere cambio = (Sphere) rootNode
+										.getChild("Nodo " + nodosArista[0]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x, cambio
+										.getLocalTranslation().y, cambio
+										.getLocalTranslation().z + 4.0f);
+								actualizarAristas();
+								oportunidad++;
 							}
+						}//Mover en y
+						else if(oportunidad>=5&&oportunidad<10){
+							if (vertices[0].y <= prob[0].y) {
+								Sphere cambio = (Sphere) rootNode
+								.getChild("Nodo " + nodosArista[0]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x, cambio
+										.getLocalTranslation().y - 4.0f, cambio
+										.getLocalTranslation().z );
+								actualizarAristas();
+								oportunidad++;
+							} else {
+								Sphere cambio = (Sphere) rootNode
+								.getChild("Nodo " + nodosArista[0]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x, cambio
+										.getLocalTranslation().y + 4.0f, cambio
+										.getLocalTranslation().z);
+								actualizarAristas();
+								oportunidad++;
+							}
+						}else if(oportunidad>=10&& oportunidad<15){
+							if (vertices[0].x <= prob[0].x) {
+								Sphere cambio = (Sphere) rootNode
+								.getChild("Nodo " + nodosArista[0]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x - 4.0f, cambio
+										.getLocalTranslation().y, cambio
+										.getLocalTranslation().z );
+								actualizarAristas();
+								oportunidad++;
+							} else {
+								Sphere cambio = (Sphere) rootNode
+								.getChild("Nodo " + nodosArista[0]);
+								cambio.setLocalTranslation(cambio
+										.getLocalTranslation().x + 4.0f, cambio
+										.getLocalTranslation().y, cambio
+										.getLocalTranslation().z);
+								actualizarAristas();
+								oportunidad++;
+							}				
 						}
 					}
+					
+
 				}
+
 			}
+
+			// for (int codigoNodo : Ctrl.getCodigosNodos()) {
+			// if (codigoNodo != Ctrl.getNodosDeArista(codigoArista)[0]
+			// && codigoNodo != Ctrl
+			// .getNodosDeArista(codigoArista)[1]) {
+			//
+			// // Crear contador de oportunidades
+			// int oportunidad = 0;
+			//
+			// colisiones.clear();
+			// colisiones = buscarColisiones(arista, codigoArista);
+			//
+			// while (colisiones.size() > 0) {
+			// if (oportunidad < 5) {
+			// colisiones.clear();
+			// colisiones = buscarColisiones(arista,
+			// codigoArista);
+			//								
+			// // Recorrer coleccion de colisiones
+			// for (int i = 0; i < colisiones.size(); i++) {
+			//
+			// // Identificar nodo problema
+			// Vector3f[] prob = new Vector3f[1];
+			// prob[0] = colisiones.get(i)
+			// .getLocalTranslation();
+			//
+			// // Obtener Nodos principales
+			// int[] verticesNodos = Ctrl
+			// .getNodosDeArista(codigoArista);
+			// Vector3f[] vertices = new Vector3f[2];
+			//
+			// vertices[0] = ((Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]))
+			// .getLocalTranslation();
+			//
+			// vertices[1] = ((Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]))
+			// .getLocalTranslation();
+			//
+			// // Verificar el nodo más cercano a la
+			// // colision
+			// if (vertices[0].distance(prob[0]) > vertices[1]
+			// .distance(prob[0])) {
+			// // El más cercano está en la posición 1
+			//
+			// if (vertices[1].y <= prob[0].y) {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x,
+			// cambio
+			// .getLocalTranslation().y,
+			// cambio
+			// .getLocalTranslation().z + 4.0f);
+			// actualizarAristas();
+			// oportunidad++;
+			// } else {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x,
+			// cambio
+			// .getLocalTranslation().y,
+			// cambio
+			// .getLocalTranslation().z - 4.0f);
+			// actualizarAristas();
+			// oportunidad++;
+			// }
+			//
+			// } else {
+			// // El más cercano está en la posición 0
+			// if (vertices[0].y <= prob[0].y) {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x,
+			// cambio
+			// .getLocalTranslation().y,
+			// cambio
+			// .getLocalTranslation().z + 4.0f);
+			// actualizarAristas();
+			// oportunidad++;
+			// } else {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x,
+			// cambio
+			// .getLocalTranslation().y,
+			// cambio
+			// .getLocalTranslation().z - 4.0f);
+			// actualizarAristas();
+			// oportunidad++;
+			// }
+			// }
+			// }
+			// }
+			// if (oportunidad >= 5 && oportunidad < 10) {
+			// // Si no se eliminaron las colisiones moviendo
+			// // sobre el eje z, intentar con el eje y
+			// colisiones.clear();
+			// colisiones = buscarColisiones(arista,
+			// codigoArista);
+			// // Recorrer coleccion de colisiones
+			// for (int i = 0; i < colisiones.size(); i++) {
+			//
+			// // Identificar nodo problema
+			// Vector3f[] prob = new Vector3f[1];
+			// prob[0] = colisiones.get(i)
+			// .getLocalTranslation();
+			//
+			// // Obtener Nodos principales
+			// int[] verticesNodos = Ctrl
+			// .getNodosDeArista(codigoArista);
+			// Vector3f[] vertices = new Vector3f[2];
+			//
+			// vertices[0] = ((Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]))
+			// .getLocalTranslation();
+			//
+			// vertices[1] = ((Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]))
+			// .getLocalTranslation();
+			//
+			// // Verificar el nodo más cercano a la
+			// // colision
+			// if (vertices[0].distance(prob[0]) > vertices[1]
+			// .distance(prob[0])) {
+			// // El más cercano está en la posición 1
+			//
+			// if (vertices[1].x <= prob[0].x) {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x,
+			// cambio
+			// .getLocalTranslation().y + 4.0f,
+			// cambio
+			// .getLocalTranslation().z);
+			// actualizarAristas();
+			// oportunidad++;
+			// } else {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x,
+			// cambio
+			// .getLocalTranslation().y - 4.0f,
+			// cambio
+			// .getLocalTranslation().z);
+			// actualizarAristas();
+			// oportunidad++;
+			// }
+			//
+			// } else {
+			// // El más cercano está en la posición 0
+			// if (vertices[0].x <= prob[0].x) {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x,
+			// cambio
+			// .getLocalTranslation().y + 4.0f,
+			// cambio
+			// .getLocalTranslation().z);
+			// actualizarAristas();
+			// oportunidad++;
+			// } else {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x,
+			// cambio
+			// .getLocalTranslation().y - 4.0f,
+			// cambio
+			// .getLocalTranslation().z);
+			// actualizarAristas();
+			// oportunidad++;
+			// }
+			// }
+			// }
+			// }
+			// if (oportunidad >= 10 && oportunidad < 15) {
+			// // Si no se eliminaron las colisiones moviendo
+			// // sobre el eje z, ni y, intentar con el eje x
+			// colisiones.clear();
+			// colisiones = buscarColisiones(arista,
+			// codigoArista);
+			// // Recorrer coleccion de colisiones
+			// for (int i = 0; i < colisiones.size(); i++) {
+			//
+			// // Identificar nodo problema
+			// Vector3f[] prob = new Vector3f[1];
+			// prob[0] = colisiones.get(i)
+			// .getLocalTranslation();
+			//
+			// // Obtener Nodos principales
+			// int[] verticesNodos = Ctrl
+			// .getNodosDeArista(codigoArista);
+			// Vector3f[] vertices = new Vector3f[2];
+			//
+			// vertices[0] = ((Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]))
+			// .getLocalTranslation();
+			//
+			// vertices[1] = ((Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]))
+			// .getLocalTranslation();
+			//
+			// // Verificar el nodo más cercano a la
+			// // colision
+			// if (vertices[0].distance(prob[0]) > vertices[1]
+			// .distance(prob[0])) {
+			// // El más cercano está en la posición 1
+			//
+			// if (vertices[1].y <= prob[0].y) {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x + 4.0f,
+			// cambio
+			// .getLocalTranslation().y,
+			// cambio
+			// .getLocalTranslation().z);
+			// actualizarAristas();
+			// oportunidad++;
+			// } else {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[1]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x - 4.0f,
+			// cambio
+			// .getLocalTranslation().y,
+			// cambio
+			// .getLocalTranslation().z);
+			// actualizarAristas();
+			// oportunidad++;
+			// }
+			//
+			// } else {
+			// // El más cercano está en la posición 0
+			// if (vertices[0].x <= prob[0].x) {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x + 4.0f,
+			// cambio
+			// .getLocalTranslation().y,
+			// cambio
+			// .getLocalTranslation().z);
+			// actualizarAristas();
+			// oportunidad++;
+			// } else {
+			// Sphere cambio = (Sphere) rootNode
+			// .getChild("Nodo "
+			// + verticesNodos[0]);
+			// cambio
+			// .setLocalTranslation(
+			// cambio
+			// .getLocalTranslation().x - 4.0f,
+			// cambio
+			// .getLocalTranslation().y,
+			// cambio
+			// .getLocalTranslation().z);
+			// actualizarAristas();
+			// oportunidad++;
+			// }
+			// }
+			// }
+			// }
+			// }
+			// }
+			// }
 		}
-
 	}
-
 }
