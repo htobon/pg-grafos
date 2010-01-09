@@ -394,7 +394,7 @@ public class Principal extends javax.swing.JFrame {
 							// Panel Izquierdo (Informacion del Grafo)
 							scrollPanelIzquierdo = new JScrollPane();
 							scrollPanelIzquierdo
-									.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+									.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 							scrollPanelIzquierdo
 									.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 							scrollPanelIzquierdo
@@ -413,9 +413,9 @@ public class Principal extends javax.swing.JFrame {
 								jtaInfo = new JTextArea();
 								panelIzquierdo.add(jtaInfo);
 								jtaInfo.setText("Información");
-								jtaInfo
-										.setPreferredSize(new java.awt.Dimension(
-												202, 466));
+//								jtaInfo
+//										.setPreferredSize(new java.awt.Dimension(
+//												202, 466));
 								jtaInfo.setBorder(BorderFactory
 										.createEmptyBorder(0, 0, 0, 0));
 								jtaInfo.setEditable(false);
