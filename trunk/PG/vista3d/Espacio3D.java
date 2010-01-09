@@ -84,8 +84,8 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 	}
 
-	private void dibujarCruz() {
-		Text cruz = new Text("cruz", "+");
+	public void dibujarCruz() {
+		Text cruz = new Text("cruz", "-");
 		// Text cross = Text.createDefaultTextLabel("Cross hairs", "+");
 		cruz.setCullHint(Spatial.CullHint.Never);
 		// cruz.setTextureCombineMode(TextureCombineMode.Replace);
