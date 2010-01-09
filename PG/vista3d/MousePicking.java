@@ -52,6 +52,7 @@ public class MousePicking extends MouseInputAction {
 
 		if (MouseInput.get().isButtonDown(1) && shotTime > 0.1f) {
 			shotTime = 0;
+			
 			float xScreen = MouseInput.get().getXAbsolute();
 			// mouseAdapter is a class I use to be able to use the same classes
 			// in an applet and in a desktop application, because I've found it
@@ -76,9 +77,10 @@ public class MousePicking extends MouseInputAction {
 			// geometry to pick. For
 			// example, it can be the root
 			// node
+			
 			try {
+				System.out.println(picker.getNumber());
 				if (picker.getNumber() > 0) {
-					//System.out.println(picker.getNumber());
 
 					String codigo = picker.getPickData(0).getTargetMesh()
 							.getName().split(" ")[1];

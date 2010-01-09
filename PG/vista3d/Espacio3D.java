@@ -81,6 +81,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 		dibujarAristas(codigosAristas);
 
 		extruirGrafo();
+		simpleSetup();
 
 	}
 
@@ -265,7 +266,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 		box.updateModelBound();
 		box.setLocalTranslation(new Vector3f(0, 0, -10));
 		box.setRenderQueueMode(Renderer.QUEUE_SKIP);
-		rootNode.attachChild(box);
+		//rootNode.attachChild(box);
 
 		box.setRandomColors();
 
