@@ -85,7 +85,11 @@ public class Espacio3D extends SimpleCanvasImpl {
 	}
 
 	public void dibujarCruz() {
-		Text cruz = new Text("cruz", "-");
+		if(rootNode.getChild("cruz")!=null){
+			rootNode.detachChild(rootNode.getChild("cruz"));
+		}
+		Text cruz = new Text("cruz", "+");
+		
 		// Text cross = Text.createDefaultTextLabel("Cross hairs", "+");
 		cruz.setCullHint(Spatial.CullHint.Never);
 		// cruz.setTextureCombineMode(TextureCombineMode.Replace);
@@ -94,6 +98,17 @@ public class Espacio3D extends SimpleCanvasImpl {
 				// of a font char
 				DisplaySystem.getDisplaySystem().getHeight() / 2f - 8f, 0));
 		rootNode.attachChild(cruz);
+		
+		
+//		Sphere cruz= new Sphere("cruz",10,10,1.0f);
+//		cruz.setLocalTranslation(new Vector3f(DisplaySystem.getDisplaySystem()
+//			.getWidth()/32.0f,DisplaySystem.getDisplaySystem()
+//			.getHeight()/32.0f, 0));
+//		cruz.setRenderQueueMode(Renderer.QUEUE_SKIP);
+//		rootNode.attachChild(cruz);
+//		cruz.setSolidColor(ColorRGBA.white);
+//		cruz.updateGeometricState(0, true);
+//		cruz.updateRenderState();
 
 	}
 
