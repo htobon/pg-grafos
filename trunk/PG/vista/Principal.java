@@ -203,7 +203,7 @@ public class Principal extends javax.swing.JFrame {
 		// Important! Here is where we add the guts to the panel:
 		impl = new Espacio3D(panelVisualizacion.getWidth(), panelVisualizacion
 				.getHeight());
-		
+
 		canvas.setImplementor(impl);
 
 		Callable<?> call = new Callable<Object>() {
@@ -223,7 +223,7 @@ public class Principal extends javax.swing.JFrame {
 		impl.resizeCanvas(canvas.getWidth(), canvas.getHeight());
 		((JMECanvas) canvas).makeDirty();
 		impl.dibujarCruz();
-		
+
 	}
 
 	private void initGUI() {
@@ -416,9 +416,9 @@ public class Principal extends javax.swing.JFrame {
 								jtaInfo = new JTextArea();
 								panelIzquierdo.add(jtaInfo);
 								jtaInfo.setText("Información");
-//								jtaInfo
-//										.setPreferredSize(new java.awt.Dimension(
-//												202, 466));
+								// jtaInfo
+								// .setPreferredSize(new java.awt.Dimension(
+								// 202, 466));
 								jtaInfo.setBorder(BorderFactory
 										.createEmptyBorder(0, 0, 0, 0));
 								jtaInfo.setEditable(false);
@@ -443,11 +443,13 @@ public class Principal extends javax.swing.JFrame {
 
 						divisor.setLeftComponent(scrollPanelIzquierdo);
 						divisor.setRightComponent(panelVisualizacion);
-						panelVisualizacion.addComponentListener(new ComponentAdapter() {
-							public void componentResized(ComponentEvent evt) {
-								panelVisualizacionComponentResized(evt);
-							}
-						});
+						panelVisualizacion
+								.addComponentListener(new ComponentAdapter() {
+									public void componentResized(
+											ComponentEvent evt) {
+										panelVisualizacionComponentResized(evt);
+									}
+								});
 
 					}
 				}
@@ -471,44 +473,43 @@ public class Principal extends javax.swing.JFrame {
 
 	private void botonGuardarActionPerformed(ActionEvent evt) {
 
-				JFileChooser jfc = new JFileChooser();
-				jfc.setDialogTitle("Guardar");
-				jfc.setApproveButtonText("Guardar");
-				jfc.setMultiSelectionEnabled(false);
-				jfc.setFileFilter(new FileFilter() {
-					public boolean accept(File f) {
-						return (f.getName().endsWith(".grafo") || f
-								.isDirectory());
-					}
+		JFileChooser jfc = new JFileChooser();
+		jfc.setDialogTitle("Guardar");
+		jfc.setApproveButtonText("Guardar");
+		jfc.setMultiSelectionEnabled(false);
+		jfc.setFileFilter(new FileFilter() {
+			public boolean accept(File f) {
+				return (f.getName().endsWith(".grafo") || f.isDirectory());
+			}
 
-					public String getDescription() {
-						return ".grafo";
-					}
-				});
-				
-				int opción = jfc.showOpenDialog(null);
-				if (opción == JFileChooser.APPROVE_OPTION) {
+			public String getDescription() {
+				return ".grafo";
+			}
+		});
 
-					File file = jfc.getSelectedFile();
-					
-					// Verificar existencia
-					int respuesta = -1;
-					if ((new File(file.getAbsoluteFile()+".grafo")).exists()||file.exists()) {
-						respuesta = JOptionPane.showConfirmDialog(null,
-								"El archivo ya existe.¿Quiéres reemplazarlo?",
-								"Confirmar Reemplazo",
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE);
-					} else {
-						respuesta = JOptionPane.YES_OPTION;
-					}
+		int opción = jfc.showOpenDialog(null);
+		if (opción == JFileChooser.APPROVE_OPTION) {
 
-					// Si el archivo no existe o si se va a sobreescribir
-					if (respuesta == JOptionPane.YES_OPTION) {
-						Ctrl.guardarGrafo(file);
-					}
+			File file = jfc.getSelectedFile();
 
-				}
+			// Verificar existencia
+			int respuesta = -1;
+			if ((new File(file.getAbsoluteFile() + ".grafo")).exists()
+					|| file.exists()) {
+				respuesta = JOptionPane.showConfirmDialog(null,
+						"El archivo ya existe.¿Quiéres reemplazarlo?",
+						"Confirmar Reemplazo", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+			} else {
+				respuesta = JOptionPane.YES_OPTION;
+			}
+
+			// Si el archivo no existe o si se va a sobreescribir
+			if (respuesta == JOptionPane.YES_OPTION) {
+				Ctrl.guardarGrafo(file);
+			}
+
+		}
 	}
 
 	private void abrirMenuActionPerformed(ActionEvent evt) {
@@ -544,27 +545,26 @@ public class Principal extends javax.swing.JFrame {
 
 	private void btnAbrirGrafoActionPerformed(ActionEvent evt) {
 
-				JFileChooser jfc = new JFileChooser();
-				jfc.setMultiSelectionEnabled(false);
-				jfc.setFileFilter(new FileFilter() {
-					public boolean accept(File f) {
-						return (f.getName().endsWith(".grafo") || f
-								.isDirectory());
-					}
+		JFileChooser jfc = new JFileChooser();
+		jfc.setMultiSelectionEnabled(false);
+		jfc.setFileFilter(new FileFilter() {
+			public boolean accept(File f) {
+				return (f.getName().endsWith(".grafo") || f.isDirectory());
+			}
 
-					public String getDescription() {
-						return ".grafo";
-					}
-				});
-				int opción = jfc.showOpenDialog(null);
-				if (opción == JFileChooser.APPROVE_OPTION) {
+			public String getDescription() {
+				return ".grafo";
+			}
+		});
+		int opción = jfc.showOpenDialog(null);
+		if (opción == JFileChooser.APPROVE_OPTION) {
 
-					File file = jfc.getSelectedFile();
-					boolean ret = Ctrl.abrirGrafo(file);
-					if (ret) {
-						impl.dibujarGrafo();
-					}
-				}
+			File file = jfc.getSelectedFile();
+			boolean ret = Ctrl.abrirGrafo(file);
+			if (ret) {
+				impl.dibujarGrafo();
+			}
+		}
 	}
 
 	public void cambiarPropiedadesGrafos() {
@@ -590,20 +590,23 @@ public class Principal extends javax.swing.JFrame {
 		impl.doUpdate();
 
 	}
-	
+
 	private void botonResetActionPerformed(ActionEvent evt) {
 		impl.resetCam();
 	}
-	
+
 	private void panelVisualizacionComponentResized(ComponentEvent evt) {
-		
-		impl.dibujarCruz();
-		impl.doUpdate();
-		
+
+		if (impl != null) {
+			impl.dibujarCruz();
+			impl.doUpdate();
+		}
+
 	}
-	
+
 	private void thisComponentResized(ComponentEvent evt) {
-		impl.dibujarCruz();
+		if (impl != null)
+			impl.dibujarCruz();
 	}
 
 }
