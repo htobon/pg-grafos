@@ -136,9 +136,9 @@ public class Principal extends javax.swing.JFrame {
 			NapkinLookAndFeel laf = new NapkinLookAndFeel();
 			NapkinTheme tema = NapkinTheme.Manager.getTheme("blueprint");
 			// NapkinTheme tema = NapkinTheme.Manager.getTheme("napkin");
-			for (String t : NapkinTheme.Manager.themeNames()) {
-				System.out.println(t);
-			}
+//			for (String t : NapkinTheme.Manager.themeNames()) {
+//				System.out.println(t);
+//			}
 			NapkinTheme.Manager.setCurrentTheme(tema);
 			// SwingUtilities.updateComponentTreeUI(this);
 			UIManager.setLookAndFeel(laf);
