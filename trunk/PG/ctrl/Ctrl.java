@@ -363,15 +363,16 @@ public class Ctrl {
 	 * @return String
 	 */
 	public static String getTipoArista(int codigo) {
-		String tipo= ServiciosBD.getTipoArista(codigo);
-		if(tipo == null){
-			for(Arista arista: grafo.getAristas()){
-				if(arista.getCodigo()==codigo){
-					return arista.getTipo();
-				}
+		// String tipo= ServiciosBD.getTipoArista(codigo);
+		// if(tipo == null){
+		for (Arista arista : grafo.getAristas()) {
+			if (arista.getCodigo() == codigo) {
+				return arista.getTipo();
 			}
 		}
-		return tipo;
+		return "";
+		// }
+		// return tipo;
 		// return ServiciosBD.getTipoArista(codigo);
 	}
 
@@ -383,16 +384,18 @@ public class Ctrl {
 	 * @return String
 	 */
 	public static String getTipoNodo(int codigo) {
-		String tipo= ServiciosBD.getTipoNodo(codigo);
-		if(tipo == null){
-			for(Nodo nodo: grafo.getNodos()){
-				if(nodo.getCodigo()==codigo){
-					return nodo.getTipo();
-				}
+		// String tipo = ServiciosBD.getTipoNodo(codigo);
+		// System.out.println(tipo);
+		// if(tipo == null){
+		for (Nodo nodo : grafo.getNodos()) {
+			if (nodo.getCodigo() == codigo) {
+				return nodo.getTipo();
 			}
 		}
-		return tipo;
-		//return ServiciosBD.getTipoNodo(codigo);
+		// }
+		// return tipo;
+		return "";
+		// return ServiciosBD.getTipoNodo(codigo);
 	}
 
 	/**
