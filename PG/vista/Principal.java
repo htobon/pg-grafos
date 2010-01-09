@@ -203,6 +203,7 @@ public class Principal extends javax.swing.JFrame {
 		// Important! Here is where we add the guts to the panel:
 		impl = new Espacio3D(panelVisualizacion.getWidth(), panelVisualizacion
 				.getHeight());
+		
 		canvas.setImplementor(impl);
 
 		Callable<?> call = new Callable<Object>() {
@@ -221,6 +222,8 @@ public class Principal extends javax.swing.JFrame {
 	protected void doResize() {
 		impl.resizeCanvas(canvas.getWidth(), canvas.getHeight());
 		((JMECanvas) canvas).makeDirty();
+		impl.dibujarCruz();
+		
 	}
 
 	private void initGUI() {
@@ -440,12 +443,22 @@ public class Principal extends javax.swing.JFrame {
 
 						divisor.setLeftComponent(scrollPanelIzquierdo);
 						divisor.setRightComponent(panelVisualizacion);
+						panelVisualizacion.addComponentListener(new ComponentAdapter() {
+							public void componentResized(ComponentEvent evt) {
+								panelVisualizacionComponentResized(evt);
+							}
+						});
 
 					}
 				}
 				getContentPane().setLayout(new BorderLayout());
 				this.setIconImage(new ImageIcon(getClass().getClassLoader()
 						.getResource("imagenes/logo2.png")).getImage());
+				this.addComponentListener(new ComponentAdapter() {
+					public void componentResized(ComponentEvent evt) {
+						thisComponentResized(evt);
+					}
+				});
 				getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 			}
 			pack();
@@ -580,6 +593,17 @@ public class Principal extends javax.swing.JFrame {
 	
 	private void botonResetActionPerformed(ActionEvent evt) {
 		impl.resetCam();
+	}
+	
+	private void panelVisualizacionComponentResized(ComponentEvent evt) {
+		
+		impl.dibujarCruz();
+		impl.doUpdate();
+		
+	}
+	
+	private void thisComponentResized(ComponentEvent evt) {
+		impl.dibujarCruz();
 	}
 
 }
