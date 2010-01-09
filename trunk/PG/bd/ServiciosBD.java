@@ -13,6 +13,27 @@ public class ServiciosBD {
 
 	public static Connection conexion;
 
+	/**
+	 * Se abre una conexión a la base de datos MySQL.
+	 * 
+	 * @param servidor
+	 *            - Host en donde se encuentra alojada la base de datos. (puede
+	 *            ser una ip, o una dirección)
+	 * @param puerto
+	 *            - Puerto a utilizar por la base de datos. (Por defecto debería
+	 *            ser 3306).
+	 * @param usuario
+	 *            - Nombre de usuario con el cual te conectarás a la base de
+	 *            datos. (Por defecto es root).
+	 * @param clave
+	 *            - Clave de acceso correspondiente a dicho nombre de usuario.
+	 *            (Generalmente no tiene o es 123456).
+	 * @param nombreBD
+	 *            - El nombre de la base de datos en la cual se encuentra el
+	 *            grafo a dibujar.
+	 * @return True si la conexión se pudo llevar a cabo correctamente. False en
+	 *         caso contrario.
+	 */
 	public static boolean crearConexion(String servidor, String puerto,
 			String usuario, char[] clave, String nombreBD) {
 		try {
@@ -31,6 +52,10 @@ public class ServiciosBD {
 		}
 	}
 
+	/**
+	 * @return Retorna todos los códigos de todos los nodos que se encuentran en
+	 *         la base de datos.
+	 */
 	public static int[] getCodigosNodos() {
 		try {
 			PreparedStatement query = conexion
@@ -52,6 +77,13 @@ public class ServiciosBD {
 		return null;
 	}
 
+	/**
+	 * Consulta el tipo de nodo de un nodo en específico.
+	 * 
+	 * @param codigo
+	 *            del nodo al cual se le desea consultar el tipo.
+	 * @return el tipo de nodo al cual pertenece.
+	 */
 	public static String getTipoNodo(int codigo) {
 		try {
 			PreparedStatement query = conexion
@@ -70,6 +102,16 @@ public class ServiciosBD {
 		return null;
 	}
 
+	/**
+	 * ESte método se encarga de consultar todas las propiedades de un nodo
+	 * determinado.
+	 * 
+	 * @param codigo
+	 *            del nodo al cual se desea consultar sus correspondientes
+	 *            propiedades.
+	 * @return Retorna una colección Clave-Valor de todos los atributos de dicho
+	 *         nodo.
+	 */
 	public static HashMap<String, Object> getAtributosNodo(int codigo) {
 		HashMap<String, Object> nodos = new HashMap<String, Object>();
 		try {
@@ -179,7 +221,7 @@ public class ServiciosBD {
 			res.first();
 			for (int c = 0; c < tipos.length; c++, res.next()) {
 				tipos[c] = res.getString("codigo") + " - "
-				+ res.getString("nombre");
+						+ res.getString("nombre");
 			}
 			query.close();
 			res.close();
