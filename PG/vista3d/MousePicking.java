@@ -83,17 +83,21 @@ public class MousePicking extends MouseInputAction {
 					String codigo = picker.getPickData(0).getTargetMesh()
 							.getName().split(" ")[1];
 					HashMap<String, Object> atributos = new HashMap<String, Object>();
+					texto = "";
 					if (picker.getPickData(0).getTargetMesh().getName().split(
 							" ")[0].equals("Arista")) {
 						atributos = Ctrl.getAtributosArista(Integer
 								.parseInt(codigo));
+						//Obtener datos del tipo de arista
+						texto+= "Tipo: "+Ctrl.getTipoArista(Integer.parseInt(codigo))+"\n";
 					}
 					if (picker.getPickData(0).getTargetMesh().getName().split(
 							" ")[0].equals("Nodo")) {
 						atributos = Ctrl.getAtributosNodo(Integer
 								.parseInt(codigo));
+						//Obtener datos del tipo de Nodo
+						texto+= "Tipo: "+Ctrl.getTipoNodo(Integer.parseInt(codigo))+"\n";
 					}
-					texto = "";
 
 					for (String atributo : atributos.keySet()) {
 						texto += atributo + ": "
