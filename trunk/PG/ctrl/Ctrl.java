@@ -53,18 +53,17 @@ public class Ctrl {
 	 *         identificación de cada uno de los nodos.
 	 */
 	public static int[] getCodigosNodos() {
-		/*int[] codigos = new int[grafo.getNodos().size()];
-		int cont = 0;
-		for (Iterator<Nodo> i = grafo.getNodos().iterator(); i.hasNext(); cont++) {
-			codigos[cont] = i.next().getCodigo();
-		}
-		return codigos;*/
-		
+		/*
+		 * int[] codigos = new int[grafo.getNodos().size()]; int cont = 0; for
+		 * (Iterator<Nodo> i = grafo.getNodos().iterator(); i.hasNext(); cont++)
+		 * { codigos[cont] = i.next().getCodigo(); } return codigos;
+		 */
+
 		int[] codigos = new int[grafo.getNodos().size()];
-		ArrayList<Nodo> nodos= reordenarNodos();
-		
-		for(int i=0;i<nodos.size();i++){
-			codigos[i]=nodos.get(i).getCodigo();
+		ArrayList<Nodo> nodos = reordenarNodos();
+
+		for (int i = 0; i < nodos.size(); i++) {
+			codigos[i] = nodos.get(i).getCodigo();
 		}
 		return codigos;
 	}
@@ -357,6 +356,28 @@ public class Ctrl {
 	}
 
 	/**
+	 * Este método permite obtener un el tipo de una aristas determinada
+	 * 
+	 * @param codigo
+	 *            : Código de la arista
+	 * @return String
+	 */
+	public static String getTipoArista(int codigo) {
+		return ServiciosBD.getTipoArista(codigo);
+	}
+
+	/**
+	 * Este método permite obtener un el tipo de un nodo determinado
+	 * 
+	 * @param codigo
+	 *            : Código del nodo
+	 * @return String
+	 */
+	public static String getTipoNodo(int codigo) {
+		return ServiciosBD.getTipoNodo(codigo);
+	}
+
+	/**
 	 * Este método permite obtener un arreglo con los nombres de los tipos de
 	 * aristas que hay en el grafo
 	 * 
@@ -587,6 +608,5 @@ public class Ctrl {
 		}
 		return nodosRet;
 	}
-	
-	
+
 }
