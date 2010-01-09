@@ -363,7 +363,15 @@ public class Ctrl {
 	 * @return String
 	 */
 	public static String getTipoArista(int codigo) {
-		return ServiciosBD.getTipoArista(codigo);
+		String tipo= ServiciosBD.getTipoArista(codigo);
+		if(tipo == null){
+			for(Arista arista: grafo.getAristas()){
+				if(arista.getCodigo()==codigo){
+					return arista.getTipo();
+				}
+			}
+		}
+		return tipo;
 	}
 
 	/**
@@ -374,7 +382,15 @@ public class Ctrl {
 	 * @return String
 	 */
 	public static String getTipoNodo(int codigo) {
-		return ServiciosBD.getTipoNodo(codigo);
+		String tipo= ServiciosBD.getTipoNodo(codigo);
+		if(tipo == null){
+			for(Nodo nodo: grafo.getNodos()){
+				if(nodo.getCodigo()==codigo){
+					return nodo.getTipo();
+				}
+			}
+		}
+		return tipo;
 	}
 
 	/**
