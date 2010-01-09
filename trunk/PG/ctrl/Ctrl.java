@@ -372,6 +372,7 @@ public class Ctrl {
 			}
 		}
 		return tipo;
+		// return ServiciosBD.getTipoArista(codigo);
 	}
 
 	/**
@@ -391,6 +392,7 @@ public class Ctrl {
 			}
 		}
 		return tipo;
+		//return ServiciosBD.getTipoNodo(codigo);
 	}
 
 	/**
