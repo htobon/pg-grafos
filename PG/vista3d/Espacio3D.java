@@ -85,32 +85,35 @@ public class Espacio3D extends SimpleCanvasImpl {
 	}
 
 	public void dibujarCruz() {
-		if(rootNode.getChild("cruz")!=null){
-			rootNode.detachChild(rootNode.getChild("cruz"));
-		}
-		//Text cruz = new Text("cruz", "+");
-		
-		 Text cruz = Text.createDefaultTextLabel("cruz", "+");
-		cruz.setCullHint(Spatial.CullHint.Never);
-		// cruz.setTextureCombineMode(TextureCombineMode.Replace);
-		cruz.setLocalTranslation(new Vector3f(this.width/2f-8f, this.height/2-8f, 0));
-//		cruz.setLocalTranslation(new Vector3f(DisplaySystem.getDisplaySystem()
-//				.getWidth() / 2f - 8f, // 8 is half the width
-//				// of a font char
-//				DisplaySystem.getDisplaySystem().getHeight() / 2f - 8f, 0));
-		rootNode.attachChild(cruz);
-		
-		
-//		Sphere cruz= new Sphere("cruz",10,10,1.0f);
-//		cruz.setLocalTranslation(new Vector3f(DisplaySystem.getDisplaySystem()
-//			.getWidth()/32.0f,DisplaySystem.getDisplaySystem()
-//			.getHeight()/32.0f, 0));
-		cruz.setRenderQueueMode(Renderer.QUEUE_TRANSPARENT);
-//		rootNode.attachChild(cruz);
-//		cruz.setSolidColor(ColorRGBA.white);
-		cruz.updateGeometricState(0, true);
-		cruz.updateRenderState();
+		if (rootNode != null) {
+			if (rootNode.getChild("cruz") != null) {
+				rootNode.detachChild(rootNode.getChild("cruz"));
+			}
+			// Text cruz = new Text("cruz", "+");
 
+			Text cruz = Text.createDefaultTextLabel("cruz", "+");
+			cruz.setCullHint(Spatial.CullHint.Never);
+			// cruz.setTextureCombineMode(TextureCombineMode.Replace);
+			cruz.setLocalTranslation(new Vector3f(this.width / 2f - 8f,
+					this.height / 2 - 8f, 0));
+			// cruz.setLocalTranslation(new
+			// Vector3f(DisplaySystem.getDisplaySystem()
+			// .getWidth() / 2f - 8f, // 8 is half the width
+			// // of a font char
+			// DisplaySystem.getDisplaySystem().getHeight() / 2f - 8f, 0));
+			rootNode.attachChild(cruz);
+
+			// Sphere cruz= new Sphere("cruz",10,10,1.0f);
+			// cruz.setLocalTranslation(new
+			// Vector3f(DisplaySystem.getDisplaySystem()
+			// .getWidth()/32.0f,DisplaySystem.getDisplaySystem()
+			// .getHeight()/32.0f, 0));
+			cruz.setRenderQueueMode(Renderer.QUEUE_TRANSPARENT);
+			// rootNode.attachChild(cruz);
+			// cruz.setSolidColor(ColorRGBA.white);
+			cruz.updateGeometricState(0, true);
+			cruz.updateRenderState();
+		}
 	}
 
 	private void dibujarAristas(int[] codigosAristas) {
@@ -176,22 +179,23 @@ public class Espacio3D extends SimpleCanvasImpl {
 
 		for (int codigoNodo : codigosNodos) {
 			Sphere nodo = new Sphere("Nodo " + codigoNodo, 10, 20, 1f);
-			
+
 			TextureState ts = renderer.createTextureState();
 			ts.setEnabled(true);
-			ts.setTexture(TextureManager.loadTexture(Grafo3D.class.getClassLoader().getResource("imagenes/metal.jpg"),
-			Texture.MinificationFilter.BilinearNearestMipMap,
-			Texture.MagnificationFilter.Bilinear));
-			
+			ts.setTexture(TextureManager.loadTexture(Grafo3D.class
+					.getClassLoader().getResource("imagenes/metal.jpg"),
+					Texture.MinificationFilter.BilinearNearestMipMap,
+					Texture.MagnificationFilter.Bilinear));
+
 			nodo.setRenderState(ts);
-			
+
 			BoundingBox bounding = new BoundingBox();
 			nodo.setModelBound(bounding);
 			nodo.updateModelBound();
 
 			nodo.setLocalTranslation(new Vector3f(location_x, location_y, 0));
 			nodo.setRenderQueueMode(Renderer.QUEUE_SKIP);
-			
+
 			rootNode.attachChild(nodo);
 
 			// System.out.println(Ctrl.getColorNodo(codigoNodo));
@@ -423,7 +427,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 			Line arista = (Line) rootNode.getChild("Arista " + codigoArista);
 			// Revisar colisiones por arista
 			colisiones = buscarColisiones(arista, codigoArista);
-			//int numColisiones = encontrarColisiones(arista, codigoArista);
+			// int numColisiones = encontrarColisiones(arista, codigoArista);
 			// if (numColisiones > 0) {
 			int oportunidad = 0;
 			while (colisiones.size() > 0 && oportunidad < 15) {
@@ -473,20 +477,20 @@ public class Espacio3D extends SimpleCanvasImpl {
 								actualizarAristas();
 								oportunidad++;
 							}
-						}//Mover en y
-						else if(oportunidad>=5&&oportunidad<10){
+						}// Mover en y
+						else if (oportunidad >= 5 && oportunidad < 10) {
 							if (vertices[1].y <= prob[0].y) {
 								Sphere cambio = (Sphere) rootNode
-								.getChild("Nodo " + nodosArista[1]);
+										.getChild("Nodo " + nodosArista[1]);
 								cambio.setLocalTranslation(cambio
 										.getLocalTranslation().x, cambio
 										.getLocalTranslation().y - 4.0f, cambio
-										.getLocalTranslation().z );
+										.getLocalTranslation().z);
 								actualizarAristas();
 								oportunidad++;
 							} else {
 								Sphere cambio = (Sphere) rootNode
-								.getChild("Nodo " + nodosArista[1]);
+										.getChild("Nodo " + nodosArista[1]);
 								cambio.setLocalTranslation(cambio
 										.getLocalTranslation().x, cambio
 										.getLocalTranslation().y + 4.0f, cambio
@@ -494,26 +498,26 @@ public class Espacio3D extends SimpleCanvasImpl {
 								actualizarAristas();
 								oportunidad++;
 							}
-						}else if(oportunidad>=10&& oportunidad<15){
+						} else if (oportunidad >= 10 && oportunidad < 15) {
 							if (vertices[1].x <= prob[0].x) {
 								Sphere cambio = (Sphere) rootNode
-								.getChild("Nodo " + nodosArista[1]);
+										.getChild("Nodo " + nodosArista[1]);
 								cambio.setLocalTranslation(cambio
 										.getLocalTranslation().x - 4.0f, cambio
 										.getLocalTranslation().y, cambio
-										.getLocalTranslation().z );
+										.getLocalTranslation().z);
 								actualizarAristas();
 								oportunidad++;
 							} else {
 								Sphere cambio = (Sphere) rootNode
-								.getChild("Nodo " + nodosArista[1]);
+										.getChild("Nodo " + nodosArista[1]);
 								cambio.setLocalTranslation(cambio
 										.getLocalTranslation().x + 4.0f, cambio
 										.getLocalTranslation().y, cambio
 										.getLocalTranslation().z);
 								actualizarAristas();
 								oportunidad++;
-							}				
+							}
 						}
 					} else {
 						// El más cercano está en la posición 0
@@ -537,20 +541,20 @@ public class Espacio3D extends SimpleCanvasImpl {
 								actualizarAristas();
 								oportunidad++;
 							}
-						}//Mover en y
-						else if(oportunidad>=5&&oportunidad<10){
+						}// Mover en y
+						else if (oportunidad >= 5 && oportunidad < 10) {
 							if (vertices[0].y <= prob[0].y) {
 								Sphere cambio = (Sphere) rootNode
-								.getChild("Nodo " + nodosArista[0]);
+										.getChild("Nodo " + nodosArista[0]);
 								cambio.setLocalTranslation(cambio
 										.getLocalTranslation().x, cambio
 										.getLocalTranslation().y - 4.0f, cambio
-										.getLocalTranslation().z );
+										.getLocalTranslation().z);
 								actualizarAristas();
 								oportunidad++;
 							} else {
 								Sphere cambio = (Sphere) rootNode
-								.getChild("Nodo " + nodosArista[0]);
+										.getChild("Nodo " + nodosArista[0]);
 								cambio.setLocalTranslation(cambio
 										.getLocalTranslation().x, cambio
 										.getLocalTranslation().y + 4.0f, cambio
@@ -558,29 +562,28 @@ public class Espacio3D extends SimpleCanvasImpl {
 								actualizarAristas();
 								oportunidad++;
 							}
-						}else if(oportunidad>=10&& oportunidad<15){
+						} else if (oportunidad >= 10 && oportunidad < 15) {
 							if (vertices[0].x <= prob[0].x) {
 								Sphere cambio = (Sphere) rootNode
-								.getChild("Nodo " + nodosArista[0]);
+										.getChild("Nodo " + nodosArista[0]);
 								cambio.setLocalTranslation(cambio
 										.getLocalTranslation().x - 4.0f, cambio
 										.getLocalTranslation().y, cambio
-										.getLocalTranslation().z );
+										.getLocalTranslation().z);
 								actualizarAristas();
 								oportunidad++;
 							} else {
 								Sphere cambio = (Sphere) rootNode
-								.getChild("Nodo " + nodosArista[0]);
+										.getChild("Nodo " + nodosArista[0]);
 								cambio.setLocalTranslation(cambio
 										.getLocalTranslation().x + 4.0f, cambio
 										.getLocalTranslation().y, cambio
 										.getLocalTranslation().z);
 								actualizarAristas();
 								oportunidad++;
-							}				
+							}
 						}
 					}
-					
 
 				}
 
