@@ -1,5 +1,8 @@
 #summary One-sentence summary of this page.
 
+
+http://lh6.ggpht.com/_-hRtiexeGnY/S0zSd8gadkI/AAAAAAAAAUo/e-vZgptoYXk/s400/principal.PNG
+
 = Introducción =
 
 La visualización de grafos en 2D presenta una serie de limitantes que podrían verse reflejados en problemas en cuanto al tamaño y complejidad de las estructuras que se pueden visualizar. 
