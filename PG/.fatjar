@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Mon Dec 21 13:47:27 COT 2009
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=D\:\\Ambientes de Programacion\\workspace\\PG\\PG_fat3.jar
+manifest.mergeall=true
+manifest.mainclass=vista.Principal
+manifest.file=<createnew>
+jarname.isextern=true
+onejar.expand=
+excludes=<po|PG>~.svn/;<po|PG>~bd/~.svn/;<po|PG>~com/~.svn/;<po|PG>~ctrl/~.svn/;<po|PG>~imagenes/~.svn/;<po|PG>~lib/~.svn/;<po|PG>~libs/;<po|PG>~modelo/~.svn/;<po|PG>~uml/~.svn/;<po|PG>~vista/~.svn/;<po|PG>~vista3d/~.svn/
+includes=

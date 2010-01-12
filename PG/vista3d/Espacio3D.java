@@ -163,7 +163,7 @@ public class Espacio3D extends SimpleCanvasImpl {
 		// Cantidad de nodos en el eje X
 		int cantidadX = (int) Math.ceil(Math.sqrt(codigosNodos.length));
 		// Distancia entre nodos
-		float distanciaNodos = 4.0f;
+		float distanciaNodos = 6.0f;
 
 		// Dimension Ancho de la Caja
 		float anchoNodo = max.getX() - min.getX();
