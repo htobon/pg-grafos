@@ -26,17 +26,17 @@ Lograr implementar una técnica de modelado, visualización e interacción de gr
 = Objetivos Específicos =
 
 
-- Revisar el estado del arte (historia y situación actual) de las técnicas de visualización de grafos. 
+ * Revisar el estado del arte (historia y situación actual) de las técnicas de visualización de grafos. 
 
-- Desarrollar un programa (software) que permita visualizar e interactuar en un escenario 3D utilizando un modelo de grafos. 
+ * Desarrollar un programa (software) que permita visualizar e interactuar en un escenario 3D utilizando un modelo de grafos. 
 
-- Entender el funcionamiento de la estructura de datos en la que se basan los grafos. 
+ * Entender el funcionamiento de la estructura de datos en la que se basan los grafos. 
 
-- Investigar acerca del funcionamiento de la librería JMonkey, y la manera en que ésta nos puede ayudar a modelar los grafos. 
+ * Investigar acerca del funcionamiento de la librería JMonkey, y la manera en que ésta nos puede ayudar a modelar los grafos. 
 
-- Lograr encontrar un tema para aplicar el proyecto, permitiendo entender a grandes rasgos el funcionamiento propio de dicha técnica en la elaboración de modelos de interacción. 
+ * Lograr encontrar un tema para aplicar el proyecto, permitiendo entender a grandes rasgos el funcionamiento propio de dicha técnica en la elaboración de modelos de interacción. 
 
-- Permitir fusionar los conocimientos adquiridos en el proceso educativo de nuestras carreras, tanto de Ingeniería de Sistemas como de Diseño de Medios Interactivo, para desarrollar un proyecto aplicable.
+ * Permitir fusionar los conocimientos adquiridos en el proceso educativo de nuestras carreras, tanto de Ingeniería de Sistemas como de Diseño de Medios Interactivo, para desarrollar un proyecto aplicable.
 
 
 = Justificación =
