@@ -132,6 +132,16 @@ public class ServiciosBD {
 		return null;
 	}
 
+	/**
+	 * ESte método se encarga de consultar todas las propiedades de una arista
+	 * determinada.
+	 * 
+	 * @param codigo
+	 *            de la aristao a la cual se desea consultar sus
+	 *            correspondientes propiedades.
+	 * @return Retorna una colección Clave-Valor de todos los atributos de dicha
+	 *         arista.
+	 */
 	public static HashMap<String, Object> getAtributosArista(int codigo) {
 		HashMap<String, Object> aristas = new HashMap<String, Object>();
 		try {
@@ -152,6 +162,10 @@ public class ServiciosBD {
 		return null;
 	}
 
+	/**
+	 * @return Retorna todos los códigos de todas las aristas que se encuentran
+	 *         en la base de datos.
+	 */
 	public static int[] getCodigosAristas() {
 		try {
 			PreparedStatement query = conexion
@@ -172,6 +186,13 @@ public class ServiciosBD {
 		return null;
 	}
 
+	/**
+	 * Consulta el tipo de arista de una línea específica.
+	 * 
+	 * @param codigo
+	 *            de la arista a la cual se le desea consultar el tipo.
+	 * @return el tipo de arista a la cual pertenece.
+	 */
 	public static String getTipoArista(int codigo) {
 		try {
 			PreparedStatement query = conexion
@@ -190,6 +211,16 @@ public class ServiciosBD {
 		return null;
 	}
 
+	/**
+	 * Este método consulta los nodos que se encuentran adyacentes a una arista
+	 * dada.
+	 * 
+	 * @param codigo
+	 *            de la arista a la cual se le desean consultar sus
+	 *            correspondientes nodos.
+	 * @return Retorna un arreglo de dos posiciones correspondientes a los
+	 *         códigos de los dos nodos adyancentes a dicha arista.
+	 */
 	public static int[] getNodosArista(int codigo) {
 		int[] nodos = new int[2];
 		PreparedStatement query;
@@ -211,6 +242,13 @@ public class ServiciosBD {
 		return null;
 	}
 
+	/**
+	 * Este método se encarga de buscar todos los tipos de aristas que existen
+	 * en la base de datos.
+	 * 
+	 * @return Retorna un arreglo de cadenas (String) correspondiente a los
+	 *         tipos de aristas.
+	 */
 	public static String[] getTiposAristas() {
 		try {
 			PreparedStatement query = conexion
@@ -233,6 +271,13 @@ public class ServiciosBD {
 		return null;
 	}
 
+	/**
+	 * Este método se encarga de buscar todos los tipos de nodos que existen
+	 * en la base de datos.
+	 * 
+	 * @return Retorna un arreglo de cadenas (String) correspondiente a los
+	 *         tipos de nodos.
+	 */
 	public static String[] getTiposNodos() {
 		try {
 			PreparedStatement query = conexion
