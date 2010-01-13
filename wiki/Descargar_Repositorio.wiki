@@ -5,8 +5,8 @@
 = Descargar proyecto =
 
 ==Requisitos==
-  * Instalar NetBeans 6.7.1 http://www.netbeans.org/downloads/index.html
-  * Instalar Subversion http://unlimited-runner.googlecode.com/files/CollabNetSubversion-client-1.5.5-1.win32.exe
+  * Instalar Eclipse IDE: http://www.eclipse.org/downloads/
+  * Instalar Subclipse (Plugin para Eclipse IDE): http://subclipse.tigris.org/
 
 ==Procedimiento==
   # Iniciar sesión en Google (Gmail). Obtener contraseña de Google code entrando a: http://code.google.com/p/unlimited-runner/source/checkout .El usuario es el mismo de Gmail y la contraseña se tiene que generar donde dice When prompted, enter your generated googlecode.com password. Lo que los lleva a  http://code.google.com/hosting/settings y la ven donde dice Your googlecode.com password:
