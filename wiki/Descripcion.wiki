@@ -26,14 +26,17 @@ Lograr implementar una técnica de modelado, visualización e interacción de gr
 = Objetivos Específicos =
 
 
+- Revisar el estado del arte (historia y situación actual) de las técnicas de visualización de grafos. 
 
-*	Revisar el estado del arte (historia y situación actual) de las técnicas de visualización de grafos. 
-*	Desarrollar un programa (software) que permita visualizar e interactuar en un escenario 3D utilizando un modelo de grafos. 
-*	Entender el funcionamiento de la estructura de datos en la que se basan los grafos. 
-*	Investigar acerca del funcionamiento de la librería JMonkey, y la manera en que ésta nos puede ayudar a modelar los grafos. 
-*	Lograr encontrar un tema para aplicar el proyecto, permitiendo entender a grandes rasgos el funcionamiento propio de dicha técnica en la elaboración de modelos de interacción. 
-*	Permitir fusionar los conocimientos adquiridos en el proceso educativo de nuestras carreras, tanto de Ingeniería de Sistemas como de Diseño de Medios Interactivo, para desarrollar un proyecto aplicable.
+- Desarrollar un programa (software) que permita visualizar e interactuar en un escenario 3D utilizando un modelo de grafos. 
 
+- Entender el funcionamiento de la estructura de datos en la que se basan los grafos. 
+
+- Investigar acerca del funcionamiento de la librería JMonkey, y la manera en que ésta nos puede ayudar a modelar los grafos. 
+
+- Lograr encontrar un tema para aplicar el proyecto, permitiendo entender a grandes rasgos el funcionamiento propio de dicha técnica en la elaboración de modelos de interacción. 
+
+- Permitir fusionar los conocimientos adquiridos en el proceso educativo de nuestras carreras, tanto de Ingeniería de Sistemas como de Diseño de Medios Interactivo, para desarrollar un proyecto aplicable.
 
 
 = Justificación =
@@ -50,11 +53,3 @@ Llegar a presentar técnicas de visualización de grafos en 3D no sólo nos abre
 Los campos de acción en los que podrá intervenir nuestro proyecto, parte desde las nociones básicas de redes sociales, redes de telecomunicaciones, ingeniería de software, diseño de base de datos, hasta temas como la química y la biología en conjunto con la biomedicina.
 
 La iniciativa surge desde el punto de vista de la visualización, haciendo que el análisis de diversos factores se lleve a cabo de una manera mucho más acorde con la realidad, pudiendo analizar sucesos que posiblemente no podrían ser analizados en un grafo en 2D.
-
-
-= Limitaciones =
-
-
-El principal obstáculo que podían presentarse durante el desarrollo del proyecto, consistía en el posible exceso de carga académica podría afectar el tiempo en que se lleve a cabo el desarrollo del proyecto.
-
-Además, una gran limitante que se presentó fue el cambio de tutor de proyecto de grado, por factores externos a nosotros, en un momento en que el proyecto ya se había iniciado, retrasando el proceso.
