@@ -79,7 +79,7 @@ public class MousePicking extends MouseInputAction {
 			// node
 			
 			try {
-				System.out.println(picker.getNumber());
+				//System.out.println(picker.getNumber());
 				if (picker.getNumber() > 0) {
 
 					String codigo = picker.getPickData(0).getTargetMesh()

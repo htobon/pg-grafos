@@ -519,7 +519,7 @@ public class Principal extends javax.swing.JFrame {
 	}
 
 	public void cargarGrafo() {
-		System.out.println("Cargando grafo!");
+		//System.out.println("Cargando grafo!");
 		boolean fueCreado = Ctrl.crearGrafo();
 		impl.dibujarGrafo();
 
