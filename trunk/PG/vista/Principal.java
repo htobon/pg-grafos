@@ -375,7 +375,7 @@ public class Principal extends javax.swing.JFrame {
 							.getScaledInstance(43, 46,
 									Image.SCALE_AREA_AVERAGING));
 					botonReset.setIcon(iconoReset);
-					botonReset.setToolTipText("Reestablecer Cámara");
+					botonReset.setToolTipText("Restablecer Cámara");
 					botonReset.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							botonResetActionPerformed(evt);
