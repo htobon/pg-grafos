@@ -108,7 +108,7 @@ public class Grafo implements Serializable{
 
 	/**
 	 * Método para asignar la colección de nodos 
-	 * @param  HashSet<Nodo>
+	 * @param  nodos
 	 */
 	public void setNodos(HashSet<Nodo> nodos) {
 		this.nodos = nodos;
@@ -117,7 +117,7 @@ public class Grafo implements Serializable{
 
 	/**
 	 * Método para asignar la colección de aristas 
-	 * @param  HashSet<Arista> 
+	 * @param  aristas
 	 */
 	public void setAristas(HashSet<Arista> aristas) {
 		this.aristas = aristas;
